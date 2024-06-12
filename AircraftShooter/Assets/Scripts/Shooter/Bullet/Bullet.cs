@@ -8,8 +8,6 @@ public class Bullet : MonoBehaviour, IMemoryPool
    [Header("Basic")]
     [SerializeField] protected string mpType;
     [SerializeField] protected string mpGroup = "Bullet";
-    [SerializeField] protected string hitEffect;
-    [SerializeField] protected string muzzleFlash;
     [SerializeField] protected float radius = 0.5f;
     [SerializeField] protected bool rangeAttack = false;
     [SerializeField] protected float range = 5f;
@@ -23,10 +21,10 @@ public class Bullet : MonoBehaviour, IMemoryPool
     protected float speedRate;
     protected float angle;
     protected float angleRate;
-    public string MPType { get { return mpType; } set { mpType = value; } }
-    public string MPGroup { get { return mpGroup; } set { mpGroup = value; } }
+    //public string MPType { get { return mpType; } set { mpType = value; } }
+    //public string MPGroup { get { return mpGroup; } set { mpGroup = value; } }
     public bool RangeAttack { get { return rangeAttack; } set { rangeAttack = value; } }
-    public float Range { get { return range; } set { range = value; } }
+    //public float Range { get { return range; } set { range = value; } }
 
     public float lifeTime = 3.0f;
     protected bool isPlaced;
