@@ -19,15 +19,9 @@ public class ArcBullet : MonoBehaviour, IMemoryPool {
     [SerializeField] private float waitTime;
     [SerializeField] private float attackTime = 0.1f;
     [SerializeField] private string mpType = "";
-    [SerializeField] private string mpGroup = "Bullet";
     [SerializeField] private GameObject bullet;
     [SerializeField] private string targetTag = "Player";
-    [SerializeField] string shootSfx;
-    [SerializeField] string hitSfx;
 
-    [Header("Effect")]
-    [SerializeField] private string targetEffect;
-    [SerializeField] private string attackEffect;
 
     private Transform myTransform;
     private SphereCollider sphereCollider;
@@ -121,7 +115,8 @@ public class ArcBullet : MonoBehaviour, IMemoryPool {
 
         bullet.SetActive(true);
 
-        while (percent < 1) {
+        while (percent < 1) 
+        {
             percent += Time.deltaTime * moveRate;
             myTransform.position = Vector3.Slerp(startRelCenter, endRelCenter, percent);
             myTransform.position += center;
@@ -205,7 +200,8 @@ public class ArcBullet : MonoBehaviour, IMemoryPool {
         MyDestroy();
     }
 
-    private void OnTriggerEnter(Collider other) {
+    private void OnTriggerEnter(Collider other) 
+    {
         if (other.CompareTag(targetTag) || other.CompareTag("Obstacle")) {
             LivingEntity damagableObject = other.GetComponent<LivingEntity>();
             if (damagableObject != null) {
@@ -214,7 +210,8 @@ public class ArcBullet : MonoBehaviour, IMemoryPool {
         }
     }
 
-    private void MyDestroy() {
+    private void MyDestroy() 
+    {
         HSPoolManager.Instance.RemoveItem(mpType, gameObject);
     }
 }

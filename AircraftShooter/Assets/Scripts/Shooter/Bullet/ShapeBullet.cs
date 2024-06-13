@@ -27,7 +27,8 @@ public class ShapeBullet : MonoBehaviour, IMemoryPool
         childBullet.ParentBullet = this;
     }
 
-    public void Create(Vector3 pos, Quaternion rot, int power, float speed, bool isCritical) {
+    public void Create(Vector3 pos, Quaternion rot, int power, float speed, bool isCritical) 
+    {
         myTransform.position = pos;
         myTransform.rotation = rot;
         this.power = power;
@@ -59,23 +60,26 @@ public class ShapeBullet : MonoBehaviour, IMemoryPool
 
     public void RunChildrenTriggerEnter(Collider other) {
         LivingEntity entity = other.GetComponent<LivingEntity> ();
-        if (entity) {
-            // entity.TakeDamage(power, other.transform.position, isCritical, EnergyAttribute);
+        if (entity) 
+        {
             entity.TakeDamage(power);   // ToDo: Fix it!
         }
 
         MyDestroy();
     }
 
-    public void Stop() {
-        if (isDead) {
+    public void Stop() 
+    {
+        if (isDead) 
+        {
             return;
         }
 
         MyDestroy();
     }
 
-    private void MyDestroy() {
+    private void MyDestroy() 
+    {
         isDead = true;
 
         CancelInvoke();

@@ -30,9 +30,6 @@ public class HomingBullet : Bullet {
             this.targetTransform = null;
             findTarget = false;
         }
-        // if (target == null) {
-        //     targetTransform = GameManager.instance.player.transform;
-        // }
 
         this.homingSpeedRate = homingSpeedRate;
         this.decreaseHomingSpeed = decreaseHomingSpeed;

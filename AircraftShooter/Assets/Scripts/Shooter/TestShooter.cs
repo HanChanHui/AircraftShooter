@@ -26,6 +26,7 @@ public class TestShooter : MonoBehaviour
             time = 0f;
             
             Directional();
+            angle = angle%360 + angleRate;
         }
         
     }

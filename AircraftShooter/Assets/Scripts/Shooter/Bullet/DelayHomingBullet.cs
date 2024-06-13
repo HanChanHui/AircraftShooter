@@ -13,14 +13,11 @@ public class DelayHomingBullet : Bullet
         Transform targetTransform;
         Rigidbody myRigidbody;
         float turnSpeed;
-        //BaseEnemy targetEnemy;
-        //EnemySpawnManager enemySpawnManager;
 
         protected override void MyStart() {
             base.MyStart();
             myTransform = transform;
             myRigidbody = GetComponent<Rigidbody>();
-            //enemySpawnManager = EnemySpawnManager.Instance;
         }
 
         public void Init(float turnSpeed, float delayTime) {
@@ -46,14 +43,6 @@ public class DelayHomingBullet : Bullet
             }
 
             isDead = false;
-
-            // targetEnemy = enemySpawnManager.GetRandomEnemy();
-            // if (targetEnemy) {
-            //     targetTransform = targetEnemy.transform;
-            //     StartCoroutine(nameof(CoFixedUpdate));
-            // } else {
-            //     Disappear();
-            // }
         }
 
         IEnumerator CoFixedUpdate() {
@@ -85,14 +74,7 @@ public class DelayHomingBullet : Bullet
 
         protected override void Move() {
             myRigidbody.velocity = myTransform.forward * speed;
-
-            // if (targetEnemy.IsDead == false) {
-            //     Quaternion rot = Quaternion.LookRotation(targetTransform.position - myTransform.position);
-            //     myRigidbody.MoveRotation(Quaternion.RotateTowards(myTransform.rotation, rot, turnSpeed));
-            // } else {
-            //     Disappear();
-            // }
-
+            
             CheckCollisions();
         }
     }
