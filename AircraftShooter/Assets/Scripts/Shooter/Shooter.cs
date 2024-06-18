@@ -25,6 +25,7 @@ public class Shooter : MonoBehaviour
         RandomHoming,
         Placed,
         Aiming,
+        AimingDirectional,
         Cross,
         RandomDirectional,
         Arc,
@@ -80,7 +81,7 @@ public class Shooter : MonoBehaviour
     List<Bullet> bulletList = new();
 
     [Header("Forward")]
-    [SerializeField] float ForwardAngleSpeed;
+    [SerializeField] float forwardAngleSpeed;
 
 
     [Header("Nway")]
@@ -111,6 +112,8 @@ public class Shooter : MonoBehaviour
 
     [Header("Aiming")]
     [SerializeField] Transform targetTransform;
+    [SerializeField] bool stopAttackCooltime = true;
+    [SerializeField] float targetfixedAngle;
 
     [Header("Spreading")]
     [SerializeField] float groupSpeed;
@@ -189,6 +192,11 @@ public class Shooter : MonoBehaviour
         }
     }
 
+    public void StopAttackCooltime(bool _stopAttackCooltime)
+    {
+        stopAttackCooltime = _stopAttackCooltime;
+    }
+
     public void Shoot() 
     {
         shootFunc();
@@ -232,7 +240,7 @@ public class Shooter : MonoBehaviour
 
     void ForwardShoot() 
     {
-        NwayShoot(speed, speedRate, angle + (ForwardAngleSpeed * Time.time % 360), angleRate, angleRange, count);
+        NwayShoot(speed, speedRate, angle + (forwardAngleSpeed * Time.time % 360), angleRate, angleRange, count);
         // 양방향으로도 가능.
         //NwayShoot(speed, speedRate, angle + (-ForwardAngleSpeed * Time.time % 360), angleRate, angleRange, count);
     }
@@ -260,7 +268,8 @@ public class Shooter : MonoBehaviour
 
     void RandomNwayShoot() 
     {
-        for (int i = 0; i < count; i++) {
+        for (int i = 0; i < count; i++) 
+        {
             BasicShoot(speed, speedRate, angle + angleRange * (Random.Range(0, 1.0f) - 0.5f), angleRate, muzzle.position);
         }
     }
@@ -337,7 +346,7 @@ public class Shooter : MonoBehaviour
     {
         for (int i = 0; i < nWayCount; i++) 
         {
-            NwayShoot(speed, speedRate, angle + (float)(i * 360) / nWayCount, angleRate, angleRange, count);
+            NwayShoot(speed, speedRate, angle + (float)(i * 360) / nWayCount + (forwardAngleSpeed * Time.time % 360), angleRate, angleRange, count);
         }
     }
 
@@ -345,6 +354,7 @@ public class Shooter : MonoBehaviour
     {
         NwayShoot(speed, speedRate, angle + wavingAngleRange * Mathf.Sin(Time.time * cycle),
                 angleRate, angleRange, count);
+        Debug.Log(Mathf.Sin(Time.time * cycle));
     }
 
     void WavingCircleShoot() 
@@ -372,8 +382,13 @@ public class Shooter : MonoBehaviour
 
     void AimingShoot() 
     {
-        float angle = AngleBetweenTransform(muzzle, targetTransform);
-        BasicShoot(speed, speedRate, -angle, angleRate, muzzle.position);
+        if (stopAttackCooltime) 
+        {
+            targetfixedAngle = AngleBetweenTransform(muzzle, targetTransform);
+            stopAttackCooltime = false;
+        }
+        angle = targetfixedAngle;
+        NwayShoot(speed, speedRate, -angle + 180, angleRate, angleRange, count);
     }
 
     void SpreadingShoot() 
