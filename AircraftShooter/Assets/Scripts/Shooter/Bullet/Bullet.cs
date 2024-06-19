@@ -129,11 +129,14 @@ public class Bullet : MonoBehaviour, IMemoryPool
     }
 
     IEnumerator CoPlaced() {
-        originSpeed = speed;
-        yield return new WaitForSeconds(moveTime);
-        speed = placedStopSpeed;
-        yield return new WaitForSeconds(stopTime);
-        speed = originSpeed;
+
+        while (true) {
+            originSpeed = speed;
+            yield return new WaitForSeconds(moveTime);
+            speed = placedStopSpeed;
+            yield return new WaitForSeconds(stopTime);
+            speed = originSpeed;
+        }
     }
 
     protected virtual void Move() {

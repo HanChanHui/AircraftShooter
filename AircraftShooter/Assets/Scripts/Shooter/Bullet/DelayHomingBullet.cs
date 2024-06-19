@@ -42,6 +42,7 @@ public class DelayHomingBullet : Bullet
                 StartCoroutine(nameof(CoDelayAndSpeedUp));
             }
 
+            StartCoroutine(nameof(CoFixedUpdate));
             isDead = false;
         }
 

@@ -30,6 +30,7 @@ public class Shooter : MonoBehaviour
         RandomDirectional,
         Arc,
         CustomShape,
+        Pattern,
     };
 
     [Header("Basic")]
@@ -127,6 +128,19 @@ public class Shooter : MonoBehaviour
     [Header("Arc")]
     [SerializeField] float arrivalTime;
     [SerializeField] float height;
+
+    [Header("Pattern")]
+    [SerializeField] int pat_width;
+    [SerializeField] int pat_height;
+    protected string pattern =
+    "                                   \n" +
+    "                                   \n" +
+    "                                   \n" +
+    "####  #   # #     #     ##### #####\n" +
+    "#   # #   # #     #     #       #  \n" +
+    "####  #   # #     #     ####    #  \n" +
+    "#   # #   # #     #     #       #  \n" +
+    "####  ##### ##### ##### #####   #  ";
 
     delegate void ShootFunc();
     ShootFunc shootFunc;
@@ -248,7 +262,8 @@ public class Shooter : MonoBehaviour
     void NwayShoot(float speed, float speedRate, float angle, float angleRate, float angleRange, int count) 
     {
         if (count > 1) {
-            for (int i = 0; i < count; i++) {
+            for (int i = 0; i < count; i++) 
+            {
                 BasicShoot(speed, speedRate, angle + angleRange * ((float)i / (count - 1) - 0.5f), angleRate, muzzle.position);
             }
         } else {
@@ -435,10 +450,34 @@ public class Shooter : MonoBehaviour
 
     void ArcShoot() 
     {
-        ArcBullet bullet = HSPoolManager.Instance.NewItem<ArcBullet>(bulletType);
+       ArcBullet bullet = HSPoolManager.Instance.NewItem<ArcBullet>(bulletType);
         if (bullet) 
         {
             bullet.Create(muzzle.position, targetTransform.position, isCalculatedDamage, arrivalTime, height);
+        }
+    }
+
+    void PatternShoot() 
+    {
+        StartCoroutine(Patterns());
+    }
+
+    IEnumerator Patterns()
+    {
+        string[] lines = pattern.Split('\n');
+        for (int y = lines.Length - 1; y >= 0; y--)
+        {
+            for (int x = 0; x < lines[y].Length; x++)
+            {
+                char p = lines[y][x];
+                if (p != ' ')
+                {
+                    float angles = angle - forwardAngleSpeed * ((float)x / (pat_width - 1) - 0.5f);
+                    BasicShoot(speed, speedRate, angles, angleRate, muzzle.position);
+                }
+                
+            }
+            yield return new WaitForSeconds(0.1f);
         }
     }
 
@@ -471,6 +510,7 @@ public class Shooter : MonoBehaviour
     void CreateCustomShapeBullet(Vector3 startPos, float rot, float speed) 
     {
         Bullet bullet = HSPoolManager.Instance.NewItem<Bullet>(bulletType);
+       
         if (bullet) 
         {
             bullet.CheckOutBound = this.CheckOutBound;
@@ -613,6 +653,8 @@ public class Shooter : MonoBehaviour
                 return ArcShoot;
             case ShootingType.CustomShape:
                 return CustomShapeShoot;
+            case ShootingType.Pattern:
+                return PatternShoot;
             default:
                 return null;
         }
