@@ -1,0 +1,57 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 04557e9532410564b9453696fb5fe6b7, type: 3}
+  m_Name: Pattern_2
+  m_EditorClassIdentifier: 
+  shootingType: 0
+  bulletType: 
+  power: 0
+  speed: 0
+  speedRate: 0
+  angle: 0
+  angleRate: 0
+  startDistance: 0
+  lifeTime: 0
+  rot: 0
+  vertex: 0
+  sup: 0
+  rotateBulletCore: 0
+  rotateBulletOffset: {x: 0, y: 0, z: 0}
+  forwardAngleSpeed: 0
+  angleRange: 0
+  count: 0
+  multipleStep: 0
+  multipleRange: 0
+  turnSpeed: 0
+  decreaseHomingSpeed: 0
+  homingSpeedRate: 0
+  delayTime: 0
+  nWayCount: 0
+  wavingAngleRange: 0
+  cycle: 0
+  moveTime: 0
+  stopTime: 0
+  placedStopSpeed: 0
+  targetTransform: {fileID: 0}
+  stopAttackCooltime: 0
+  targetfixedAngle: 0
+  groupSpeed: 0
+  groupCount: 0
+  speedRange: 0
+  groupAngle: 0
+  groupInterval: 0
+  arrivalTime: 0
+  height: 0
+  attackCooltime: 0
+  attackTime: 0
+  attackTimeReset: 0
+  stopAttack: 0

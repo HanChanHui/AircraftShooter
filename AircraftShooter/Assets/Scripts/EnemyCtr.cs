@@ -8,7 +8,7 @@ public class EnemyCtr : MonoBehaviour
 {
     [Header("Shooter")]
     [SerializeField] protected Shooter basicShooter;
-    //[SerializeField] protected Shooter basicShooter2;
+    [SerializeField] protected Shooter basicShooter2;
 
     [SerializeField] bool canAttack;
     //[SerializeField] private bool canStopAttack = true;
@@ -17,7 +17,10 @@ public class EnemyCtr : MonoBehaviour
     {
         basicShooter.Init();
         canAttack = true;
-        //basicShooter2.Init();
+        if(basicShooter2 != null)
+        {
+            basicShooter2.Init();
+        }
         StartCoroutine(CoCheckDistance());
         StartCoroutine(CoStopAttackCooltime());
     }
@@ -40,7 +43,11 @@ public class EnemyCtr : MonoBehaviour
     {
             yield return new WaitForSeconds(basicShooter.attackTime);
             basicShooter.Shoot();
-            //basicShooter2.Shoot();
+        if (basicShooter2 != null)
+        {
+            basicShooter2.Shoot();
+        }
+       
 
 
 
