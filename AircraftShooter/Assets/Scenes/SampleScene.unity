@@ -338,11 +338,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   basicShooter: {fileID: 1464561125}
-  canAttack: 1
-  attackCooltime: 0
-  attackTime: 0
-  stopAttackDelay: 0.1
-  stopAttack: 0
+  canAttack: 0
 --- !u!1 &705507993
 GameObject:
   m_ObjectHideFlags: 0
@@ -636,10 +632,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f4a2a817573ace145b10f01b66227770, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  shootingType: 23
+  shootingType: 7
   muzzle: {fileID: 1464561124}
   showMuzzleFlash: 0
-  saveBullet: 0
+  shootingPattern: {fileID: 11400000, guid: 7ad521af00f16394d89cd7a67f86b252, type: 2}
+  savePattern: 0
+  loadPattern: 1
   bulletType: Bullet
   power: 0
   speed: 5
@@ -654,19 +652,19 @@ MonoBehaviour:
   rotateBulletCore: 1
   rotateBulletOffset: {x: 0, y: 0, z: 0}
   forwardAngleSpeed: 0
-  angleRange: 0
-  count: 0
+  angleRange: 30
+  count: 3
   multipleStep: 0
   multipleRange: 0
   turnSpeed: 0
   decreaseHomingSpeed: 0
   homingSpeedRate: 0
   delayTime: 0
-  nWayCount: 0
+  nWayCount: 3
   wavingAngleRange: 0
   cycle: 0
-  moveTime: 1
-  stopTime: 0.3
+  moveTime: 0
+  stopTime: 0
   placedStopSpeed: 0
   targetTransform: {fileID: 197752969}
   stopAttackCooltime: 1
@@ -678,8 +676,12 @@ MonoBehaviour:
   groupInterval: 0
   arrivalTime: 0
   height: 0
-  pat_width: 40
-  pat_height: 8
+  pat_width: 0
+  pat_height: 0
+  attackCooltime: 0
+  attackTime: 0
+  attackTimeReset: 0
+  stopAttack: 0
 --- !u!1 &1535085685
 GameObject:
   m_ObjectHideFlags: 0
@@ -864,7 +866,9 @@ MonoBehaviour:
   shootingType: 3
   muzzle: {fileID: 1636414610}
   showMuzzleFlash: 0
-  saveBullet: 0
+  shootingPattern: {fileID: 0}
+  savePattern: 0
+  loadPattern: 0
   bulletType: Bullet
   power: 0
   speed: 1
@@ -905,6 +909,10 @@ MonoBehaviour:
   height: 0
   pat_width: 0
   pat_height: 0
+  attackCooltime: 0
+  attackTime: 0
+  attackTimeReset: 0
+  stopAttack: 0
 --- !u!4 &1636414610
 Transform:
   m_ObjectHideFlags: 0

@@ -10,16 +10,13 @@ public class EnemyCtr : MonoBehaviour
     [SerializeField] protected Shooter basicShooter;
     //[SerializeField] protected Shooter basicShooter2;
 
+    [SerializeField] bool canAttack;
     //[SerializeField] private bool canStopAttack = true;
-    [SerializeField] private bool canAttack = false;
-    [SerializeField] private float attackCooltime = 0f;
-    [SerializeField] private float attackTime = 0f;
-    [SerializeField] private float stopAttackDelay = 0f;
-    [SerializeField] private float stopAttack = 0f;
 
     private void Start() 
     {
         basicShooter.Init();
+        canAttack = true;
         //basicShooter2.Init();
         StartCoroutine(CoCheckDistance());
         StartCoroutine(CoStopAttackCooltime());
@@ -41,10 +38,10 @@ public class EnemyCtr : MonoBehaviour
 
     protected IEnumerator CoAttack() 
     {
-            yield return new WaitForSeconds(attackTime);
+            yield return new WaitForSeconds(basicShooter.attackTime);
             basicShooter.Shoot();
             //basicShooter2.Shoot();
-            yield return new WaitForSeconds(stopAttackDelay);
+
 
 
             StartCoroutine(CoAttackCooltime());
@@ -55,7 +52,7 @@ public class EnemyCtr : MonoBehaviour
     protected IEnumerator CoAttackCooltime()
     {
             canAttack = false;
-            yield return new WaitForSeconds(attackCooltime);
+            yield return new WaitForSeconds(basicShooter.attackCooltime);
             canAttack = true;
     }
 
@@ -63,10 +60,10 @@ public class EnemyCtr : MonoBehaviour
     {
         while(true)
         {
-            attackCooltime = 0f;
-            yield return new WaitForSeconds(stopAttack);
-            attackCooltime = 5f;
-            yield return new WaitForSeconds(attackCooltime);
+            basicShooter.attackCooltime = 0f;
+            yield return new WaitForSeconds(basicShooter.stopAttack);
+            basicShooter.attackCooltime = basicShooter.attackTimeReset;
+            yield return new WaitForSeconds(basicShooter.attackCooltime);
             //basicShooter.StopAttackCooltime(canStopAttack);
         }
     }

@@ -37,7 +37,10 @@ public class Shooter : MonoBehaviour
     [SerializeField] ShootingType shootingType;
     [SerializeField] Transform muzzle;
     [SerializeField] bool showMuzzleFlash;
-    [SerializeField] bool saveBullet;
+    
+    [SerializeField] ShootingPattern shootingPattern;
+    [SerializeField] bool savePattern;
+    [SerializeField] bool loadPattern;
 
     [Header("Bullet")]
     [SerializeField] string bulletType;
@@ -142,6 +145,12 @@ public class Shooter : MonoBehaviour
     "#   # #   # #     #     #       #  \n" +
     "####  ##### ##### ##### #####   #  ";
 
+    [Header("AttackCoolTime")]
+    public float attackCooltime = 0f;
+    public float attackTime = 0f;
+    public float attackTimeReset = 0f;
+    public float stopAttack = 0f;
+
     delegate void ShootFunc();
     ShootFunc shootFunc;
     bool isInitialized;
@@ -173,6 +182,11 @@ public class Shooter : MonoBehaviour
 
         if (shootingType == ShootingType.CustomShape) {
             InitCustomShape();
+        }
+
+        if(loadPattern)
+        {
+            LoadPattern(shootingPattern);
         }
     }
 
@@ -241,7 +255,7 @@ public class Shooter : MonoBehaviour
                 bullet.RotateBulletCore(offset);
             }
 
-            if (saveBullet) {
+            if (savePattern) {
                 bulletList.Add(bullet);
             }
         }
@@ -321,7 +335,7 @@ public class Shooter : MonoBehaviour
             bullet.Create(muzzle.position, muzzle.rotation, isCalculatedDamage,
                     speed, speedRate, angle, angleRate, isCritical, startDistance, lifeTime);
 
-            if (saveBullet) {
+            if (savePattern) {
                 bulletList.Add(bullet);
             }
         }
@@ -345,7 +359,7 @@ public class Shooter : MonoBehaviour
             bullet.Create(muzzle.position, muzzle.rotation, isCalculatedDamage,
                     speed, speedRate, angle + angleRange * (Random.Range(0, 1.0f) - 0.5f), angleRate, isCritical, startDistance, lifeTime);
 
-            if (saveBullet) 
+            if (savePattern) 
             {
                 bulletList.Add(bullet);
             }
@@ -388,7 +402,7 @@ public class Shooter : MonoBehaviour
             bullet.Create(muzzle.position, muzzle.rotation, isCalculatedDamage, speed,
                     speedRate, angle, angleRate, isCritical, startDistance, lifeTime);
 
-            if (saveBullet) 
+            if (savePattern) 
             {
                 bulletList.Add(bullet);
             }
@@ -545,7 +559,7 @@ public class Shooter : MonoBehaviour
 
     public void RemoveAllBullet() 
     {
-        if (saveBullet) 
+        if (savePattern) 
         {
             for (int i = 0; i < bulletList.Count; i++) 
             {
@@ -658,6 +672,112 @@ public class Shooter : MonoBehaviour
             default:
                 return null;
         }
+    }
+
+    private void OnDisable()
+    {
+        if(savePattern)
+        {
+            SavePattern(shootingPattern);
+        }
+    }
+
+    public void SavePattern(ShootingPattern pattern)
+    {
+        pattern.shootingType = shootingType;
+
+        pattern.bulletType = bulletType;
+        pattern.power = power;
+        pattern.speed = speed;
+        pattern.speedRate = speedRate;
+        pattern.angle = angle;
+        pattern.angleRate = angleRate;
+        pattern.startDistance = startDistance;
+        pattern.lifeTime = lifeTime;
+        pattern.rot = rot;
+        pattern.vertex = vertex;
+        pattern.sup = sup;
+        pattern.rotateBulletCore = rotateBulletCore;
+        pattern.rotateBulletOffset = rotateBulletOffset;
+        pattern.forwardAngleSpeed = forwardAngleSpeed;
+        pattern.angleRange = angleRange;
+        pattern.count = count;
+        pattern.multipleStep = multipleStep;
+        pattern.multipleRange = multipleRange;
+        pattern.turnSpeed = turnSpeed;
+        pattern.decreaseHomingSpeed = decreaseHomingSpeed;
+        pattern.delayTime = delayTime;
+        pattern.nWayCount = nWayCount;
+        pattern.wavingAngleRange = wavingAngleRange;
+        pattern.cycle = cycle;
+        pattern.moveTime = moveTime;
+        pattern.stopTime = stopTime;
+        pattern.placedStopSpeed = placedStopSpeed;
+        pattern.targetTransform = targetTransform;
+        pattern.stopAttackCooltime = stopAttackCooltime;
+        pattern.targetfixedAngle = targetfixedAngle;
+        pattern.groupSpeed = groupSpeed;
+        pattern.groupCount = groupCount;
+        pattern.speedRange = speedRange;
+        pattern.groupAngle = groupAngle;
+        pattern.groupInterval = groupInterval;
+        pattern.arrivalTime = arrivalTime;
+        pattern.height = height;
+        pattern.attackCooltime = attackCooltime;
+        pattern.attackTime = attackTime;
+        pattern.attackTimeReset = attackTimeReset;
+        pattern.stopAttack = stopAttack;
+
+        Debug.Log("Pattern saved!");
+    }
+
+    public void LoadPattern(ShootingPattern pattern)
+    {
+        shootingType = pattern.shootingType;
+
+        bulletType = pattern.bulletType;
+        power = pattern.power;
+        speed = pattern.speed;
+        speedRate = pattern.speedRate;
+        angle = pattern.angle;
+        angleRate = pattern.angleRate;
+        startDistance = pattern.startDistance;
+        lifeTime = pattern.lifeTime;
+        rot = pattern.rot;
+        vertex = pattern.vertex;
+        sup = pattern.sup;
+        rotateBulletCore = pattern.rotateBulletCore;
+        rotateBulletOffset = pattern.rotateBulletOffset;
+        forwardAngleSpeed = pattern.forwardAngleSpeed;
+        angleRange = pattern.angleRange;
+        count = pattern.count;
+        multipleStep = pattern.multipleStep;
+        multipleRange = pattern.multipleRange;
+        turnSpeed = pattern.turnSpeed;
+        decreaseHomingSpeed = pattern.decreaseHomingSpeed;
+        delayTime = pattern.delayTime;
+        nWayCount = pattern.nWayCount;
+        wavingAngleRange = pattern.wavingAngleRange;
+        cycle = pattern.cycle;
+        moveTime = pattern.moveTime;
+        stopTime = pattern.stopTime;
+        placedStopSpeed = pattern.placedStopSpeed;
+        targetTransform = pattern.targetTransform;
+        stopAttackCooltime = pattern.stopAttackCooltime;
+        targetfixedAngle = pattern.targetfixedAngle;
+        groupSpeed = pattern.groupSpeed;
+        groupCount = pattern.groupCount;
+        speedRange = pattern.speedRange;
+        groupAngle = pattern.groupAngle;
+        groupInterval = pattern.groupInterval;
+        arrivalTime = pattern.arrivalTime;
+        height = pattern.height;
+        attackCooltime = pattern.attackCooltime;
+        attackTime = pattern.attackTime;
+        attackTimeReset = pattern.attackTimeReset;
+        stopAttack = pattern.stopAttack;
+
+        Debug.Log("Pattern loaded!");
     }
 
 }
