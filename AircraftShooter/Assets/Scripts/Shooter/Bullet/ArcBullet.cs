@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ArcBullet : MonoBehaviour, IMemoryPool {
+public class ArcBullet : Bullet, IMemoryPool {
     public enum Motion {
         Slerp,
         Parabola,
@@ -14,23 +14,23 @@ public class ArcBullet : MonoBehaviour, IMemoryPool {
     [SerializeField] private float speed;
     [SerializeField] private float height;
     [SerializeField] private int damage = 10;
-    [SerializeField] private int obstacleDamage = 1;
+    //[SerializeField] private int obstacleDamage = 1;
     [SerializeField] private float arrivalTime;
     [SerializeField] private float waitTime;
     [SerializeField] private float attackTime = 0.1f;
-    [SerializeField] private string mpType = "";
+    //[SerializeField] private string mpType = "";
     [SerializeField] private GameObject bullet;
     [SerializeField] private string targetTag = "Player";
 
 
-    private Transform myTransform;
+    //private Transform myTransform;
     private SphereCollider sphereCollider;
     private Vector3 startPos;
     private Vector3 endPos;
     private Vector3 startRelCenter;
     private Vector3 endRelCenter;
     private Vector3 center;
-    private bool isCritical;
+    //private bool isCritical;
     private float gravity;
 
     // arc
@@ -40,14 +40,13 @@ public class ArcBullet : MonoBehaviour, IMemoryPool {
     private Vector3 velocity;
     private float endTime;
 
-    public void MPStart() {
-        MyStart();
-    }
-
-    private void MyStart() {
+    protected override void MyStart() 
+    {
+        base.MyStart();
         myTransform = transform;
         sphereCollider = GetComponent<SphereCollider>();
     }
+    
 
     public void Create(Vector3 startPos, Vector3 endPos, int damage, float arrivalTime = 0, float height = 1, bool isCritical = false) {
         myTransform.position = startPos;
@@ -58,7 +57,7 @@ public class ArcBullet : MonoBehaviour, IMemoryPool {
         this.maxHeight = height;
         this.isCritical = isCritical;
 
-        bullet.SetActive(false);
+        //bullet.SetActive(false);
         sphereCollider.enabled = false;
 
         switch (motionType) {
@@ -113,7 +112,7 @@ public class ArcBullet : MonoBehaviour, IMemoryPool {
 
         yield return new WaitForSeconds(waitTime);
 
-        bullet.SetActive(true);
+        //bullet.SetActive(true);
 
         while (percent < 1) 
         {
@@ -124,7 +123,7 @@ public class ArcBullet : MonoBehaviour, IMemoryPool {
             yield return null;
         }
 
-        bullet.SetActive(false);
+        //bullet.SetActive(false);
 
 
         // check collider
@@ -143,7 +142,7 @@ public class ArcBullet : MonoBehaviour, IMemoryPool {
 
         yield return new WaitForSeconds(waitTime);
 
-        bullet.SetActive(true);
+        //bullet.SetActive(true);
 
         while (time < endTime) {
             time += Time.deltaTime;
@@ -157,7 +156,7 @@ public class ArcBullet : MonoBehaviour, IMemoryPool {
             yield return null;
         }
 
-        bullet.SetActive(false);
+        //bullet.SetActive(false);
 
         // check collider
         sphereCollider.enabled = true;
@@ -177,21 +176,22 @@ public class ArcBullet : MonoBehaviour, IMemoryPool {
         float distance = Vector3.Distance(endPos, startPos);
         float percent = 0;
 
-
+        Debug.Log(endPos + " + " + startPos + " = " + distance);
         yield return new WaitForSeconds(waitTime);
 
-        bullet.SetActive(true);
+        //bullet.SetActive(true);
 
         while (percent < 1f) {
             percent += Time.deltaTime * speed;
+            Debug.Log(percent);
             float x = Mathf.Lerp(0, distance, percent);
             float y = height * Mathf.Sin(Mathf.Clamp01(percent) * Mathf.PI);
             myTransform.position = Vector3.Lerp(startPos, endPos, x / distance) + Vector3.up * y;
-
+            Debug.Log(myTransform.position);
             yield return null;
         }
 
-        bullet.SetActive(false);
+        //bullet.SetActive(false);
 
         sphereCollider.enabled = true;
         yield return new WaitForSeconds(attackTime);
@@ -210,8 +210,8 @@ public class ArcBullet : MonoBehaviour, IMemoryPool {
         }
     }
 
-    private void MyDestroy() 
-    {
-        HSPoolManager.Instance.RemoveItem(mpType, gameObject);
-    }
+    // private void MyDestroy() 
+    // {
+    //     HSPoolManager.Instance.RemoveItem(mpType, gameObject);
+    // }
 }

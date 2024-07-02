@@ -63,9 +63,6 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: -927199367670048503, guid: 5ae1b6d4c894f9c449d33837a633a8ec, type: 3}
       insertIndex: -1
       addedObject: {fileID: 6792179546333269676}
-    - targetCorrespondingSourceObject: {fileID: -927199367670048503, guid: 5ae1b6d4c894f9c449d33837a633a8ec, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 7156807946156961833}
   m_SourcePrefab: {fileID: 100100000, guid: 5ae1b6d4c894f9c449d33837a633a8ec, type: 3}
 --- !u!1 &1372885107834379819 stripped
 GameObject:
@@ -99,38 +96,3 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
---- !u!114 &7156807946156961833
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1372885107834379819}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: da9461d8c433672449f0bda2cb9fc41f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  mpType: HomingBullet
-  radius: 0.5
-  rangeAttack: 0
-  range: 5
-  bulletCore: {fileID: 2690388833332276280}
-  rotateOffset: {x: 0, y: 0, z: 0}
-  obstacleDamage: 1
-  colliderMask:
-    serializedVersion: 2
-    m_Bits: 0
-  enemyColliderMask:
-    serializedVersion: 2
-    m_Bits: 0
-  lifeTime: 3
-  shootSfx: 
-  hitSfx: 
-  delayTime: 1
-  targetSpeed: 10
---- !u!4 &2690388833332276280 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: -4216859302048453862, guid: 5ae1b6d4c894f9c449d33837a633a8ec, type: 3}
-  m_PrefabInstance: {fileID: 6930083995508737826}
-  m_PrefabAsset: {fileID: 0}

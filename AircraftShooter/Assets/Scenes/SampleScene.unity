@@ -159,6 +159,9 @@ MonoBehaviour:
   - type: HomingBullet
     obj: {fileID: 1372885107834379819, guid: 4204e5d699fa60f4e9ab8b861cb4058b, type: 3}
     count: 5000
+  - type: ArcBullet
+    obj: {fileID: 2946949568076321284, guid: c311ceb85574d584eb4a7b3ac915a1c2, type: 3}
+    count: 100
 --- !u!4 &56202718
 Transform:
   m_ObjectHideFlags: 0
@@ -538,13 +541,125 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5593195909017292585, guid: 4be7a99d429a19840a38df28f88a8680, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 5593195909017292589, guid: 4be7a99d429a19840a38df28f88a8680, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
     - target: {fileID: 5593195909017292591, guid: 4be7a99d429a19840a38df28f88a8680, type: 3}
       propertyPath: m_Name
       value: PlayerMedel
       objectReference: {fileID: 0}
+    - target: {fileID: 5593195909017292591, guid: 4be7a99d429a19840a38df28f88a8680, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 5593195909017292593, guid: 4be7a99d429a19840a38df28f88a8680, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 5593195909017292595, guid: 4be7a99d429a19840a38df28f88a8680, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 5593195909017292597, guid: 4be7a99d429a19840a38df28f88a8680, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 5593195909017292599, guid: 4be7a99d429a19840a38df28f88a8680, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 5593195909017292601, guid: 4be7a99d429a19840a38df28f88a8680, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 5593195909017292603, guid: 4be7a99d429a19840a38df28f88a8680, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 5593195909017292605, guid: 4be7a99d429a19840a38df28f88a8680, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 5593195909017292607, guid: 4be7a99d429a19840a38df28f88a8680, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 5593195909017292609, guid: 4be7a99d429a19840a38df28f88a8680, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 5593195909017292611, guid: 4be7a99d429a19840a38df28f88a8680, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 5593195909017292613, guid: 4be7a99d429a19840a38df28f88a8680, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 5593195909017292615, guid: 4be7a99d429a19840a38df28f88a8680, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 5593195909017292617, guid: 4be7a99d429a19840a38df28f88a8680, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 5593195909017292619, guid: 4be7a99d429a19840a38df28f88a8680, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 5593195909017292621, guid: 4be7a99d429a19840a38df28f88a8680, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 5593195909017292623, guid: 4be7a99d429a19840a38df28f88a8680, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 5593195909017292625, guid: 4be7a99d429a19840a38df28f88a8680, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
     - target: {fileID: 5593195909017292627, guid: 4be7a99d429a19840a38df28f88a8680, type: 3}
       propertyPath: m_Name
       value: Player
+      objectReference: {fileID: 0}
+    - target: {fileID: 5593195909017292627, guid: 4be7a99d429a19840a38df28f88a8680, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 5593195909017292627, guid: 4be7a99d429a19840a38df28f88a8680, type: 3}
+      propertyPath: m_TagString
+      value: Player
+      objectReference: {fileID: 0}
+    - target: {fileID: 5593195909017292629, guid: 4be7a99d429a19840a38df28f88a8680, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 5593195909017292631, guid: 4be7a99d429a19840a38df28f88a8680, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 5593195909017292633, guid: 4be7a99d429a19840a38df28f88a8680, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 5593195909017292635, guid: 4be7a99d429a19840a38df28f88a8680, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 5593195909017292637, guid: 4be7a99d429a19840a38df28f88a8680, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 5593195909017292639, guid: 4be7a99d429a19840a38df28f88a8680, type: 3}
+      propertyPath: m_Layer
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 5593195910366287650, guid: 4be7a99d429a19840a38df28f88a8680, type: 3}
       propertyPath: speed
@@ -632,13 +747,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f4a2a817573ace145b10f01b66227770, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  shootingType: 7
+  shootingType: 22
   muzzle: {fileID: 1464561124}
   showMuzzleFlash: 0
   shootingPattern: {fileID: 11400000, guid: 7ad521af00f16394d89cd7a67f86b252, type: 2}
   savePattern: 0
-  loadPattern: 1
-  bulletType: Bullet
+  loadPattern: 0
+  bulletType: ArcBullet
   power: 0
   speed: 5
   speedRate: 0
@@ -652,15 +767,15 @@ MonoBehaviour:
   rotateBulletCore: 1
   rotateBulletOffset: {x: 0, y: 0, z: 0}
   forwardAngleSpeed: 0
-  angleRange: 30
-  count: 3
+  angleRange: 0
+  count: 0
   multipleStep: 0
   multipleRange: 0
   turnSpeed: 0
   decreaseHomingSpeed: 0
   homingSpeedRate: 0
   delayTime: 0
-  nWayCount: 3
+  nWayCount: 0
   wavingAngleRange: 0
   cycle: 0
   moveTime: 0
@@ -674,13 +789,13 @@ MonoBehaviour:
   speedRange: 0
   groupAngle: 0
   groupInterval: 0
-  arrivalTime: 0
-  height: 0
+  arrivalTime: 5
+  height: 10
   pat_width: 0
   pat_height: 0
   attackCooltime: 0
   attackTime: 0
-  attackTimeReset: 0
+  attackTimeReset: 2
   stopAttack: 0
 --- !u!1 &1535085685
 GameObject:
