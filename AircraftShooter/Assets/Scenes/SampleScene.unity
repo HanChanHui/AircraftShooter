@@ -160,7 +160,7 @@ MonoBehaviour:
     obj: {fileID: 1372885107834379819, guid: 4204e5d699fa60f4e9ab8b861cb4058b, type: 3}
     count: 5000
   - type: ArcBullet
-    obj: {fileID: 2946949568076321284, guid: c311ceb85574d584eb4a7b3ac915a1c2, type: 3}
+    obj: {fileID: 2108002596513203910, guid: f679d8e40eff86a4ab434d9986186068, type: 3}
     count: 100
 --- !u!4 &56202718
 Transform:
@@ -341,6 +341,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   basicShooter: {fileID: 1464561125}
+  basicShooter2: {fileID: 0}
   canAttack: 0
 --- !u!1 &705507993
 GameObject:
@@ -729,7 +730,7 @@ Transform:
   m_GameObject: {fileID: 1464561123}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 1, z: 0, w: 0}
-  m_LocalPosition: {x: 0, y: 0.78, z: -1.08}
+  m_LocalPosition: {x: -2, y: 1, z: -1}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -747,20 +748,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f4a2a817573ace145b10f01b66227770, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  shootingType: 22
+  shootingType: 15
   muzzle: {fileID: 1464561124}
   showMuzzleFlash: 0
   shootingPattern: {fileID: 11400000, guid: 7ad521af00f16394d89cd7a67f86b252, type: 2}
   savePattern: 0
   loadPattern: 0
-  bulletType: ArcBullet
+  bulletType: HomingBullet
   power: 0
   speed: 5
-  speedRate: 0
+  speedRate: 1
   angle: 180
-  angleRate: 0
+  angleRate: 0.1
   startDistance: 0
-  lifeTime: 10
+  lifeTime: 3
   rot: 180
   vertex: 4
   sup: 2
@@ -771,18 +772,18 @@ MonoBehaviour:
   count: 0
   multipleStep: 0
   multipleRange: 0
-  turnSpeed: 0
+  turnSpeed: 1
   decreaseHomingSpeed: 0
   homingSpeedRate: 0
   delayTime: 0
-  nWayCount: 0
+  nWayCount: 3
   wavingAngleRange: 0
   cycle: 0
   moveTime: 0
   stopTime: 0
   placedStopSpeed: 0
   targetTransform: {fileID: 197752969}
-  stopAttackCooltime: 1
+  stopAttackCooltime: 0
   targetfixedAngle: 0
   groupSpeed: 0
   groupCount: 0
@@ -965,7 +966,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &1636414609
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -978,16 +979,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f4a2a817573ace145b10f01b66227770, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  shootingType: 3
+  shootingType: 7
   muzzle: {fileID: 1636414610}
   showMuzzleFlash: 0
-  shootingPattern: {fileID: 0}
-  savePattern: 0
+  shootingPattern: {fileID: 11400000, guid: fa3b1061dc366e84fa3bf430da74619b, type: 2}
+  savePattern: 1
   loadPattern: 0
   bulletType: Bullet
   power: 0
-  speed: 1
-  speedRate: 0.005
+  speed: 10
+  speedRate: 0
   angle: 180
   angleRate: 0
   startDistance: 0
@@ -998,15 +999,15 @@ MonoBehaviour:
   rotateBulletCore: 0
   rotateBulletOffset: {x: 0, y: 0, z: 0}
   forwardAngleSpeed: 0
-  angleRange: 80
-  count: 8
+  angleRange: 0
+  count: 0
   multipleStep: 0
   multipleRange: 0
   turnSpeed: 0
   decreaseHomingSpeed: 0
   homingSpeedRate: 0
   delayTime: 0
-  nWayCount: 0
+  nWayCount: 12
   wavingAngleRange: 0
   cycle: 0
   moveTime: 0
@@ -1026,8 +1027,8 @@ MonoBehaviour:
   pat_height: 0
   attackCooltime: 0
   attackTime: 0
-  attackTimeReset: 0
-  stopAttack: 0
+  attackTimeReset: 1
+  stopAttack: 0.5
 --- !u!4 &1636414610
 Transform:
   m_ObjectHideFlags: 0
@@ -1037,7 +1038,7 @@ Transform:
   m_GameObject: {fileID: 1636414608}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 1, z: 0, w: 0}
-  m_LocalPosition: {x: 0, y: 0.78, z: 1.15}
+  m_LocalPosition: {x: -2, y: 1, z: -1}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
