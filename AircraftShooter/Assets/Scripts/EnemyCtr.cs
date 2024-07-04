@@ -75,5 +75,11 @@ public class EnemyCtr : MonoBehaviour
         }
     }
 
+    private IEnumerator PlacedCircleShoot()
+    {
+        
+        yield return null;
+    }
+
     
 }

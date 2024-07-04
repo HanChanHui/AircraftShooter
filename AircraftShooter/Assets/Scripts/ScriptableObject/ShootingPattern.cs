@@ -9,7 +9,7 @@ public class ShootingPattern : ScriptableObject
     public Shooter.ShootingType shootingType;
 
     [Header("Bullet")]
-    public string bulletType;
+    public Shooter.BulletType bulletType;
     public int power;
     public float speed;
     public float speedRate;

@@ -33,32 +33,40 @@ public class Shooter : MonoBehaviour
         Pattern,
     };
 
+    public enum BulletType {
+        Bullet,
+        HomingBullet,
+        ArcBullet,
+        ShapeBullet,
+    };
+
     [Header("Basic")]
-    [SerializeField] ShootingType shootingType;
-    [SerializeField] Transform muzzle;
-    [SerializeField] bool showMuzzleFlash;
+    public ShootingType shootingType;
+    public Transform muzzle;
+    public bool showMuzzleFlash;
     
-    [SerializeField] ShootingPattern shootingPattern;
-    [SerializeField] bool savePattern;
-    [SerializeField] bool loadPattern;
+    public ShootingPattern shootingPattern;
+    public bool savePattern;
+    public bool loadPattern;
 
     [Header("Bullet")]
-    [SerializeField] string bulletType;
-    [SerializeField] int power;
-    [SerializeField] float speed;
-    [SerializeField] float speedRate;
-    [SerializeField] float angle;
-    [SerializeField] float angleRate;
-    [SerializeField] float startDistance;
-    [SerializeField] float lifeTime;
-    public string BulletType { get { return bulletType; } set { bulletType = value; } }
+    //public string bulletType;
+    public BulletType bulletType;
+    public int power;
+    public float speed;
+    public float speedRate;
+    public float angle;
+    public float angleRate;
+    public float startDistance;
+    public float lifeTime;
+    //public string BulletType { get { return bulletType; } set { bulletType = value; } }
 
     [Header("Custom Shape")]
-    [SerializeField] float rot = 0f;
-    [SerializeField, Range(3, 7)] int vertex = 3;
-    [SerializeField, Range(1, 5)] float sup = 3;
-    [SerializeField] bool rotateBulletCore = false;
-    [SerializeField] Vector3 rotateBulletOffset;
+    public float rot = 0f;
+    [Range(3, 7)] public int vertex = 3;
+    [Range(1, 5)] public float sup = 3;
+    public bool rotateBulletCore = false;
+    public Vector3 rotateBulletOffset;
     int m;
     float a;
     float phi;
@@ -85,56 +93,56 @@ public class Shooter : MonoBehaviour
     List<Bullet> bulletList = new();
 
     [Header("Forward")]
-    [SerializeField] float forwardAngleSpeed;
+    public float forwardAngleSpeed;
 
 
     [Header("Nway")]
-    [SerializeField] float angleRange;
-    [SerializeField] int count;
+    public float angleRange;
+    public int count;
 
     [Header("Multiple")]
-    [SerializeField] float multipleStep;
-    [SerializeField] float multipleRange;
+    public float multipleStep;
+    public float multipleRange;
 
     [Header("Homing")]
-    [SerializeField] float turnSpeed;
-    [SerializeField] bool decreaseHomingSpeed;
-    [SerializeField] float homingSpeedRate;
-    [SerializeField] float delayTime;
+    public float turnSpeed;
+    public bool decreaseHomingSpeed;
+    public float homingSpeedRate;
+    public float delayTime;
 
     [Header("Rolling N-way")]
-    [SerializeField] int nWayCount;
+    public int nWayCount;
 
     [Header("Waving N-way")]
-    [SerializeField] float wavingAngleRange;
-    [SerializeField] int cycle;
+    public float wavingAngleRange;
+    public int cycle;
 
     [Header("Placed")]
-    [SerializeField] float moveTime;
-    [SerializeField] float stopTime;
-    [SerializeField] float placedStopSpeed;
+    public float moveTime;
+    public float stopTime;
+    public float placedStopSpeed;
 
     [Header("Aiming")]
-    [SerializeField] Transform targetTransform;
-    [SerializeField] bool stopAttackCooltime = true;
-    [SerializeField] float targetfixedAngle;
+    public Transform targetTransform;
+    public bool stopAttackCooltime = true;
+    public float targetfixedAngle;
 
     [Header("Spreading")]
-    [SerializeField] float groupSpeed;
-    [SerializeField] float groupCount;
-    [SerializeField] float speedRange;
+    public float groupSpeed;
+    public float groupCount;
+    public float speedRange;
 
     [Header("Overtaking")]
-    [SerializeField] float groupAngle;
-    [SerializeField] float groupInterval;
+    public float groupAngle;
+    public float groupInterval;
 
     [Header("Arc")]
-    [SerializeField] float arrivalTime;
-    [SerializeField] float height;
+    public float arrivalTime;
+    public float height;
 
     [Header("Pattern")]
-    [SerializeField] int pat_width;
-    [SerializeField] int pat_height;
+    public int pat_width;
+    public int pat_height;
     protected string pattern =
     "                                   \n" +
     "                                   \n" +
@@ -199,6 +207,11 @@ public class Shooter : MonoBehaviour
         shootFunc = GetShootFunc(type);
     }
 
+    public void RemoveType(ShootingType type)
+    {
+        shootFunc -= GetShootFunc(type);
+    }
+
     public void ResetDamage() {
         currPower = power;
     }
@@ -239,7 +252,7 @@ public class Shooter : MonoBehaviour
     }
 
     void BasicShoot(float speed, float speedRate, float angle, float angleRate, Vector3 pos) {
-        Bullet bullet = HSPoolManager.Instance.NewItem<Bullet>(bulletType);
+        Bullet bullet = HSPoolManager.Instance.NewItem<Bullet>(bulletType.ToString());
         if (bullet) 
         {
             if (penetration) {
@@ -328,7 +341,7 @@ public class Shooter : MonoBehaviour
     }
 
     void HomingShoot() {
-        HomingBullet bullet = HSPoolManager.Instance.NewItem<HomingBullet>(bulletType);
+        HomingBullet bullet = HSPoolManager.Instance.NewItem<HomingBullet>(bulletType.ToString());
         if (bullet) {
             bullet.Init(turnSpeed, targetTransform, homingSpeedRate, decreaseHomingSpeed);
             bullet.CheckOutBound = this.CheckOutBound;
@@ -342,7 +355,7 @@ public class Shooter : MonoBehaviour
     }
 
     void DelayHomingShoot() {
-        DelayHomingBullet bullet = HSPoolManager.Instance.NewItem<DelayHomingBullet>(bulletType);
+        DelayHomingBullet bullet = HSPoolManager.Instance.NewItem<DelayHomingBullet>(bulletType.ToString());
         if (bullet) {
             bullet.Init(turnSpeed, delayTime);
             bullet.Create(muzzle.position, muzzle.rotation, isCalculatedDamage,
@@ -351,7 +364,7 @@ public class Shooter : MonoBehaviour
     }
 
     void RandomHomingShoot() {
-        HomingBullet bullet = HSPoolManager.Instance.NewItem<HomingBullet>(bulletType);
+        HomingBullet bullet = HSPoolManager.Instance.NewItem<HomingBullet>(bulletType.ToString());
         if (bullet) 
         {
             bullet.Init(turnSpeed, null, homingSpeedRate, decreaseHomingSpeed);
@@ -394,7 +407,7 @@ public class Shooter : MonoBehaviour
 
     void PlacedShoot() 
     {
-        Bullet bullet = HSPoolManager.Instance.NewItem<Bullet>(bulletType);
+        Bullet bullet = HSPoolManager.Instance.NewItem<Bullet>(bulletType.ToString());
         if (bullet) 
         {
             bullet.InitPlaced(moveTime, stopTime, placedStopSpeed);
@@ -454,7 +467,7 @@ public class Shooter : MonoBehaviour
 
     void CrossShoot() 
     {
-        ShapeBullet bullet = HSPoolManager.Instance.NewItem<ShapeBullet>(bulletType);
+        ShapeBullet bullet = HSPoolManager.Instance.NewItem<ShapeBullet>(bulletType.ToString());
         if (bullet) 
         {
             bullet.Create(muzzle.position, muzzle.rotation, isCalculatedDamage,
@@ -464,7 +477,7 @@ public class Shooter : MonoBehaviour
 
     void ArcShoot() 
     {
-       ArcBullet bullet = HSPoolManager.Instance.NewItem<ArcBullet>(bulletType);
+       ArcBullet bullet = HSPoolManager.Instance.NewItem<ArcBullet>(bulletType.ToString());
         if (bullet) 
         {
             bullet.Create(muzzle.position, targetTransform.position, isCalculatedDamage, arrivalTime, height);
@@ -523,7 +536,7 @@ public class Shooter : MonoBehaviour
 
     void CreateCustomShapeBullet(Vector3 startPos, float rot, float speed) 
     {
-        Bullet bullet = HSPoolManager.Instance.NewItem<Bullet>(bulletType);
+        Bullet bullet = HSPoolManager.Instance.NewItem<Bullet>(bulletType.ToString());
        
         if (bullet) 
         {
@@ -685,7 +698,6 @@ public class Shooter : MonoBehaviour
     public void SavePattern(ShootingPattern pattern)
     {
         pattern.shootingType = shootingType;
-
         pattern.bulletType = bulletType;
         pattern.power = power;
         pattern.speed = speed;
@@ -734,7 +746,6 @@ public class Shooter : MonoBehaviour
     public void LoadPattern(ShootingPattern pattern)
     {
         shootingType = pattern.shootingType;
-
         bulletType = pattern.bulletType;
         power = pattern.power;
         speed = pattern.speed;
