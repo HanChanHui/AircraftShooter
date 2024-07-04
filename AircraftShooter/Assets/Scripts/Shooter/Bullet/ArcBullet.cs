@@ -11,7 +11,7 @@ public class ArcBullet : Bullet, IMemoryPool {
 
     [Header("Basic")]
     [SerializeField] private Motion motionType;
-    [SerializeField] private float speed;
+    [SerializeField] private float Arcspeed;
     [SerializeField] private float height;
     [SerializeField] private int damage = 10;
     //[SerializeField] private int obstacleDamage = 1;
@@ -56,6 +56,7 @@ public class ArcBullet : Bullet, IMemoryPool {
         this.arrivalTime = arrivalTime;
         this.maxHeight = height;
         this.isCritical = isCritical;
+        this.Arcspeed = speed;
 
         //bullet.SetActive(false);
         sphereCollider.enabled = false;
@@ -182,12 +183,10 @@ public class ArcBullet : Bullet, IMemoryPool {
         //bullet.SetActive(true);
 
         while (percent < 1f) {
-            percent += Time.deltaTime * speed;
-            Debug.Log(percent);
+            percent += Time.deltaTime * Arcspeed;
             float x = Mathf.Lerp(0, distance, percent);
             float y = height * Mathf.Sin(Mathf.Clamp01(percent) * Mathf.PI);
             myTransform.position = Vector3.Lerp(startPos, endPos, x / distance) + Vector3.up * y;
-            Debug.Log(myTransform.position);
             yield return null;
         }
 

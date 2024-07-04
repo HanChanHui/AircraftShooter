@@ -162,6 +162,9 @@ MonoBehaviour:
   - type: ArcBullet
     obj: {fileID: 2946949568076321284, guid: c311ceb85574d584eb4a7b3ac915a1c2, type: 3}
     count: 100
+  - type: ShapeBullet
+    obj: {fileID: 8339991416357701776, guid: 7b12904d055acc544a946dd83a9de936, type: 3}
+    count: 100
 --- !u!4 &56202718
 Transform:
   m_ObjectHideFlags: 0
@@ -747,15 +750,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f4a2a817573ace145b10f01b66227770, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  shootingType: 22
+  shootingType: 3
   muzzle: {fileID: 1464561124}
   showMuzzleFlash: 0
   shootingPattern: {fileID: 11400000, guid: 7ad521af00f16394d89cd7a67f86b252, type: 2}
   savePattern: 0
   loadPattern: 0
-  bulletType: ArcBullet
+  bulletType: 0
   power: 0
-  speed: 5
+  speed: 20
   speedRate: 0
   angle: 180
   angleRate: 0
@@ -984,7 +987,7 @@ MonoBehaviour:
   shootingPattern: {fileID: 0}
   savePattern: 0
   loadPattern: 0
-  bulletType: Bullet
+  bulletType: 0
   power: 0
   speed: 1
   speedRate: 0.005
