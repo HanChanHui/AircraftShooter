@@ -312,7 +312,7 @@ public class Shooter : MonoBehaviour
     {
         for (int i = 0; i < count; i++) 
         {
-            BasicShoot(speed, speedRate, angle + angleRange * (Random.Range(0, 1.0f) - 0.5f), angleRate, muzzle.position);
+            BasicShoot(speed, speedRate, angle + angleRange * (Random.Range(0, 1.0f) - 0.5f) + (forwardAngleSpeed * Time.time % 360), angleRate, muzzle.position);
         }
     }
 
@@ -394,7 +394,7 @@ public class Shooter : MonoBehaviour
 
     void WavingNwayShoot() 
     {
-        NwayShoot(speed, speedRate, angle + wavingAngleRange * Mathf.Sin(Time.time * cycle),
+        NwayShoot(speed, speedRate, angle + wavingAngleRange * Mathf.Sin(Time.time * cycle) + (forwardAngleSpeed * Time.time % 360),
                 angleRate, angleRange, count);
         Debug.Log(Mathf.Sin(Time.time * cycle));
     }

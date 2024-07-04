@@ -65,6 +65,8 @@ public class ShooterEditor : Editor
                 break;
             
             case Shooter.ShootingType.RandomNway:
+                EditorGUILayout.LabelField("Forward", EditorStyles.boldLabel);
+                shooter.forwardAngleSpeed = EditorGUILayout.FloatField("Forward Angle Speed", shooter.forwardAngleSpeed);
                 EditorGUILayout.LabelField("Nway", EditorStyles.boldLabel);
                 shooter.angleRange = EditorGUILayout.FloatField("Angle Range", shooter.angleRange);
                 shooter.count = EditorGUILayout.IntField("Count", shooter.count);
@@ -108,6 +110,8 @@ public class ShooterEditor : Editor
                 break;
 
             case Shooter.ShootingType.RollingNway:
+                EditorGUILayout.LabelField("Forward", EditorStyles.boldLabel);
+                shooter.forwardAngleSpeed = EditorGUILayout.FloatField("Forward Angle Speed", shooter.forwardAngleSpeed);
                 EditorGUILayout.LabelField("Nway", EditorStyles.boldLabel);
                 shooter.angleRange = EditorGUILayout.FloatField("Angle Range", shooter.angleRange);
                 shooter.count = EditorGUILayout.IntField("Count", shooter.count);
@@ -116,6 +120,8 @@ public class ShooterEditor : Editor
                 break;
 
             case Shooter.ShootingType.WavingNway:
+                EditorGUILayout.LabelField("Forward", EditorStyles.boldLabel);
+                shooter.forwardAngleSpeed = EditorGUILayout.FloatField("Forward Angle Speed", shooter.forwardAngleSpeed);
                 EditorGUILayout.LabelField("Nway", EditorStyles.boldLabel);
                 shooter.angleRange = EditorGUILayout.FloatField("Angle Range", shooter.angleRange);
                 shooter.count = EditorGUILayout.IntField("Count", shooter.count);
