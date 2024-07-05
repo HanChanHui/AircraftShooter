@@ -58,7 +58,7 @@ public class CharacterCtrl : MonoBehaviour
             // 카메라 기준으로 변환
             Vector3 transformedDirection = transform.TransformDirection(inputDirection);
 
-            if (inputDirection.magnitude > 0.1f)
+            if (inputDirection.magnitude > 0.01f)
             {
                 // 이동 방향 설정
                 moveDirection = transformedDirection * speed;
@@ -67,13 +67,13 @@ public class CharacterCtrl : MonoBehaviour
                 anim.SetFloat("x", inputDirection.x, smoothBlend, Time.deltaTime);
                 anim.SetFloat("y", inputDirection.z, smoothBlend, Time.deltaTime);
             }
-            // else
-            // {
-            //     // 멈추기
-            //     moveDirection = Vector3.zero;
-            //     anim.SetFloat("x", 0);
-            //     anim.SetFloat("y", 0);
-            // }
+            else
+            {
+                // 멈추기
+                moveDirection = Vector3.zero;
+                anim.SetFloat("x", 0, smoothBlend, Time.deltaTime);
+                anim.SetFloat("y", 0, smoothBlend, Time.deltaTime);
+            }
         }
 
         // 중력 적용
