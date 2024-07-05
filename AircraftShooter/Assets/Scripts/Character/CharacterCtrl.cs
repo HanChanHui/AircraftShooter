@@ -7,6 +7,7 @@ public class CharacterCtrl : MonoBehaviour
     [SerializeField] float speed = 5.0f;
     [SerializeField] float rotationSpeed = 700.0f;
     [SerializeField] float gravity = 9.81f;
+    [SerializeField] float smoothBlend = 0.1f;
 
 
     private CharacterController characterController;
@@ -54,22 +55,25 @@ public class CharacterCtrl : MonoBehaviour
             Vector3 inputDirection = new Vector3(horizontal, 0, vertical);
             inputDirection = Vector3.ClampMagnitude(inputDirection, 1);
 
+            // 카메라 기준으로 변환
+            Vector3 transformedDirection = transform.TransformDirection(inputDirection);
+
             if (inputDirection.magnitude > 0.1f)
             {
                 // 이동 방향 설정
-                moveDirection = inputDirection * speed;
+                moveDirection = transformedDirection * speed;
 
                 // 애니메이터 파라미터 설정
-                anim.SetFloat("x", inputDirection.x);
-                anim.SetFloat("y", inputDirection.z);
+                anim.SetFloat("x", inputDirection.x, smoothBlend, Time.deltaTime);
+                anim.SetFloat("y", inputDirection.z, smoothBlend, Time.deltaTime);
             }
-            else
-            {
-                // 멈추기
-                moveDirection = Vector3.zero;
-                anim.SetFloat("x", 0);
-                anim.SetFloat("y", 0);
-            }
+            // else
+            // {
+            //     // 멈추기
+            //     moveDirection = Vector3.zero;
+            //     anim.SetFloat("x", 0);
+            //     anim.SetFloat("y", 0);
+            // }
         }
 
         // 중력 적용

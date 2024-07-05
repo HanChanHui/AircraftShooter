@@ -158,6 +158,7 @@ public class Shooter : MonoBehaviour
     public float attackTime = 0f;
     public float attackTimeReset = 0f;
     public float stopAttack = 0f;
+    public bool canAttack = true;
 
     delegate void ShootFunc();
     ShootFunc shootFunc;
@@ -242,6 +243,49 @@ public class Shooter : MonoBehaviour
     {
         shootFunc();
     }
+
+    public IEnumerator CoCheckDistance() 
+    {
+
+            while (true) 
+            {
+                if (canAttack) 
+                {
+                    StartCoroutine(CoAttack());
+                    yield break;
+                }
+                yield return new WaitForSeconds(0.0f);
+            }
+    }
+
+    private IEnumerator CoAttack() 
+    {
+        yield return new WaitForSeconds(attackTime);
+        Shoot();
+       
+        StartCoroutine(CoAttackCooltime());
+        StartCoroutine(CoCheckDistance());
+    }
+
+
+    private IEnumerator CoAttackCooltime()
+    {
+            canAttack = false;
+            yield return new WaitForSeconds(attackCooltime);
+            canAttack = true;
+    }
+
+    public IEnumerator CoStopAttackCooltime()
+    {
+        while(true)
+        {
+            attackCooltime = 0f;
+            yield return new WaitForSeconds(stopAttack);
+            attackCooltime = attackTimeReset;
+            yield return new WaitForSeconds(attackCooltime);
+        }
+    }
+
 
     // temp
     public void Shoot(int damage, bool isCritical) {

@@ -160,7 +160,7 @@ MonoBehaviour:
     obj: {fileID: 1372885107834379819, guid: 4204e5d699fa60f4e9ab8b861cb4058b, type: 3}
     count: 5000
   - type: ArcBullet
-    obj: {fileID: 2946949568076321284, guid: c311ceb85574d584eb4a7b3ac915a1c2, type: 3}
+    obj: {fileID: 2108002596513203910, guid: f679d8e40eff86a4ab434d9986186068, type: 3}
     count: 100
   - type: ShapeBullet
     obj: {fileID: 8339991416357701776, guid: 7b12904d055acc544a946dd83a9de936, type: 3}
@@ -344,8 +344,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   basicShooter: {fileID: 1464561125}
-  basicShooter2: {fileID: 0}
-  canAttack: 0
+  basicShooter2: {fileID: 1636414609}
 --- !u!1001 &569485683
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -896,6 +895,7 @@ MonoBehaviour:
   attackTime: 0
   attackTimeReset: 2
   stopAttack: 0
+  canAttack: 1
 --- !u!1 &1535085685
 GameObject:
   m_ObjectHideFlags: 0
@@ -965,6 +965,7 @@ MonoBehaviour:
   speed: 15
   rotationSpeed: 700
   gravity: 9.81
+  smoothBlend: 0.1
 --- !u!143 &1611185767
 CharacterController:
   m_ObjectHideFlags: 0
@@ -1115,7 +1116,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &1636414609
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1178,6 +1179,7 @@ MonoBehaviour:
   attackTime: 0
   attackTimeReset: 0
   stopAttack: 0
+  canAttack: 1
 --- !u!4 &1636414610
 Transform:
   m_ObjectHideFlags: 0
