@@ -20,11 +20,13 @@ public class EnemyCtr : MonoBehaviour
         if(basicShooter2 != null)
         {
             basicShooter2.Init();
+            StartCoroutine(basicShooter2.CoCheckDistance());
+            StartCoroutine(basicShooter2.CoStopAttackCooltime());
         }
         StartCoroutine(basicShooter.CoCheckDistance());
-        StartCoroutine(basicShooter2.CoCheckDistance());
+        
         StartCoroutine(basicShooter.CoStopAttackCooltime());
-        StartCoroutine(basicShooter2.CoStopAttackCooltime());
+
     }
 
     // protected IEnumerator CoCheckDistance() 
