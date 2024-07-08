@@ -475,6 +475,7 @@ public class Shooter : MonoBehaviour
         }
         angle = targetfixedAngle;
         NwayShoot(speed, speedRate, -angle + 180, angleRate, angleRange, count);
+        stopAttackCooltime = true;
     }
 
     void SpreadingShoot() 
