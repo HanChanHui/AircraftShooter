@@ -923,6 +923,18 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4595656916361263908, guid: 02c2b87f236fa674e8217c966bf5042b, type: 3}
+      propertyPath: runSpeed
+      value: 15
+      objectReference: {fileID: 0}
+    - target: {fileID: 4595656916361263908, guid: 02c2b87f236fa674e8217c966bf5042b, type: 3}
+      propertyPath: smoothBlend
+      value: 0.07
+      objectReference: {fileID: 0}
+    - target: {fileID: 4595656916361263908, guid: 02c2b87f236fa674e8217c966bf5042b, type: 3}
+      propertyPath: rotationSpeed
+      value: 500
+      objectReference: {fileID: 0}
+    - target: {fileID: 4595656916361263908, guid: 02c2b87f236fa674e8217c966bf5042b, type: 3}
       propertyPath: turnThreshold
       value: 0.5
       objectReference: {fileID: 0}
