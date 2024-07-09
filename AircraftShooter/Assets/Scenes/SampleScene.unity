@@ -338,7 +338,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 79cefd4f842138b45b4ec0cc45689ca4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  basicShooter: {fileID: 0}
+  basicShooter: {fileID: 1464561125}
   basicShooter2: {fileID: 0}
 --- !u!1 &705507993
 GameObject:
@@ -567,7 +567,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f4a2a817573ace145b10f01b66227770, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  shootingType: 23
+  shootingType: 25
   muzzle: {fileID: 1464561124}
   showMuzzleFlash: 0
   shootingPattern: {fileID: 11400000, guid: 7ad521af00f16394d89cd7a67f86b252, type: 2}
@@ -613,6 +613,7 @@ MonoBehaviour:
   height: 10
   pat_width: 0
   pat_height: 0
+  radius: 0.10000000149011612
   attackCooltime: 0
   attackTime: 0
   attackTimeReset: 2
@@ -850,6 +851,7 @@ MonoBehaviour:
   height: 0
   pat_width: 0
   pat_height: 0
+  radius: 0.10000000149011612
   attackCooltime: 0
   attackTime: 0
   attackTimeReset: 0
@@ -927,12 +929,16 @@ PrefabInstance:
       value: 15
       objectReference: {fileID: 0}
     - target: {fileID: 4595656916361263908, guid: 02c2b87f236fa674e8217c966bf5042b, type: 3}
+      propertyPath: followDelay
+      value: 0.001
+      objectReference: {fileID: 0}
+    - target: {fileID: 4595656916361263908, guid: 02c2b87f236fa674e8217c966bf5042b, type: 3}
       propertyPath: smoothBlend
       value: 0.07
       objectReference: {fileID: 0}
     - target: {fileID: 4595656916361263908, guid: 02c2b87f236fa674e8217c966bf5042b, type: 3}
       propertyPath: rotationSpeed
-      value: 500
+      value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 4595656916361263908, guid: 02c2b87f236fa674e8217c966bf5042b, type: 3}
       propertyPath: turnThreshold

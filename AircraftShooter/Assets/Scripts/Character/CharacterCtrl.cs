@@ -13,6 +13,10 @@ public class CharacterCtrl : MonoBehaviour
     [SerializeField] float turnThreshold = 0.5f; // 회전 각도 감지 임계값
 
 
+    public float followDelay = 0.1f; // 딜레이 시간 (초 단위)
+    private Quaternion targetRotation;
+    private float followTimer;
+
     private CharacterController characterController;
     private Vector3 moveDirection = Vector3.zero;
     private Animator anim;
@@ -23,13 +27,19 @@ public class CharacterCtrl : MonoBehaviour
         anim = GetComponent<Animator>();
     }
 
+    private void Start()
+    {
+        targetRotation = transform.rotation;
+        followTimer = 0f;
+    }
+
     void Update()
     {
         RotatePlayerToMouse();
         MovePlayer();
     }
 
-  void RotatePlayerToMouse()
+    void RotatePlayerToMouse()
     {
         Plane playerPlane = new Plane(Vector3.up, transform.position);
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
@@ -38,22 +48,26 @@ public class CharacterCtrl : MonoBehaviour
             Vector3 targetPoint = ray.GetPoint(hitDist);
             Vector3 direction = targetPoint - transform.position;
             direction.y = 0; // Y축 회전을 방지하여 플레이어가 바닥을 보지 않도록 합니다.
+
             if (direction != Vector3.zero)
             {
-                Quaternion targetRotation = Quaternion.LookRotation(direction);
-                float angle = Quaternion.Angle(transform.rotation, targetRotation);
-                Debug.Log(moveDirection);
-                // 회전 각도에 따라 턴 애니메이션 설정
-                if (angle > turnThreshold && moveDirection.x == 0 && moveDirection.z == 0)
+                Quaternion newTargetRotation = Quaternion.LookRotation(direction);
+                // 회전 목표를 업데이트하고 타이머를 초기화
+                if (targetRotation != newTargetRotation)
                 {
-                    anim.SetBool("IsTurning", true);
-                }
-                else
-                {
-                    anim.SetBool("IsTurning", false);
+                    targetRotation = newTargetRotation;
+                    followTimer = 0f;
                 }
 
-                transform.rotation = Quaternion.RotateTowards(transform.rotation, targetRotation, rotationSpeed * Time.deltaTime);
+                // 타이머 업데이트
+                followTimer += Time.deltaTime;
+
+                // 타이머가 딜레이를 초과했을 때만 실제 회전 적용
+                if (followTimer > followDelay)
+                {
+                    // 부드럽게 회전
+                    transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, rotationSpeed * Time.deltaTime);
+                }
             }
         }
     }
@@ -82,8 +96,8 @@ public class CharacterCtrl : MonoBehaviour
                 // 이동 방향과 애니메이션 방향 설정
                 Vector3 localInputDirection = transform.InverseTransformDirection(moveDirection);
                 float maxMagnitude = isRunning ? 2f : 1f;
-                localInputDirection.x = Mathf.Clamp(localInputDirection.x , -maxMagnitude, maxMagnitude);
-                localInputDirection.z = Mathf.Clamp(localInputDirection.z , -maxMagnitude, maxMagnitude);
+                localInputDirection.x = Mathf.Clamp(localInputDirection.x, -maxMagnitude, maxMagnitude);
+                localInputDirection.z = Mathf.Clamp(localInputDirection.z, -maxMagnitude, maxMagnitude);
 
                 // 애니메이터 파라미터 설정
                 anim.SetFloat("x", localInputDirection.x, smoothBlend, Time.deltaTime);

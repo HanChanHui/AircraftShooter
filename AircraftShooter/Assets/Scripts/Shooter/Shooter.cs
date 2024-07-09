@@ -1,3 +1,4 @@
+
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -31,6 +32,7 @@ public class Shooter : MonoBehaviour
         Arc,
         CustomShape,
         Pattern,
+        CircleShape,
     };
 
     public enum BulletType {
@@ -152,6 +154,11 @@ public class Shooter : MonoBehaviour
     "####  #   # #     #     ####    #  \n" +
     "#   # #   # #     #     #       #  \n" +
     "####  ##### ##### ##### #####   #  ";
+
+    [Header("CircleShape")]
+    public double radius = 500f;
+    private double angle_1, angle_2;
+
 
     [Header("AttackCoolTime")]
     public float attackCooltime = 0f;
@@ -326,8 +333,6 @@ public class Shooter : MonoBehaviour
     void ForwardShoot() 
     {
         NwayShoot(speed, speedRate, angle + (forwardAngleSpeed * Time.time % 360), angleRate, angleRange, count);
-        // 양방향으로도 가능.
-        //NwayShoot(speed, speedRate, angle + (-ForwardAngleSpeed * Time.time % 360), angleRate, angleRange, count);
     }
 
     void NwayShoot(float speed, float speedRate, float angle, float angleRate, float angleRange, int count) 
@@ -553,6 +558,34 @@ public class Shooter : MonoBehaviour
         }
     }
 
+    void CircleShapeShoot()
+    {
+        CirclePatterns();
+    }
+
+    double DegreeToRadian(double _a)
+    {
+        double angled = System.Math.PI * (_a/180f);
+        return angled;
+    }
+
+    void CirclePatterns()
+    {
+        for(int i = 0; i < 360; i += 18)
+        {
+            Bullet bullet = HSPoolManager.Instance.NewItem<Bullet>(bulletType.ToString());
+            angle_1 = System.Math.Cos(DegreeToRadian(0 + i));
+            angle_2 = System.Math.Sin(DegreeToRadian(0 + i));
+            Debug.Log(radius);
+            double pointx = angle_1 * radius;
+            double pointz = angle_2 * radius;
+            Vector3 projposition = new Vector3((float)pointx, 0, (float)pointz);
+             bullet.Create(projposition, muzzle.rotation, isCalculatedDamage, speed,
+                    speedRate, angle, angleRate, isCritical, startDistance, lifeTime);
+        }
+    }
+
+
     void CustomShapeShoot() 
     {
         float dir = rot;
@@ -727,6 +760,8 @@ public class Shooter : MonoBehaviour
                 return CustomShapeShoot;
             case ShootingType.Pattern:
                 return PatternShoot;
+            case ShootingType.CircleShape:
+                return CircleShapeShoot;
             default:
                 return null;
         }
