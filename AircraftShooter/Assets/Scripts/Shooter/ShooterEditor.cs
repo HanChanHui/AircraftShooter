@@ -195,10 +195,17 @@ public class ShooterEditor : Editor
                 shooter.height = EditorGUILayout.FloatField("Height", shooter.height);
                 break;
 
-             case Shooter.ShootingType.Pattern:
+            case Shooter.ShootingType.Pattern:
                 EditorGUILayout.LabelField("Pattern", EditorStyles.boldLabel);
                 shooter.pat_width = EditorGUILayout.IntField("Pat Width", shooter.pat_width);
                 shooter.pat_height = EditorGUILayout.IntField("Pat Height", shooter.pat_height);
+                break;
+
+            case Shooter.ShootingType.CircleShape:
+                EditorGUILayout.LabelField("CircleShape", EditorStyles.boldLabel);
+                shooter.radius = EditorGUILayout.FloatField("Radius", shooter.radius);
+                shooter.circleAngle = EditorGUILayout.IntField("CircleAngle", shooter.circleAngle);
+                shooter.angleSpeed = EditorGUILayout.FloatField("AngleSpeed", shooter.angleSpeed);
                 break;
 
             // 다른 ShootingType에 대한 케이스 추가...

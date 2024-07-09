@@ -1,4 +1,3 @@
-
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -40,6 +39,7 @@ public class Shooter : MonoBehaviour
         HomingBullet,
         ArcBullet,
         ShapeBullet,
+        CircleShapeBullet,
     };
 
     [Header("Basic")]
@@ -156,8 +156,9 @@ public class Shooter : MonoBehaviour
     "####  ##### ##### ##### #####   #  ";
 
     [Header("CircleShape")]
-    public double radius = 500f;
-    private double angle_1, angle_2;
+    public float radius;
+    public int circleAngle;
+    public float angleSpeed;
 
 
     [Header("AttackCoolTime")]
@@ -571,17 +572,23 @@ public class Shooter : MonoBehaviour
 
     void CirclePatterns()
     {
-        for(int i = 0; i < 360; i += 18)
+        ShapeBullet centorbullet = HSPoolManager.Instance.NewItem<ShapeBullet>(bulletType.ToString());
+        if (centorbullet) 
         {
-            Bullet bullet = HSPoolManager.Instance.NewItem<Bullet>(bulletType.ToString());
-            angle_1 = System.Math.Cos(DegreeToRadian(0 + i));
-            angle_2 = System.Math.Sin(DegreeToRadian(0 + i));
-            Debug.Log(radius);
-            double pointx = angle_1 * radius;
-            double pointz = angle_2 * radius;
-            Vector3 projposition = new Vector3((float)pointx, 0, (float)pointz);
-             bullet.Create(projposition, muzzle.rotation, isCalculatedDamage, speed,
+            centorbullet.Create(muzzle.position, muzzle.rotation, isCalculatedDamage, speed, isCritical);
+            //centorbullet.Init(angleSpeed);
+        }
+
+        for(int i = 0; i < 360; i += circleAngle)
+        {
+            Bullet bullet = HSPoolManager.Instance.NewItem<Bullet>(BulletType.Bullet.ToString());
+            double angleRad = DegreeToRadian(i);
+            float pointx = Mathf.Cos((float)angleRad) * radius;
+            float pointz = Mathf.Sin((float)angleRad) * radius;
+            Vector3 projposition = centorbullet.transform.position + new Vector3(pointx, 0, pointz);
+            bullet.Create(projposition, muzzle.rotation, isCalculatedDamage, speed,
                     speedRate, angle, angleRate, isCritical, startDistance, lifeTime);
+            bullet.transform.SetParent(centorbullet.transform);
         }
     }
 

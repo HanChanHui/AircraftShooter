@@ -10,7 +10,6 @@ public class CharacterCtrl : MonoBehaviour
     [SerializeField] float gravity = 9.81f;
     [SerializeField] float smoothBlend = 0.1f;
     [SerializeField] float stopSmoothBlend = 0.1f;
-    [SerializeField] float turnThreshold = 0.5f; // 회전 각도 감지 임계값
 
 
     public float followDelay = 0.1f; // 딜레이 시간 (초 단위)

@@ -165,6 +165,9 @@ MonoBehaviour:
   - type: ShapeBullet
     obj: {fileID: 8339991416357701776, guid: 7b12904d055acc544a946dd83a9de936, type: 3}
     count: 100
+  - type: CircleShapeBullet
+    obj: {fileID: 2192237106023745383, guid: 4f396ce95a9011941a3dcb2d3da4c819, type: 3}
+    count: 100
 --- !u!4 &56202718
 Transform:
   m_ObjectHideFlags: 0
@@ -573,7 +576,7 @@ MonoBehaviour:
   shootingPattern: {fileID: 11400000, guid: 7ad521af00f16394d89cd7a67f86b252, type: 2}
   savePattern: 0
   loadPattern: 0
-  bulletType: 0
+  bulletType: 4
   power: 0
   speed: 20
   speedRate: 0
@@ -613,7 +616,9 @@ MonoBehaviour:
   height: 10
   pat_width: 0
   pat_height: 0
-  radius: 0.10000000149011612
+  radius: 5
+  circleAngle: 10
+  angleSpeed: 0
   attackCooltime: 0
   attackTime: 0
   attackTimeReset: 2
@@ -851,7 +856,9 @@ MonoBehaviour:
   height: 0
   pat_width: 0
   pat_height: 0
-  radius: 0.10000000149011612
+  radius: 0.1
+  circleAngle: 0
+  angleSpeed: 0
   attackCooltime: 0
   attackTime: 0
   attackTimeReset: 0
