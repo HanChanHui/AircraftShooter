@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6200956272817328406}
   - component: {fileID: 4084960137441418004}
-  - component: {fileID: 4484857311193433670}
+  - component: {fileID: 2001514855311940232}
   m_Layer: 0
   m_Name: CircleShapeBullet
   m_TagString: Untagged
@@ -60,7 +60,7 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
---- !u!114 &4484857311193433670
+--- !u!114 &2001514855311940232
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -69,15 +69,19 @@ MonoBehaviour:
   m_GameObject: {fileID: 2192237106023745383}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 015c34782e7b4534995d1289315cf0e8, type: 3}
+  m_Script: {fileID: 11500000, guid: 8b0ed1b4030ce874f8f25481f5f2dfa8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   mpType: CircleShapeBullet
   hitEffect: 
   power: 0
   speed: 0
+  angle: 0
   rotateSpeed: 0
   lifeTime: 0
   showValueText: 0
+  radius: 0
+  circleAngle: 0
+  angleSpeed: 0
   bulletBody: {fileID: 6200956272817328406}
   childBullet: {fileID: 0}

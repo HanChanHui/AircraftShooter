@@ -99,7 +99,8 @@ public class Bullet : MonoBehaviour, IMemoryPool
         Collider[] initialCollisions = Physics.OverlapSphere(myTransform.position, 0.1f,
                                      colliderMask);
 
-        if (initialCollisions.Length > 0) {
+        if (initialCollisions.Length > 0) 
+        {
             OnHitObject(initialCollisions[0], myTransform.position);
         }
 

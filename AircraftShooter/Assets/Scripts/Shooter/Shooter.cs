@@ -572,24 +572,25 @@ public class Shooter : MonoBehaviour
 
     void CirclePatterns()
     {
-        ShapeBullet centorbullet = HSPoolManager.Instance.NewItem<ShapeBullet>(bulletType.ToString());
+        CircleShapeBullet centorbullet = HSPoolManager.Instance.NewItem<CircleShapeBullet>(bulletType.ToString());
+
         if (centorbullet) 
         {
-            centorbullet.Create(muzzle.position, muzzle.rotation, isCalculatedDamage, speed, isCritical);
-            //centorbullet.Init(angleSpeed);
+            centorbullet.Init(BulletType.Bullet, angleSpeed, circleAngle, radius);
+            centorbullet.Create(muzzle.position, muzzle.rotation, isCalculatedDamage, speed, angle, isCritical);
         }
 
-        for(int i = 0; i < 360; i += circleAngle)
-        {
-            Bullet bullet = HSPoolManager.Instance.NewItem<Bullet>(BulletType.Bullet.ToString());
-            double angleRad = DegreeToRadian(i);
-            float pointx = Mathf.Cos((float)angleRad) * radius;
-            float pointz = Mathf.Sin((float)angleRad) * radius;
-            Vector3 projposition = centorbullet.transform.position + new Vector3(pointx, 0, pointz);
-            bullet.Create(projposition, muzzle.rotation, isCalculatedDamage, speed,
-                    speedRate, angle, angleRate, isCritical, startDistance, lifeTime);
-            bullet.transform.SetParent(centorbullet.transform);
-        }
+        // for(int i = 0; i < 360; i += circleAngle)
+        // {
+        //     Bullet bullet = HSPoolManager.Instance.NewItem<Bullet>(BulletType.Bullet.ToString());
+        //     double angleRad = DegreeToRadian(i);
+        //     float pointx = Mathf.Cos((float)angleRad) * radius;
+        //     float pointz = Mathf.Sin((float)angleRad) * radius;
+        //     Vector3 projposition = centorbullet.transform.position + new Vector3(pointx, 0, pointz);
+        //     bullet.Create(projposition, muzzle.rotation, isCalculatedDamage, speed,
+        //             speedRate, angle, angleRate, isCritical, startDistance, lifeTime);
+        //     bullet.transform.SetParent(centorbullet.transform);
+        // }
     }
 
 

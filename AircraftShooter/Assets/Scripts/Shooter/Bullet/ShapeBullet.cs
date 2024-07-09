@@ -40,7 +40,8 @@ public class ShapeBullet : MonoBehaviour, IMemoryPool
         StartCoroutine("CoUpdate");
         if (lifeTime > 0) {
             Invoke("MyDestroy", lifeTime);
-        } else {
+        } 
+        else {
             Invoke("MyDestroy", 5.0f);
         }
     }
