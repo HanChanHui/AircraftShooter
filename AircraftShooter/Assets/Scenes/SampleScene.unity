@@ -560,13 +560,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f4a2a817573ace145b10f01b66227770, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  shootingType: 25
+  shootingType: 1
   muzzle: {fileID: 1376031432}
   showMuzzleFlash: 0
   shootingPattern: {fileID: 0}
   savePattern: 0
   loadPattern: 0
-  bulletType: 5
+  bulletType: 0
   power: 0
   speed: 5
   speedRate: 0
