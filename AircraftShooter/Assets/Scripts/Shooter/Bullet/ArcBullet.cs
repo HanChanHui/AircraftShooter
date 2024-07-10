@@ -19,7 +19,7 @@ public class ArcBullet : Bullet, IMemoryPool {
     [SerializeField] private float waitTime;
     [SerializeField] private float attackTime = 0.1f;
     //[SerializeField] private string mpType = "";
-    [SerializeField] private GameObject bullet;
+    //[SerializeField] private GameObject bullet;
     [SerializeField] private string targetTag = "Player";
 
 

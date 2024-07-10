@@ -11,14 +11,13 @@ public class CircleShapeBullet : MonoBehaviour, IMemoryPool
     [SerializeField] private float speed;
     [SerializeField] private float angle;
     [SerializeField] private float rotateSpeed;
-    [SerializeField] private float lifeTime;
+    public float lifeTime;
     [SerializeField] private bool showValueText;
 
     [SerializeField] private float radius;
     [SerializeField] private int circleAngle;
-    [SerializeField] private float angleSpeed;
+    public float angleSpeed;
     [SerializeField] Shooter.BulletType bulletType;
-
 
     [SerializeField] private Transform bulletBody;
     //[SerializeField] private ChildBullet childBullet;
@@ -73,16 +72,21 @@ public class CircleShapeBullet : MonoBehaviour, IMemoryPool
 
     void CirclePatterns()
     {
-        Debug.Log(circleAngle);
         for (int i = 0; i < 360; i += circleAngle)
         {
-            Bullet bullet = HSPoolManager.Instance.NewItem<Bullet>(bulletType.ToString());
-            double angleRad = DegreeToRadian(i);
-            float pointx = Mathf.Cos((float)angleRad) * radius;
-            float pointz = Mathf.Sin((float)angleRad) * radius;
-            Vector3 projposition = new Vector3(pointx, 0, pointz);
-            bullet.transform.position = projposition;
-            bullet.transform.SetParent(this.transform);
+            ChildBullet bullet = HSPoolManager.Instance.NewItem<ChildBullet>(bulletType.ToString());
+            if (bullet)
+            {
+                bullet.ParentBullet = this;
+                double angleRad = DegreeToRadian(i);
+                float pointx = Mathf.Cos((float)angleRad) * radius;
+                float pointz = Mathf.Sin((float)angleRad) * radius;
+                Vector3 projposition = new Vector3(pointx, 0, pointz);
+                bullet.transform.position = projposition;
+                //bullet.transform.SetParent(this.transform);
+                bullet.transform.parent = this.transform;
+            }
+
         }
     }
 
@@ -99,11 +103,10 @@ public class CircleShapeBullet : MonoBehaviour, IMemoryPool
     private void Move()
     {
         float moveDistance = speed * Time.deltaTime;
-        //transform.position = Vector3.Normalize(Vector3.forward) * moveDistance + new Vector3(Mathf.Cos(angle), 0, Mathf.Sin(angle));
         myTransform.Translate(Vector3.Normalize(Vector3.forward) * moveDistance);
-        // Quaternion rot = Quaternion.Euler(transform.rotation.x, angle, transform.rotation.z);
-        // myTransform.rotation = rot;
-        bulletBody.Rotate(Vector3.up * Time.deltaTime * angleSpeed);
+        Quaternion rot = Quaternion.Euler(transform.rotation.x, angle, transform.rotation.z);
+        myTransform.rotation = rot;
+
         //angle += angleSpeed;
     }
 

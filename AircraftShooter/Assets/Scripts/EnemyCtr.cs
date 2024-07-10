@@ -6,80 +6,20 @@ using UnityEngine;
 
 public class EnemyCtr : MonoBehaviour
 {
-    [Header("Shooter")]
-    [SerializeField] protected Shooter basicShooter;
-    [SerializeField] protected Shooter basicShooter2;
 
-    //[SerializeField] bool canAttack;
-    //[SerializeField] private bool canStopAttack = true;
+    public List<Shooter> shooters = new List<Shooter>();
 
     private void Start() 
     {
-        basicShooter.Init();
-        //canAttack = true;
-        if(basicShooter2 != null)
+        foreach (var shooter in shooters)
         {
-            basicShooter2.Init();
-            StartCoroutine(basicShooter2.CoCheckDistance());
-            StartCoroutine(basicShooter2.CoStopAttackCooltime());
+            if (shooter != null)
+            {
+                shooter.Init();
+                StartCoroutine(shooter.CoCheckDistance());
+                StartCoroutine(shooter.CoStopAttackCooltime());
+            }
         }
-        StartCoroutine(basicShooter.CoCheckDistance());
-        
-        StartCoroutine(basicShooter.CoStopAttackCooltime());
-
     }
-
-    // protected IEnumerator CoCheckDistance() 
-    // {
-
-    //         while (true) 
-    //         {
-    //             if (canAttack) 
-    //             {
-    //                 StartCoroutine(CoAttack());
-    //                 yield break;
-    //             }
-    //             yield return new WaitForSeconds(0.0f);
-    //         }
-    // }
-
-    // protected IEnumerator CoAttack() 
-    // {
-    //     yield return new WaitForSeconds(basicShooter.attackTime);
-    //     basicShooter.Shoot();
-    //     if (basicShooter2 != null)
-    //     {
-    //         basicShooter2.Shoot();
-    //     }
-       
-    //     StartCoroutine(CoAttackCooltime());
-    //     StartCoroutine(CoCheckDistance());
-    // }
-
-    // protected IEnumerator CoAttackCooltime()
-    // {
-    //         canAttack = false;
-    //         yield return new WaitForSeconds(basicShooter.attackCooltime);
-    //         canAttack = true;
-    // }
-
-    // protected IEnumerator CoStopAttackCooltime()
-    // {
-    //     while(true)
-    //     {
-    //         basicShooter.attackCooltime = 0f;
-    //         yield return new WaitForSeconds(basicShooter.stopAttack);
-    //         basicShooter.attackCooltime = basicShooter.attackTimeReset;
-    //         yield return new WaitForSeconds(basicShooter.attackCooltime);
-    //         //basicShooter.StopAttackCooltime(canStopAttack);
-    //     }
-    // }
-
-    // private IEnumerator PlacedCircleShoot()
-    // {
-        
-    //     yield return null;
-    // }
-
     
 }

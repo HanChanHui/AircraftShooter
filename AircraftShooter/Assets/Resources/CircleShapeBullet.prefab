@@ -83,5 +83,5 @@ MonoBehaviour:
   radius: 0
   circleAngle: 0
   angleSpeed: 0
-  bulletBody: {fileID: 6200956272817328406}
-  childBullet: {fileID: 0}
+  bulletType: 0
+  bulletBody: {fileID: 0}

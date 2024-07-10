@@ -37,6 +37,7 @@ public class Shooter : MonoBehaviour
     public enum BulletType {
         Bullet,
         HomingBullet,
+        DelayHomingBullet,
         ArcBullet,
         ShapeBullet,
         CircleShapeBullet,
@@ -201,7 +202,7 @@ public class Shooter : MonoBehaviour
             InitCustomShape();
         }
 
-        if(loadPattern)
+        if(shootingPattern != null && loadPattern)
         {
             LoadPattern(shootingPattern);
         }
@@ -777,7 +778,7 @@ public class Shooter : MonoBehaviour
 
     private void OnDisable()
     {
-        if(savePattern)
+        if(shootingPattern != null && savePattern)
         {
             SavePattern(shootingPattern);
         }

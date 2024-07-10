@@ -24,7 +24,7 @@ public class ShapeBullet : MonoBehaviour, IMemoryPool
     public void MPStart()
     {
         myTransform = transform;
-        childBullet.ParentBullet = this;
+        //childBullet.ParentBullet = this;
     }
 
     public void Create(Vector3 pos, Quaternion rot, int power, float speed, bool isCritical) 
