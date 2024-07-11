@@ -22,7 +22,7 @@ public class ShooterEditor : Editor
 
         // Bullet fields
         EditorGUILayout.LabelField("Bullet", EditorStyles.boldLabel);
-        shooter.bulletType = (Shooter.BulletType)EditorGUILayout.EnumPopup("Bullet Type", shooter.bulletType);
+        shooter.bulletType = (Consts.BulletType)EditorGUILayout.EnumPopup("Bullet Type", shooter.bulletType);
         shooter.power = EditorGUILayout.IntField("Power", shooter.power);
         shooter.speed = EditorGUILayout.FloatField("Speed", shooter.speed);
         shooter.speedRate = EditorGUILayout.FloatField("Speed Rate", shooter.speedRate);
@@ -45,7 +45,7 @@ public class ShooterEditor : Editor
         switch (shooter.shootingType)
         {
             case Shooter.ShootingType.Forward:
-                shooter.bulletType = Shooter.BulletType.Bullet;
+                shooter.bulletType = Consts.BulletType.Bullet;
                 EditorGUILayout.LabelField("Forward", EditorStyles.boldLabel);
                 shooter.forwardAngleSpeed = EditorGUILayout.FloatField("Forward Angle Speed", shooter.forwardAngleSpeed);
                 EditorGUILayout.LabelField("Nway", EditorStyles.boldLabel);
@@ -54,21 +54,21 @@ public class ShooterEditor : Editor
                 break;
 
             case Shooter.ShootingType.Nway:
-                shooter.bulletType = Shooter.BulletType.Bullet;
+                shooter.bulletType = Consts.BulletType.Bullet;
                 EditorGUILayout.LabelField("Nway", EditorStyles.boldLabel);
                 shooter.angleRange = EditorGUILayout.FloatField("Angle Range", shooter.angleRange);
                 shooter.count = EditorGUILayout.IntField("Count", shooter.count);
                 break;
 
             case Shooter.ShootingType.Circle:
-                shooter.bulletType = Shooter.BulletType.Bullet;
+                shooter.bulletType = Consts.BulletType.Bullet;
                 EditorGUILayout.LabelField("Nway", EditorStyles.boldLabel);
                 shooter.angleRange = EditorGUILayout.FloatField("Angle Range", shooter.angleRange);
                 shooter.count = EditorGUILayout.IntField("Count", shooter.count);
                 break;
             
             case Shooter.ShootingType.RandomNway:
-                shooter.bulletType = Shooter.BulletType.Bullet;
+                shooter.bulletType = Consts.BulletType.Bullet;
                 EditorGUILayout.LabelField("Forward", EditorStyles.boldLabel);
                 shooter.forwardAngleSpeed = EditorGUILayout.FloatField("Forward Angle Speed", shooter.forwardAngleSpeed);
                 EditorGUILayout.LabelField("Nway", EditorStyles.boldLabel);
@@ -77,14 +77,14 @@ public class ShooterEditor : Editor
                 break;
 
             case Shooter.ShootingType.Multiple:
-                shooter.bulletType = Shooter.BulletType.Bullet;
+                shooter.bulletType = Consts.BulletType.Bullet;
                 EditorGUILayout.LabelField("Multiple", EditorStyles.boldLabel);
                 shooter.multipleStep = EditorGUILayout.FloatField("Multiple Step", shooter.multipleStep);
                 shooter.multipleRange = EditorGUILayout.FloatField("Multiple Range", shooter.multipleRange);
                 break;
 
             case Shooter.ShootingType.CustomShape:
-                shooter.bulletType = Shooter.BulletType.Bullet;
+                shooter.bulletType = Consts.BulletType.Bullet;
                 EditorGUILayout.LabelField("Custom Shape", EditorStyles.boldLabel);
                 shooter.rot = EditorGUILayout.FloatField("Rotation", shooter.rot);
                 shooter.vertex = EditorGUILayout.IntSlider("Vertex", shooter.vertex, 3, 7);
@@ -94,7 +94,7 @@ public class ShooterEditor : Editor
                 break;
 
             case Shooter.ShootingType.Homing:
-                shooter.bulletType = Shooter.BulletType.HomingBullet;
+                shooter.bulletType = Consts.BulletType.HomingBullet;
                 EditorGUILayout.LabelField("Homing", EditorStyles.boldLabel);
                 shooter.turnSpeed = EditorGUILayout.FloatField("Turn Speed", shooter.turnSpeed);
                 shooter.decreaseHomingSpeed = EditorGUILayout.Toggle("Decrease Homing Speed", shooter.decreaseHomingSpeed);
@@ -102,7 +102,7 @@ public class ShooterEditor : Editor
                 break;
 
             case Shooter.ShootingType.DelayHoming:
-                shooter.bulletType = Shooter.BulletType.DelayHomingBullet;
+                shooter.bulletType = Consts.BulletType.DelayHomingBullet;
                 EditorGUILayout.LabelField("Homing", EditorStyles.boldLabel);
                 shooter.turnSpeed = EditorGUILayout.FloatField("Turn Speed", shooter.turnSpeed);
                 shooter.decreaseHomingSpeed = EditorGUILayout.Toggle("Decrease Homing Speed", shooter.decreaseHomingSpeed);
@@ -111,7 +111,7 @@ public class ShooterEditor : Editor
                 break;
             
             case Shooter.ShootingType.RandomHoming:
-                shooter.bulletType = Shooter.BulletType.HomingBullet;
+                shooter.bulletType = Consts.BulletType.HomingBullet;
                 EditorGUILayout.LabelField("Homing", EditorStyles.boldLabel);
                 shooter.turnSpeed = EditorGUILayout.FloatField("Turn Speed", shooter.turnSpeed);
                 shooter.decreaseHomingSpeed = EditorGUILayout.Toggle("Decrease Homing Speed", shooter.decreaseHomingSpeed);
@@ -119,7 +119,7 @@ public class ShooterEditor : Editor
                 break;
 
             case Shooter.ShootingType.RollingNway:
-                shooter.bulletType = Shooter.BulletType.Bullet;
+                shooter.bulletType = Consts.BulletType.Bullet;
                 EditorGUILayout.LabelField("Forward", EditorStyles.boldLabel);
                 shooter.forwardAngleSpeed = EditorGUILayout.FloatField("Forward Angle Speed", shooter.forwardAngleSpeed);
                 EditorGUILayout.LabelField("Nway", EditorStyles.boldLabel);
@@ -130,7 +130,7 @@ public class ShooterEditor : Editor
                 break;
 
             case Shooter.ShootingType.WavingNway:
-                shooter.bulletType = Shooter.BulletType.Bullet;
+                shooter.bulletType = Consts.BulletType.Bullet;
                 EditorGUILayout.LabelField("Forward", EditorStyles.boldLabel);
                 shooter.forwardAngleSpeed = EditorGUILayout.FloatField("Forward Angle Speed", shooter.forwardAngleSpeed);
                 EditorGUILayout.LabelField("Nway", EditorStyles.boldLabel);
@@ -142,7 +142,7 @@ public class ShooterEditor : Editor
                 break;
 
             case Shooter.ShootingType.CircleWavingNway:
-                shooter.bulletType = Shooter.BulletType.Bullet;
+                shooter.bulletType = Consts.BulletType.Bullet;
                 EditorGUILayout.LabelField("Nway", EditorStyles.boldLabel);
                 shooter.count = EditorGUILayout.IntField("Count", shooter.count);
                 EditorGUILayout.LabelField("Waving N-way", EditorStyles.boldLabel);
@@ -151,7 +151,7 @@ public class ShooterEditor : Editor
                 break;
 
             case Shooter.ShootingType.Placed:
-                shooter.bulletType = Shooter.BulletType.Bullet;
+                shooter.bulletType = Consts.BulletType.Bullet;
                 EditorGUILayout.LabelField("Placed", EditorStyles.boldLabel);
                 shooter.moveTime = EditorGUILayout.FloatField("Move Time", shooter.moveTime);
                 shooter.stopTime = EditorGUILayout.FloatField("Stop Time", shooter.stopTime);
@@ -159,7 +159,7 @@ public class ShooterEditor : Editor
                 break;
 
             case Shooter.ShootingType.Aiming:
-                shooter.bulletType = Shooter.BulletType.Bullet;
+                shooter.bulletType = Consts.BulletType.Bullet;
                 EditorGUILayout.LabelField("Nway", EditorStyles.boldLabel);
                 shooter.angleRange = EditorGUILayout.FloatField("Angle Range", shooter.angleRange);
                 shooter.count = EditorGUILayout.IntField("Count", shooter.count);
@@ -170,7 +170,7 @@ public class ShooterEditor : Editor
                 break;
 
             case Shooter.ShootingType.Spreading:
-            shooter.bulletType = Shooter.BulletType.Bullet;
+            shooter.bulletType = Consts.BulletType.Bullet;
                 EditorGUILayout.LabelField("Nway", EditorStyles.boldLabel);
                 shooter.angleRange = EditorGUILayout.FloatField("Angle Range", shooter.angleRange);
                 shooter.count = EditorGUILayout.IntField("Count", shooter.count);
@@ -180,7 +180,7 @@ public class ShooterEditor : Editor
                 break;
             
             case Shooter.ShootingType.RandomSpreading:
-                shooter.bulletType = Shooter.BulletType.Bullet;
+                shooter.bulletType = Consts.BulletType.Bullet;
                 EditorGUILayout.LabelField("Nway", EditorStyles.boldLabel);
                 shooter.angleRange = EditorGUILayout.FloatField("Angle Range", shooter.angleRange);
                 shooter.count = EditorGUILayout.IntField("Count", shooter.count);
@@ -188,7 +188,7 @@ public class ShooterEditor : Editor
                 break;
 
             case Shooter.ShootingType.Overtaking:
-                shooter.bulletType = Shooter.BulletType.Bullet;
+                shooter.bulletType = Consts.BulletType.Bullet;
                 EditorGUILayout.LabelField("Nway", EditorStyles.boldLabel);
                 shooter.angleRange = EditorGUILayout.FloatField("Angle Range", shooter.angleRange);
                 shooter.count = EditorGUILayout.IntField("Count", shooter.count);
@@ -201,11 +201,11 @@ public class ShooterEditor : Editor
                 break;
 
              case Shooter.ShootingType.Cross:
-                shooter.bulletType = Shooter.BulletType.ShapeBullet;
+                shooter.bulletType = Consts.BulletType.ShapeBullet;
                 break;
 
             case Shooter.ShootingType.Arc:
-                shooter.bulletType = Shooter.BulletType.ArcBullet;
+                shooter.bulletType = Consts.BulletType.ArcBullet;
                 EditorGUILayout.LabelField("Aiming", EditorStyles.boldLabel);
                 shooter.targetTransform = (Transform)EditorGUILayout.ObjectField("Target Transform", shooter.targetTransform, typeof(Transform), true);
                 EditorGUILayout.LabelField("Arc", EditorStyles.boldLabel);
@@ -214,18 +214,24 @@ public class ShooterEditor : Editor
                 break;
 
             case Shooter.ShootingType.Pattern:
-                shooter.bulletType = Shooter.BulletType.Bullet;
+                shooter.bulletType = Consts.BulletType.Bullet;
                 EditorGUILayout.LabelField("Pattern", EditorStyles.boldLabel);
                 shooter.pat_width = EditorGUILayout.IntField("Pat Width", shooter.pat_width);
                 shooter.pat_height = EditorGUILayout.IntField("Pat Height", shooter.pat_height);
                 break;
 
             case Shooter.ShootingType.CircleShape:
-                shooter.bulletType = Shooter.BulletType.CircleShapeBullet;
+                shooter.bulletType = Consts.BulletType.CircleShapeBullet;
                 EditorGUILayout.LabelField("CircleShape", EditorStyles.boldLabel);
+                shooter.shapeType = (Consts.ShapeType)EditorGUILayout.EnumPopup("Shape Type", shooter.shapeType);
+                shooter.vertexShape = EditorGUILayout.IntField("VertexShape", shooter.vertexShape);
                 shooter.radius = EditorGUILayout.FloatField("Radius", shooter.radius);
-                shooter.circleAngle = EditorGUILayout.IntField("CircleAngle", shooter.circleAngle);
+                shooter.segments = EditorGUILayout.IntField("Segments", shooter.segments);
                 shooter.angleSpeed = EditorGUILayout.FloatField("AngleSpeed", shooter.angleSpeed);
+                shooter.circleAngle = EditorGUILayout.IntField("CircleAngle", shooter.circleAngle);
+                break;
+             case Shooter.ShootingType.ShooterShooter:
+                shooter.bulletType = Consts.BulletType.ShooterBullet;
                 break;
 
             // 다른 ShootingType에 대한 케이스 추가...

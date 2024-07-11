@@ -1,0 +1,207 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &9188836725549900453
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 3309026648832834301}
+  - component: {fileID: 6258133306487814497}
+  - component: {fileID: 2247112270395729214}
+  - component: {fileID: 6613007410772164891}
+  - component: {fileID: 4197973421358819124}
+  - component: {fileID: 1555656482190309581}
+  m_Layer: 0
+  m_Name: ShooterBullet
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &3309026648832834301
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9188836725549900453}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!33 &6258133306487814497
+MeshFilter:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9188836725549900453}
+  m_Mesh: {fileID: 10207, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!23 &2247112270395729214
+MeshRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9188836725549900453}
+  m_Enabled: 1
+  m_CastShadows: 1
+  m_ReceiveShadows: 1
+  m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 2
+  m_RayTraceProcedural: 0
+  m_RenderingLayerMask: 1
+  m_RendererPriority: 0
+  m_Materials:
+  - {fileID: 10303, guid: 0000000000000000f000000000000000, type: 0}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 1
+  m_SelectedEditorRenderState: 3
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+  m_AdditionalVertexStreams: {fileID: 0}
+--- !u!54 &6613007410772164891
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9188836725549900453}
+  serializedVersion: 4
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 0
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
+--- !u!114 &4197973421358819124
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9188836725549900453}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c70fa5da8b18c9945af81e5292db5d5f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  mpType: ShooterBullet
+  speed: 0
+  angle: 0
+  rotateSpeed: 0
+  lifeTime: 10
+  shooter: {fileID: 1555656482190309581}
+  attackCooltime: 0
+  attackTime: 0
+  attackTimeReset: 0.5
+  stopAttack: 0
+  canAttack: 1
+--- !u!114 &1555656482190309581
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9188836725549900453}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4a2a817573ace145b10f01b66227770, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  shootingType: 3
+  muzzle: {fileID: 3309026648832834301}
+  showMuzzleFlash: 0
+  shootingPattern: {fileID: 0}
+  savePattern: 0
+  loadPattern: 0
+  bulletType: 0
+  power: 0
+  speed: 10
+  speedRate: 0
+  angle: 180
+  angleRate: 0
+  startDistance: 0
+  lifeTime: 5
+  rot: 0
+  vertex: 3
+  sup: 3
+  rotateBulletCore: 0
+  rotateBulletOffset: {x: 0, y: 0, z: 0}
+  forwardAngleSpeed: 80
+  angleRange: 360
+  count: 6
+  multipleStep: 0
+  multipleRange: 0
+  turnSpeed: 0
+  decreaseHomingSpeed: 0
+  homingSpeedRate: 0
+  delayTime: 0
+  nWayCount: 0
+  wavingAngleRange: 0
+  cycle: 0
+  moveTime: 0
+  stopTime: 0
+  placedStopSpeed: 0
+  targetTransform: {fileID: 0}
+  stopAttackCooltime: 1
+  targetfixedAngle: 0
+  groupSpeed: 0
+  groupCount: 0
+  speedRange: 0
+  groupAngle: 0
+  groupInterval: 0
+  arrivalTime: 0
+  height: 0
+  pat_width: 0
+  pat_height: 0
+  shapeType: 0
+  vertexShape: 0
+  radius: 0
+  angleSpeed: 0
+  segments: 0
+  circleAngle: 0
+  attackCooltime: 0.1
+  attackTime: 1
+  attackTimeReset: 1
+  stopAttack: 0
+  canAttack: 1

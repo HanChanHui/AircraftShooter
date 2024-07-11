@@ -6,16 +6,31 @@ public class ChildBullet : MonoBehaviour, IMemoryPool
 {
     [Header("Basic")]
     [SerializeField] private string mpType;
+    [SerializeField] private float lifeTime;
+    [SerializeField] private float angleSpeed;
+    private Transform parentTransform;
     public CircleShapeBullet ParentBullet { get; set; }
 
+    private Transform myTransform;
 
     public void MPStart()
     {
+        myTransform = transform;
+    }
+
+    public void Create(Vector3 pos, Transform parentpos, float angleSpeed, float lifeTime)
+    {
+        myTransform.position = pos;
+        this.parentTransform = parentpos;
+        this.angleSpeed = angleSpeed;
+        this.lifeTime = lifeTime;
+
+        gameObject.SetActive(true);
         StartCoroutine(CoUpdate());
 
-        if (ParentBullet.lifeTime > 0)
+        if (lifeTime > 0)
         {
-            Invoke("MyDestroy", ParentBullet.lifeTime);
+            Invoke("MyDestroy", lifeTime);
         }
         else
         {
@@ -34,12 +49,7 @@ public class ChildBullet : MonoBehaviour, IMemoryPool
 
     private void Move()
     {
-        ParentBullet.transform.Rotate(Vector3.up, ParentBullet.angleSpeed * Time.deltaTime);
-    }
-
-    private void OnTriggerEnter(Collider other)
-    {
-        ParentBullet.RunChildrenTriggerEnter(other);
+        myTransform.RotateAround(parentTransform.position, Vector3.up, angleSpeed * Time.deltaTime);
     }
 
     private void MyDestroy()

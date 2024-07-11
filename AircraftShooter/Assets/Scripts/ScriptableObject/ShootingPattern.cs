@@ -9,7 +9,7 @@ public class ShootingPattern : ScriptableObject
     public Shooter.ShootingType shootingType;
 
     [Header("Bullet")]
-    public Shooter.BulletType bulletType;
+    public Consts.BulletType bulletType;
     public int power;
     public float speed;
     public float speedRate;
@@ -71,6 +71,14 @@ public class ShootingPattern : ScriptableObject
     [Header("Arc")]
     public float arrivalTime;
     public float height;
+
+    [Header("CircleShape")]
+    public Consts.ShapeType shapeType;
+    public int vertexShape;
+    public float radius;
+    public float angleSpeed;
+    public int segments;
+    public int circleAngle;
 
     [Header("AttackCoolTime")]
     public float attackCooltime;

@@ -17,6 +17,7 @@ public class ShapeBullet : MonoBehaviour, IMemoryPool
     [SerializeField] private ChildBullet childBullet;
 
     private Transform myTransform;
+    [SerializeField] private Shooter shooter;
 
     private bool isDead;
     private bool isCritical;
@@ -38,6 +39,11 @@ public class ShapeBullet : MonoBehaviour, IMemoryPool
         isDead = false;
 
         StartCoroutine("CoUpdate");
+
+        // shooter.Init();
+        // StartCoroutine(shooter.CoCheckDistance());
+        // StartCoroutine(shooter.CoStopAttackCooltime());
+
         if (lifeTime > 0) {
             Invoke("MyDestroy", lifeTime);
         } 
@@ -55,8 +61,10 @@ public class ShapeBullet : MonoBehaviour, IMemoryPool
     }
 
     private void Move() {
-        myTransform.Translate(Vector3.forward * speed * Time.deltaTime);
-        bulletBody.Rotate(Vector3.up * Time.deltaTime * rotateSpeed);
+        float moveDistance = speed * Time.deltaTime;
+        myTransform.Translate(Vector3.Normalize(Vector3.forward) * moveDistance);
+        //Quaternion rot = Quaternion.Euler(transform.rotation.x, angle, transform.rotation.z);
+       // myTransform.rotation = rot;
     }
 
     public void RunChildrenTriggerEnter(Collider other) {

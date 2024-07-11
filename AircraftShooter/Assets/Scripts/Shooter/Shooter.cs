@@ -1,3 +1,4 @@
+using Consts;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -32,15 +33,7 @@ public class Shooter : MonoBehaviour
         CustomShape,
         Pattern,
         CircleShape,
-    };
-
-    public enum BulletType {
-        Bullet,
-        HomingBullet,
-        DelayHomingBullet,
-        ArcBullet,
-        ShapeBullet,
-        CircleShapeBullet,
+        ShooterShooter,
     };
 
     [Header("Basic")]
@@ -54,7 +47,7 @@ public class Shooter : MonoBehaviour
 
     [Header("Bullet")]
     //public string bulletType;
-    public BulletType bulletType;
+    public Consts.BulletType bulletType;
     public int power;
     public float speed;
     public float speedRate;
@@ -157,9 +150,12 @@ public class Shooter : MonoBehaviour
     "####  ##### ##### ##### #####   #  ";
 
     [Header("CircleShape")]
+    public ShapeType shapeType;
+    public int vertexShape;
     public float radius;
-    public int circleAngle;
     public float angleSpeed;
+    public int segments;
+    public int circleAngle;
 
 
     [Header("AttackCoolTime")]
@@ -565,33 +561,24 @@ public class Shooter : MonoBehaviour
         CirclePatterns();
     }
 
-    double DegreeToRadian(double _a)
-    {
-        double angled = System.Math.PI * (_a/180f);
-        return angled;
-    }
-
     void CirclePatterns()
     {
         CircleShapeBullet centorbullet = HSPoolManager.Instance.NewItem<CircleShapeBullet>(bulletType.ToString());
 
         if (centorbullet) 
         {
-            centorbullet.Init(BulletType.Bullet, angleSpeed, circleAngle, radius);
-            centorbullet.Create(muzzle.position, muzzle.rotation, isCalculatedDamage, speed, angle, isCritical);
+            centorbullet.Init(angleSpeed, circleAngle, radius, vertexShape, segments);
+            centorbullet.Create(shapeType, muzzle.position, muzzle.rotation, isCalculatedDamage, speed, angle, angleRate, lifeTime);
         }
+    }
 
-        // for(int i = 0; i < 360; i += circleAngle)
-        // {
-        //     Bullet bullet = HSPoolManager.Instance.NewItem<Bullet>(BulletType.Bullet.ToString());
-        //     double angleRad = DegreeToRadian(i);
-        //     float pointx = Mathf.Cos((float)angleRad) * radius;
-        //     float pointz = Mathf.Sin((float)angleRad) * radius;
-        //     Vector3 projposition = centorbullet.transform.position + new Vector3(pointx, 0, pointz);
-        //     bullet.Create(projposition, muzzle.rotation, isCalculatedDamage, speed,
-        //             speedRate, angle, angleRate, isCritical, startDistance, lifeTime);
-        //     bullet.transform.SetParent(centorbullet.transform);
-        // }
+    void ShooterShoot()
+    {
+        ShooterBullet bullet = HSPoolManager.Instance.NewItem<ShooterBullet>(bulletType.ToString());
+        if (bullet) 
+        {
+            bullet.Create(muzzle.position, muzzle.rotation, speed, angle);
+        }
     }
 
 
@@ -698,6 +685,7 @@ public class Shooter : MonoBehaviour
         }
     }
 
+
     public void AddBullet() 
     {
         switch (shootingType) 
@@ -771,6 +759,8 @@ public class Shooter : MonoBehaviour
                 return PatternShoot;
             case ShootingType.CircleShape:
                 return CircleShapeShoot;
+            case ShootingType.ShooterShooter:
+                return ShooterShoot;
             default:
                 return null;
         }
