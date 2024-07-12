@@ -4,12 +4,16 @@ using UnityEngine;
 [CustomEditor(typeof(EnemyCtr))]
 public class EnemyCtrEditor : Editor
 {
+    private int shooterCount;
+
     public override void OnInspectorGUI()
     {
         DrawDefaultInspector();
 
         EnemyCtr enemyCtr = (EnemyCtr)target;
-
+        
+        EditorGUILayout.Space();
+        EditorGUILayout.Space();
         if (GUILayout.Button("Add Shooter"))
         {
             AddShooter(enemyCtr);
@@ -29,7 +33,8 @@ public class EnemyCtrEditor : Editor
 
     private void AddShooter(EnemyCtr enemyCtr)
     {
-        Shooter newShooter = new GameObject("Shooter").AddComponent<Shooter>();
+        shooterCount = enemyCtr.shooters.Count;
+        Shooter newShooter = new GameObject("Shooter" + shooterCount).AddComponent<Shooter>();
         newShooter.transform.parent = enemyCtr.transform;
         enemyCtr.shooters.Add(newShooter);
         newShooter.muzzle = newShooter.transform;

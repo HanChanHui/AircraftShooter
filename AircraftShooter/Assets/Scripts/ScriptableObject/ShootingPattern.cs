@@ -84,5 +84,5 @@ public class ShootingPattern : ScriptableObject
     public float attackCooltime;
     public float attackTime;
     public float attackTimeReset;
-    public float stopAttack;
+    public float stopAttackDelay;
 }

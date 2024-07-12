@@ -19,17 +19,18 @@ public class ShooterEditor : Editor
         shooter.shootingPattern = (ShootingPattern)EditorGUILayout.ObjectField("Shooting Pattern", shooter.shootingPattern, typeof(ShootingPattern), false);
         shooter.savePattern = EditorGUILayout.Toggle("Save Pattern", shooter.savePattern);
         shooter.loadPattern = EditorGUILayout.Toggle("Load Pattern", shooter.loadPattern);
+        EditorGUILayout.LabelField(" ", EditorStyles.boldLabel);
 
         // Bullet fields
         EditorGUILayout.LabelField("Bullet", EditorStyles.boldLabel);
-        shooter.bulletType = (Consts.BulletType)EditorGUILayout.EnumPopup("Bullet Type", shooter.bulletType);
-        shooter.power = EditorGUILayout.IntField("Power", shooter.power);
-        shooter.speed = EditorGUILayout.FloatField("Speed", shooter.speed);
-        shooter.speedRate = EditorGUILayout.FloatField("Speed Rate", shooter.speedRate);
-        shooter.angle = EditorGUILayout.FloatField("Angle", shooter.angle);
-        shooter.angleRate = EditorGUILayout.FloatField("Angle Rate", shooter.angleRate);
-        shooter.startDistance = EditorGUILayout.FloatField("Start Distance", shooter.startDistance);
-        shooter.lifeTime = EditorGUILayout.FloatField("Life Time", shooter.lifeTime);
+        shooter.bulletType = (Consts.BulletType)EditorGUILayout.EnumPopup("Bullet Type [총알 타입]", shooter.bulletType);
+        shooter.power = EditorGUILayout.IntField("Power [데미지]", shooter.power);
+        shooter.speed = EditorGUILayout.FloatField("Speed [총알 속도]", shooter.speed);
+        shooter.speedRate = EditorGUILayout.FloatField("Speed Rate [총알 가속도]", shooter.speedRate);
+        shooter.angle = EditorGUILayout.FloatField("Angle [총알 발사 각도]", shooter.angle);
+        shooter.angleRate = EditorGUILayout.FloatField("Angle Rate [총알 회전 가속도]", shooter.angleRate);
+        shooter.startDistance = EditorGUILayout.FloatField("Start Distance [총알 발사 시작 거리]", shooter.startDistance);
+        shooter.lifeTime = EditorGUILayout.FloatField("Life Time [총알 생존시간]", shooter.lifeTime);
 
         // ShootingType selection
         //var newType = (Shooter.ShootingType)EditorGUILayout.EnumPopup("Shooting Type", shooter.shootingType);
@@ -95,6 +96,8 @@ public class ShooterEditor : Editor
 
             case Shooter.ShootingType.Homing:
                 shooter.bulletType = Consts.BulletType.HomingBullet;
+                EditorGUILayout.LabelField("Aiming", EditorStyles.boldLabel);
+                shooter.targetTransform = (Transform)EditorGUILayout.ObjectField("Target Transform", shooter.targetTransform, typeof(Transform), true);
                 EditorGUILayout.LabelField("Homing", EditorStyles.boldLabel);
                 shooter.turnSpeed = EditorGUILayout.FloatField("Turn Speed", shooter.turnSpeed);
                 shooter.decreaseHomingSpeed = EditorGUILayout.Toggle("Decrease Homing Speed", shooter.decreaseHomingSpeed);
@@ -243,10 +246,9 @@ public class ShooterEditor : Editor
         EditorGUILayout.LabelField(" ", EditorStyles.boldLabel);
 
         EditorGUILayout.LabelField("AttackCoolTime", EditorStyles.boldLabel);
-        shooter.attackCooltime = EditorGUILayout.FloatField("Attack Cooltime", shooter.attackCooltime);
-        shooter.attackTime = EditorGUILayout.FloatField("Attack Time", shooter.attackTime);
-        shooter.attackTimeReset = EditorGUILayout.FloatField("Attack TimeReset", shooter.attackTimeReset);
-        shooter.stopAttack = EditorGUILayout.FloatField("Stop Attack", shooter.stopAttack);
+        shooter.attackCooltime = EditorGUILayout.FloatField("Attack Cooltime [총알 발사 시간]", shooter.attackCooltime);
+        shooter.attackTime = EditorGUILayout.FloatField("Attack Time [총알 발사 간격 시간]", shooter.attackTime);
+        shooter.stopAttackDelay = EditorGUILayout.FloatField("Stop Attack Delay [총알 발사 정지시간]", shooter.stopAttackDelay);
 
 
 

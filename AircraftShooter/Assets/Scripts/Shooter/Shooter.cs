@@ -161,13 +161,14 @@ public class Shooter : MonoBehaviour
     [Header("AttackCoolTime")]
     public float attackCooltime = 0f;
     public float attackTime = 0f;
+    public float stopAttackDelay = 0f;
     public float attackTimeReset = 0f;
-    public float stopAttack = 0f;
     public bool canAttack = true;
 
     delegate void ShootFunc();
     ShootFunc shootFunc;
     bool isInitialized;
+    bool isRunning = false;
 
     int isCalculatedDamage;
     public int CalculatedDamage { get { return isCalculatedDamage; } set { isCalculatedDamage = value; } }
@@ -193,6 +194,7 @@ public class Shooter : MonoBehaviour
         SetType(this.shootingType);
 
         isInitialized = true;
+        isRunning = true;
 
         if (shootingType == ShootingType.CustomShape) {
             InitCustomShape();
@@ -251,22 +253,22 @@ public class Shooter : MonoBehaviour
 
     public IEnumerator CoCheckDistance() 
     {
-
-            while (true) 
+        while (isRunning)
+        {
+            if (canAttack)
             {
-                if (canAttack) 
-                {
-                    StartCoroutine(CoAttack());
-                    yield break;
-                }
-                yield return new WaitForSeconds(0.0f);
+                StartCoroutine(CoAttack());
+                yield break;
             }
+            yield return new WaitForSeconds(0.1f);
+        }
     }
 
     private IEnumerator CoAttack() 
     {
         yield return new WaitForSeconds(attackTime);
         Shoot();
+        //yield return new WaitForSeconds(stopAttackDelay);
        
         StartCoroutine(CoAttackCooltime());
         StartCoroutine(CoCheckDistance());
@@ -275,19 +277,19 @@ public class Shooter : MonoBehaviour
 
     private IEnumerator CoAttackCooltime()
     {
-            canAttack = false;
-            yield return new WaitForSeconds(attackCooltime);
-            canAttack = true;
+        canAttack = false;
+        yield return new WaitForSeconds(attackTimeReset);
+        canAttack = true;
     }
 
     public IEnumerator CoStopAttackCooltime()
     {
-        while(true)
+        while(isRunning)
         {
-            attackCooltime = 0f;
-            yield return new WaitForSeconds(stopAttack);
-            attackCooltime = attackTimeReset;
+            attackTimeReset = 0f;
             yield return new WaitForSeconds(attackCooltime);
+            attackTimeReset = stopAttackDelay;
+            yield return new WaitForSeconds(attackTimeReset);
         }
     }
 
@@ -657,6 +659,11 @@ public class Shooter : MonoBehaviour
         }
     }
 
+    public void StopAllCoroutine()
+    {
+        isRunning = false;
+    }
+
     public void UpdateNwayOption(float angleRange, int count) 
     {
         this.angleRange = angleRange;
@@ -817,7 +824,7 @@ public class Shooter : MonoBehaviour
         pattern.attackCooltime = attackCooltime;
         pattern.attackTime = attackTime;
         pattern.attackTimeReset = attackTimeReset;
-        pattern.stopAttack = stopAttack;
+        stopAttackDelay = pattern.stopAttackDelay;
 
         Debug.Log("Pattern saved!");
     }
@@ -865,7 +872,7 @@ public class Shooter : MonoBehaviour
         attackCooltime = pattern.attackCooltime;
         attackTime = pattern.attackTime;
         attackTimeReset = pattern.attackTimeReset;
-        stopAttack = pattern.stopAttack;
+        stopAttackDelay = pattern.stopAttackDelay;
 
         Debug.Log("Pattern loaded!");
     }

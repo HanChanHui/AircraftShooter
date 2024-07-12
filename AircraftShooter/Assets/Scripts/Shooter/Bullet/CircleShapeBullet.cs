@@ -56,7 +56,6 @@ public class CircleShapeBullet : MonoBehaviour, IMemoryPool
 
         isDead = false;
 
-        Debug.Log(shapeType);
         if(shapeType == Consts.ShapeType.Circle)
         {
             CirclePatterns();

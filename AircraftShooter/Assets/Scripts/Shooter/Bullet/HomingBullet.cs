@@ -8,7 +8,7 @@ public class HomingBullet : Bullet {
     [SerializeField] string shootSfx;
     [SerializeField] string hitSfx;
 
-    Transform targetTransform;
+    [SerializeField] Transform targetTransform;
     Rigidbody myRigidbody;
     float turnSpeed;
     bool findTarget;

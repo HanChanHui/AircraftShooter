@@ -6,10 +6,9 @@ using UnityEngine;
 
 public class EnemyCtr : MonoBehaviour
 {
-
     public List<Shooter> shooters = new List<Shooter>();
 
-    private void Start() 
+    private void Start()
     {
         foreach (var shooter in shooters)
         {
@@ -21,5 +20,5 @@ public class EnemyCtr : MonoBehaviour
             }
         }
     }
-    
+
 }
