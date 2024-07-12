@@ -9,7 +9,7 @@ public class ChildBullet : MonoBehaviour, IMemoryPool
     [SerializeField] private float lifeTime;
     [SerializeField] private float angleSpeed;
     private Transform parentTransform;
-    public CircleShapeBullet ParentBullet { get; set; }
+    public ShapeBullet ParentBullet { get; set; }
 
     private Transform myTransform;
 

@@ -204,7 +204,7 @@ public class ShooterEditor : Editor
                 break;
 
              case Shooter.ShootingType.Cross:
-                shooter.bulletType = Consts.BulletType.ShapeBullet;
+                //shooter.bulletType = Consts.BulletType.ShapeBullet;
                 break;
 
             case Shooter.ShootingType.Arc:
@@ -223,8 +223,8 @@ public class ShooterEditor : Editor
                 shooter.pat_height = EditorGUILayout.IntField("Pat Height", shooter.pat_height);
                 break;
 
-            case Shooter.ShootingType.CircleShape:
-                shooter.bulletType = Consts.BulletType.CircleShapeBullet;
+            case Shooter.ShootingType.CustomShapeForward:
+                shooter.bulletType = Consts.BulletType.ShapeBullet;
                 EditorGUILayout.LabelField("CircleShape", EditorStyles.boldLabel);
                 shooter.shapeType = (Consts.ShapeType)EditorGUILayout.EnumPopup("Shape Type", shooter.shapeType);
                 shooter.vertexShape = EditorGUILayout.IntField("VertexShape", shooter.vertexShape);

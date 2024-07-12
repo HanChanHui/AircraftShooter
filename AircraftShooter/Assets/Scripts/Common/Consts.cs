@@ -11,7 +11,6 @@ namespace Consts
         DelayHomingBullet,
         ArcBullet,
         ShapeBullet,
-        CircleShapeBullet,
         ChildBullet,
         ShooterBullet,
     }

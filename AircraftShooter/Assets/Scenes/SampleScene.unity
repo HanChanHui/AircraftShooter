@@ -166,9 +166,6 @@ MonoBehaviour:
     obj: {fileID: 4135271898269737915, guid: 72928c1a23a0a1840bdf99b2fea065d0, type: 3}
     count: 100
   - type: ShapeBullet
-    obj: {fileID: 8339991416357701776, guid: 7b12904d055acc544a946dd83a9de936, type: 3}
-    count: 100
-  - type: CircleShapeBullet
     obj: {fileID: 2192237106023745383, guid: 4f396ce95a9011941a3dcb2d3da4c819, type: 3}
     count: 100
   - type: ChildBullet
@@ -176,7 +173,7 @@ MonoBehaviour:
     count: 500
   - type: ShooterBullet
     obj: {fileID: 9188836725549900453, guid: e55b4bf148e0ca54ca5fda9212589225, type: 3}
-    count: 500
+    count: 300
 --- !u!4 &56202718
 Transform:
   m_ObjectHideFlags: 0
@@ -531,17 +528,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f4a2a817573ace145b10f01b66227770, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  shootingType: 14
+  shootingType: 25
   muzzle: {fileID: 1014086435}
   showMuzzleFlash: 0
   shootingPattern: {fileID: 0}
   savePattern: 0
   loadPattern: 0
-  bulletType: 1
+  bulletType: 4
   power: 0
   speed: 5
   speedRate: 0
-  angle: 0
+  angle: 180
   angleRate: 0
   startDistance: 0
   lifeTime: 5
@@ -579,10 +576,10 @@ MonoBehaviour:
   pat_height: 0
   shapeType: 0
   vertexShape: 0
-  radius: 0
+  radius: 5
   angleSpeed: 0
   segments: 0
-  circleAngle: 0
+  circleAngle: 10
   attackCooltime: 0
   attackTime: 0
   stopAttackDelay: 0.2

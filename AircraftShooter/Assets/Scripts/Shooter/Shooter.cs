@@ -32,7 +32,7 @@ public class Shooter : MonoBehaviour
         Arc,
         CustomShape,
         Pattern,
-        CircleShape,
+        CustomShapeForward,
         ShooterShooter,
     };
 
@@ -517,12 +517,12 @@ public class Shooter : MonoBehaviour
 
     void CrossShoot() 
     {
-        ShapeBullet bullet = HSPoolManager.Instance.NewItem<ShapeBullet>(bulletType.ToString());
-        if (bullet) 
-        {
-            bullet.Create(muzzle.position, muzzle.rotation, isCalculatedDamage,
-                    speed, isCritical);
-        }
+        // ShapeBullet bullet = HSPoolManager.Instance.NewItem<ShapeBullet>(bulletType.ToString());
+        // if (bullet) 
+        // {
+        //     bullet.Create(muzzle.position, muzzle.rotation, isCalculatedDamage,
+        //             speed, isCritical);
+        // }
     }
 
     void ArcShoot() 
@@ -565,7 +565,7 @@ public class Shooter : MonoBehaviour
 
     void CirclePatterns()
     {
-        CircleShapeBullet centorbullet = HSPoolManager.Instance.NewItem<CircleShapeBullet>(bulletType.ToString());
+        ShapeBullet centorbullet = HSPoolManager.Instance.NewItem<ShapeBullet>(bulletType.ToString());
 
         if (centorbullet) 
         {
@@ -764,7 +764,7 @@ public class Shooter : MonoBehaviour
                 return CustomShapeShoot;
             case ShootingType.Pattern:
                 return PatternShoot;
-            case ShootingType.CircleShape:
+            case ShootingType.CustomShapeForward:
                 return CircleShapeShoot;
             case ShootingType.ShooterShooter:
                 return ShooterShoot;
