@@ -163,6 +163,7 @@ public class Shooter : MonoBehaviour
     public float attackTime = 0f;
     public float stopAttackDelay = 0f;
     public float attackTimeReset = 0f;
+    public float attackFixedTime = 0f;
     public bool canAttack = true;
 
     delegate void ShootFunc();
@@ -262,40 +263,65 @@ public class Shooter : MonoBehaviour
             }
             yield return new WaitForSeconds(0.1f);
         }
+        yield return null;
     }
 
-    private IEnumerator CoAttack() 
+    private IEnumerator CoAttack()
     {
-        yield return new WaitForSeconds(attackTime);
-        Shoot();
-        //yield return new WaitForSeconds(stopAttackDelay);
-       
-        StartCoroutine(CoAttackCooltime());
-        StartCoroutine(CoCheckDistance());
+        if (isRunning)
+        {
+            yield return new WaitForSeconds(attackTime);
+            Shoot();
+
+            StartCoroutine(CoAttackCooltime());
+            StartCoroutine(CoCheckDistance());
+        }
     }
 
 
     private IEnumerator CoAttackCooltime()
     {
-        canAttack = false;
-        yield return new WaitForSeconds(attackTimeReset);
-        canAttack = true;
+        if (isRunning)
+        {
+            canAttack = false;
+            yield return new WaitForSeconds(attackTimeReset);
+            canAttack = true;
+        }
     }
 
     public IEnumerator CoStopAttackCooltime()
     {
+        if(attackFixedTime > 0)
+        {
+            StartCoroutine(CoFixedAttackCooltime());
+        }
+
         while(isRunning)
         {
-            attackTimeReset = 0f;
+            //attackTimeReset = 0f;
             yield return new WaitForSeconds(attackCooltime);
             attackTimeReset = stopAttackDelay;
             yield return new WaitForSeconds(attackTimeReset);
         }
     }
 
+    public IEnumerator CoFixedAttackCooltime()
+    {
+        yield return new WaitForSeconds(attackFixedTime);
+        isRunning = false;
+    }
+
+    public void StartShoot()
+    {
+        StopAllCoroutine();
+        isRunning = true;
+        StartCoroutine(CoCheckDistance());
+        StartCoroutine(CoStopAttackCooltime());
+    }
 
     // temp
-    public void Shoot(int damage, bool isCritical) {
+    public void Shoot(int damage, bool isCritical) 
+    {
         isCalculatedDamage = damage;
         this.isCritical = isCritical;
 

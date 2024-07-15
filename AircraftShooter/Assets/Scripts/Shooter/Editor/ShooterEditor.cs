@@ -9,7 +9,14 @@ public class ShooterEditor : Editor
         Shooter shooter = (Shooter)target;
 
         var newType = (Shooter.ShootingType)EditorGUILayout.EnumPopup("Shooting Type", shooter.shootingType);
-        shooter.shootingType = newType;
+        // ShootingType selection
+        if (newType != shooter.shootingType)
+        {
+            shooter.RemoveType(shooter.shootingType);
+            shooter.SetType(newType);
+            shooter.shootingType = newType;
+        }
+        EditorGUILayout.LabelField(" ", EditorStyles.boldLabel);
 
         // 기본 인스펙터 필드
         EditorGUILayout.LabelField("Basic", EditorStyles.boldLabel);
@@ -31,14 +38,6 @@ public class ShooterEditor : Editor
         shooter.angleRate = EditorGUILayout.FloatField("Angle Rate [총알 회전 가속도]", shooter.angleRate);
         shooter.startDistance = EditorGUILayout.FloatField("Start Distance [총알 발사 시작 거리]", shooter.startDistance);
         shooter.lifeTime = EditorGUILayout.FloatField("Life Time [총알 생존시간]", shooter.lifeTime);
-
-        // ShootingType selection
-        //var newType = (Shooter.ShootingType)EditorGUILayout.EnumPopup("Shooting Type", shooter.shootingType);
-        if (newType != shooter.shootingType)
-        {
-            shooter.RemoveType(shooter.shootingType);
-            shooter.SetType(newType);
-        }
         
 
         EditorGUILayout.LabelField(" ", EditorStyles.boldLabel);
@@ -249,8 +248,13 @@ public class ShooterEditor : Editor
         shooter.attackCooltime = EditorGUILayout.FloatField("Attack Cooltime [총알 발사 시간]", shooter.attackCooltime);
         shooter.attackTime = EditorGUILayout.FloatField("Attack Time [총알 발사 간격 시간]", shooter.attackTime);
         shooter.stopAttackDelay = EditorGUILayout.FloatField("Stop Attack Delay [총알 발사 정지시간]", shooter.stopAttackDelay);
+        shooter.attackFixedTime = EditorGUILayout.FloatField("Attack Fixed Time [정해진 시간동안 총알 발사]", shooter.attackFixedTime);
 
-
+        EditorGUILayout.LabelField(" ", EditorStyles.boldLabel);
+        if (GUILayout.Button("Start Shooter"))
+        {
+            shooter.StartShoot();
+        }
 
         // 변경 사항 저장
         if (GUI.changed)

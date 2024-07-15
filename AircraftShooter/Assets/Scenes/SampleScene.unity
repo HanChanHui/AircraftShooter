@@ -582,8 +582,9 @@ MonoBehaviour:
   circleAngle: 10
   attackCooltime: 0
   attackTime: 0
-  stopAttackDelay: 0.2
+  stopAttackDelay: 1
   attackTimeReset: 1
+  attackFixedTime: 3
   canAttack: 1
 --- !u!4 &1014086435
 Transform:
