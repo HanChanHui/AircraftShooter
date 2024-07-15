@@ -8,24 +8,16 @@ public class ShooterEditor : Editor
     {
         Shooter shooter = (Shooter)target;
 
+        EditorGUILayout.LabelField("Pattern Type", EditorStyles.boldLabel);
         var newType = (Shooter.ShootingType)EditorGUILayout.EnumPopup("Shooting Type", shooter.shootingType);
         // ShootingType selection
-        if (newType != shooter.shootingType)
-        {
-            shooter.RemoveType(shooter.shootingType);
-            shooter.SetType(newType);
-            shooter.shootingType = newType;
-        }
+        StopPattern(newType, shooter);
         EditorGUILayout.LabelField(" ", EditorStyles.boldLabel);
 
         // 기본 인스펙터 필드
         EditorGUILayout.LabelField("Basic", EditorStyles.boldLabel);
         shooter.muzzle = (Transform)EditorGUILayout.ObjectField("Muzzle", shooter.muzzle, typeof(Transform), true);
-        shooter.showMuzzleFlash = EditorGUILayout.Toggle("Show Muzzle Flash", shooter.showMuzzleFlash);
 
-        shooter.shootingPattern = (ShootingPattern)EditorGUILayout.ObjectField("Shooting Pattern", shooter.shootingPattern, typeof(ShootingPattern), false);
-        shooter.savePattern = EditorGUILayout.Toggle("Save Pattern", shooter.savePattern);
-        shooter.loadPattern = EditorGUILayout.Toggle("Load Pattern", shooter.loadPattern);
         EditorGUILayout.LabelField(" ", EditorStyles.boldLabel);
 
         // Bullet fields
@@ -224,7 +216,7 @@ public class ShooterEditor : Editor
 
             case Shooter.ShootingType.CustomShapeForward:
                 shooter.bulletType = Consts.BulletType.ShapeBullet;
-                EditorGUILayout.LabelField("CircleShape", EditorStyles.boldLabel);
+                EditorGUILayout.LabelField("CustomShapeForward", EditorStyles.boldLabel);
                 shooter.shapeType = (Consts.ShapeType)EditorGUILayout.EnumPopup("Shape Type", shooter.shapeType);
                 shooter.vertexShape = EditorGUILayout.IntField("VertexShape", shooter.vertexShape);
                 shooter.radius = EditorGUILayout.FloatField("Radius", shooter.radius);
@@ -251,15 +243,35 @@ public class ShooterEditor : Editor
         shooter.attackFixedTime = EditorGUILayout.FloatField("Attack Fixed Time [정해진 시간동안 총알 발사]", shooter.attackFixedTime);
 
         EditorGUILayout.LabelField(" ", EditorStyles.boldLabel);
-        if (GUILayout.Button("Start Shooter"))
+        if (GUILayout.Button("Start Shoot"))
         {
             shooter.StartShoot();
+        }
+
+        EditorGUILayout.LabelField(" ", EditorStyles.boldLabel);
+        if (GUILayout.Button("Save Shooter"))
+        {
+            shooter.SaveParameters();
+        }
+        if (GUILayout.Button("Load Shooter"))
+        {
+            shooter.LoadParameters();
         }
 
         // 변경 사항 저장
         if (GUI.changed)
         {
             EditorUtility.SetDirty(target);
+        }
+    }
+
+    void StopPattern(Shooter.ShootingType _newType, Shooter _shooter)
+    {
+         if (_newType != _shooter.shootingType)
+        {
+            _shooter.RemoveType(_shooter.shootingType);
+            _shooter.SetType(_newType);
+            _shooter.shootingType = _newType;
         }
     }
 }

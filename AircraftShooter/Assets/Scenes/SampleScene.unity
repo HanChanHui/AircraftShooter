@@ -528,13 +528,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f4a2a817573ace145b10f01b66227770, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  shootingType: 25
+  shootingType: 23
   muzzle: {fileID: 1014086435}
-  showMuzzleFlash: 0
-  shootingPattern: {fileID: 0}
-  savePattern: 0
-  loadPattern: 0
-  bulletType: 4
+  bulletType: 0
   power: 0
   speed: 5
   speedRate: 0
@@ -548,8 +544,8 @@ MonoBehaviour:
   rotateBulletCore: 0
   rotateBulletOffset: {x: 0, y: 0, z: 0}
   forwardAngleSpeed: 0
-  angleRange: 0
-  count: 1
+  angleRange: 30
+  count: 3
   multipleStep: 0
   multipleRange: 0
   turnSpeed: 1
@@ -582,9 +578,9 @@ MonoBehaviour:
   circleAngle: 10
   attackCooltime: 0
   attackTime: 0
-  stopAttackDelay: 1
+  stopAttackDelay: 0.5
   attackTimeReset: 1
-  attackFixedTime: 3
+  attackFixedTime: 5
   canAttack: 1
 --- !u!4 &1014086435
 Transform:

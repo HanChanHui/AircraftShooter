@@ -1,9 +1,8 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "ShootingPattern", menuName = "ScriptableObjects/ShootingPattern", order = 1)]
-public class ShootingPattern : ScriptableObject
+
+public class ShootingData
 {
     [Header("Basic")]
     public Shooter.ShootingType shootingType;
@@ -72,7 +71,7 @@ public class ShootingPattern : ScriptableObject
     public float arrivalTime;
     public float height;
 
-    [Header("CircleShape")]
+    [Header("CustomShapeForward")]
     public Consts.ShapeType shapeType;
     public int vertexShape;
     public float radius;
@@ -81,8 +80,9 @@ public class ShootingPattern : ScriptableObject
     public int circleAngle;
 
     [Header("AttackCoolTime")]
-    public float attackCooltime;
-    public float attackTime;
-    public float attackTimeReset;
-    public float stopAttackDelay;
+    public float attackCooltime = 0f;
+    public float attackTime = 0f;
+    public float stopAttackDelay = 0f;
+    public float attackTimeReset = 0f;
+    public float attackFixedTime = 0f;
 }
