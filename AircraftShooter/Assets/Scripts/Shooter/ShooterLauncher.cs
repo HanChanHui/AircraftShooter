@@ -1,128 +1,101 @@
 using System.Collections;
 using System.Collections.Generic;
-using System.IO;
 using Newtonsoft.Json;
 using UnityEngine;
 using System;
 
+[Serializable]
+public class ShooterJsonFiles
+{
+    public List<TextAsset> jsonFiles = new List<TextAsset>();
+}
+
 public class ShooterLauncher : MonoBehaviour
 {
-    [SerializeField] private List<Shooter> shooters = new List<Shooter>();
-
-    [SerializeField] private List<TextAsset> jsonFiles = new List<TextAsset>(); // JSON 파일 리스트
-
-    private List<BaseParameters> parametersList = new List<BaseParameters>(); // 파라미터 리스트
-    private int currentParameterIndex = 0;
-    private Shooter shooter;
+    public List<Shooter> shooters = new List<Shooter>();
+    public List<ShooterJsonFiles> shooterJsonFilesList = new List<ShooterJsonFiles>(); // 각 Shooter의 JSON 파일 리스트
 
     [SerializeField] private float term = 1f;
 
-
-    private void Awake()
-    {
-        shooter = GetComponentInChildren<Shooter>();
-    }
     void Start()
     {
-        foreach (var shooter in shooters)
+        for (int i = 0; i < shooters.Count; i++)
         {
-            if (shooter != null)
+            if (shooters[i] != null)
             {
-                shooter.Init();
+                shooters[i].Init();
+                //LoadParameters(i);
+                shooters[i].StartCoroutine(ShooterRoutine(shooters[i], i));
             }
         }
-
-        LoadAllParameters();
-        ApplyCurrentParameters();
-        if(parametersList.Count > 0)
-        {
-            StartCoroutine(OnShooterLauncher());
-        }
-        
     }
 
-    private IEnumerator OnShooterLauncher()
+    private IEnumerator ShooterRoutine(Shooter shooter, int index)
     {
-        shooter.StartShoot();
-        StartCoroutine(CoReStart());
-        yield return null;
-    }
+        List<BaseParameters> parametersList = LoadParameters(index);
+        int currentParameterIndex = 0;
 
-    private IEnumerator CoReStart()
-    {
-        while(true)
+        while (true)
         {
-            if(!shooter.IsRunning)
+            if (parametersList.Count > 0)
             {
+                shooter.ApplyParameters(parametersList[currentParameterIndex]);
+                shooter.StartShoot();
+
+                while (shooter.IsRunning)
+                {
+                    yield return new WaitForSeconds(0.1f);
+                }
+
+                currentParameterIndex = (currentParameterIndex + 1) % parametersList.Count;
                 yield return new WaitForSeconds(term);
-                NextParameters();
-                StartCoroutine(OnShooterLauncher());
-                break;
-            }
-            yield return new WaitForSeconds(0.1f);
-        }
-        yield return null;
-    }
-
-    private void LoadAllParameters()
-    {
-        foreach (var textAsset in jsonFiles)
-        {
-            if (textAsset != null)
-            {
-                try
-                {
-                    string json = textAsset.text;
-
-                    // TypeNameHandling을 설정하여 타입 정보를 포함
-                    JsonSerializerSettings settings = new JsonSerializerSettings
-                    {
-                        TypeNameHandling = TypeNameHandling.All
-                    };
-
-                    BaseParameters parameters = JsonConvert.DeserializeObject<BaseParameters>(json, settings);
-                    if (parameters != null)
-                    {
-                        parametersList.Add(parameters);
-                    }
-                }
-                catch (Exception ex)
-                {
-                    Debug.LogError("Error loading JSON from TextAsset: " + textAsset.name + " - " + ex.Message);
-                }
             }
             else
             {
-                Debug.LogWarning("TextAsset is null.");
+                Debug.LogWarning("No parameters to apply for shooter " + index);
+                yield break;
             }
         }
     }
 
-    // 현재 파라미터를 자식 오브젝트 Shooter에 적용하는 메서드
-    private void ApplyCurrentParameters()
+    private List<BaseParameters> LoadParameters(int index)
     {
-        if (parametersList.Count == 0)
+        List<BaseParameters> parametersList = new List<BaseParameters>();
+
+        if (index >= 0 && index < shooterJsonFilesList.Count)
         {
-            Debug.LogWarning("No parameters to apply.");
-            return;
+            foreach (var textAsset in shooterJsonFilesList[index].jsonFiles)
+            {
+                if (textAsset != null)
+                {
+                    try
+                    {
+                        string json = textAsset.text;
+
+                        // TypeNameHandling을 설정하여 타입 정보를 포함
+                        JsonSerializerSettings settings = new JsonSerializerSettings
+                        {
+                            TypeNameHandling = TypeNameHandling.All
+                        };
+
+                        BaseParameters parameters = JsonConvert.DeserializeObject<BaseParameters>(json, settings);
+                        if (parameters != null)
+                        {
+                            parametersList.Add(parameters);
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        Debug.LogError("Error loading JSON from TextAsset: " + textAsset.name + " - " + ex.Message);
+                    }
+                }
+                else
+                {
+                    Debug.LogWarning("TextAsset is null.");
+                }
+            }
         }
 
-        BaseParameters currentParameters = parametersList[currentParameterIndex];
-        if (shooter != null)
-        {
-            shooter.ApplyParameters(currentParameters);
-            Debug.Log("Applied parameters from: " + jsonFiles[currentParameterIndex]);
-        }
-        else
-        {
-            Debug.LogWarning("No Shooter component found in children.");
-        }
-    }
-
-    // 다음 파라미터로 전환하는 메서드
-    public void NextParameters()
-    {
-        currentParameterIndex = (currentParameterIndex + 1) % parametersList.Count;
-        ApplyCurrentParameters();
+        return parametersList;
     }
 }

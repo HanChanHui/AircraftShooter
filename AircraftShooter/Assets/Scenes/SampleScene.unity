@@ -309,7 +309,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 420261940}
-  - component: {fileID: 420261941}
   - component: {fileID: 420261942}
   m_Layer: 0
   m_Name: Enemy
@@ -333,22 +332,9 @@ Transform:
   m_Children:
   - {fileID: 244896582}
   - {fileID: 1014086435}
+  - {fileID: 1987226293}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &420261941
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 420261939}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 79cefd4f842138b45b4ec0cc45689ca4, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  shooters:
-  - {fileID: 1014086434}
 --- !u!114 &420261942
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -361,10 +347,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 76a702ecb075c6942bf3185ca1730007, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  jsonFiles:
-  - C:/Users/stayy/Documents/GitHub/AircraftShooter/AircraftShooter/Assets/Resources/Data/RollingNwayShooter.json
-  - C:/Users/stayy/Documents/GitHub/AircraftShooter/AircraftShooter/Assets/Resources/Data/ForwardShoot.json
-  - C:/Users/stayy/Documents/GitHub/AircraftShooter/AircraftShooter/Assets/Resources/Data/CustomShapeForwardShoot.json
+  shooters:
+  - {fileID: 1014086434}
+  - {fileID: 1987226292}
+  shooterJsonFilesList:
+  - jsonFiles:
+    - {fileID: 4900000, guid: 21f892ddb5895654b9fc858688fd0124, type: 3}
+    - {fileID: 4900000, guid: f4d93cd82da61b644851dd4bde9c8a62, type: 3}
+    - {fileID: 4900000, guid: f7eae77f474566241a872ab9f8734280, type: 3}
+  - jsonFiles:
+    - {fileID: 4900000, guid: f7eae77f474566241a872ab9f8734280, type: 3}
+  term: 1
 --- !u!1 &705507993
 GameObject:
   m_ObjectHideFlags: 0
@@ -804,6 +797,105 @@ MonoBehaviour:
   target: {fileID: 1611185765}
   offset: {x: 0, y: 22.84, z: -15.86}
   smoothSpeed: 0.125
+--- !u!1 &1987226291
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1987226293}
+  - component: {fileID: 1987226292}
+  m_Layer: 0
+  m_Name: Shooter1
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1987226292
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1987226291}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4a2a817573ace145b10f01b66227770, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  shootingType: 0
+  muzzle: {fileID: 1987226293}
+  bulletType: 0
+  power: 0
+  speed: 0
+  speedRate: 0
+  angle: 0
+  angleRate: 0
+  startDistance: 0
+  lifeTime: 0
+  rot: 0
+  vertex: 3
+  sup: 3
+  rotateBulletCore: 0
+  rotateBulletOffset: {x: 0, y: 0, z: 0}
+  forwardAngleSpeed: 0
+  angleRange: 0
+  count: 0
+  multipleStep: 0
+  multipleRange: 0
+  turnSpeed: 0
+  decreaseHomingSpeed: 0
+  homingSpeedRate: 0
+  delayTime: 0
+  nWayCount: 0
+  wavingAngleRange: 0
+  cycle: 0
+  moveTime: 0
+  stopTime: 0
+  placedStopSpeed: 0
+  targetTransform: {fileID: 0}
+  stopAttackCooltime: 1
+  targetfixedAngle: 0
+  groupSpeed: 0
+  groupCount: 0
+  speedRange: 0
+  groupAngle: 0
+  groupInterval: 0
+  arrivalTime: 0
+  height: 0
+  pat_width: 0
+  pat_height: 0
+  shapeType: 0
+  vertexShape: 0
+  radius: 0
+  angleSpeed: 0
+  segments: 0
+  circleAngle: 0
+  attackCooltime: 0
+  attackTime: 0
+  stopAttackDelay: 0
+  attackTimeReset: 0
+  attackFixedTime: 0
+  canAttack: 1
+  jsonName: 
+--- !u!4 &1987226293
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1987226291}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 2, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 420261940}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &726228802289895866
 PrefabInstance:
   m_ObjectHideFlags: 0
