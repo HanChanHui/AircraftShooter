@@ -1,10 +1,12 @@
 using Consts;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Serialization;
 using System.IO;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEditor;
+using System;
 
 
 public class Shooter : MonoBehaviour
@@ -352,14 +354,14 @@ public class Shooter : MonoBehaviour
     {
         for (int i = 0; i < count; i++) 
         {
-            BasicShoot(speed, speedRate, angle + angleRange * (Random.Range(0, 1.0f) - 0.5f) + (forwardAngleSpeed * Time.time % 360), angleRate, muzzle.position);
+            BasicShoot(speed, speedRate, angle + angleRange * (UnityEngine.Random.Range(0, 1.0f) - 0.5f) + (forwardAngleSpeed * Time.time % 360), angleRate, muzzle.position);
         }
     }
 
     void RandomCircleShoot() 
     {
         for (int i = 0; i < count; i++) {
-            BasicShoot(speed, speedRate, Random.Range(0, 360f), angleRate, muzzle.position);
+            BasicShoot(speed, speedRate, UnityEngine.Random.Range(0, 360f), angleRate, muzzle.position);
         }
     }
 
@@ -406,13 +408,13 @@ public class Shooter : MonoBehaviour
             bullet.Init(turnSpeed, null, homingSpeedRate, decreaseHomingSpeed);
             bullet.CheckOutBound = this.CheckOutBound;
             bullet.Create(muzzle.position, muzzle.rotation, isCalculatedDamage,
-                    speed, speedRate, angle + angleRange * (Random.Range(0, 1.0f) - 0.5f), angleRate, isCritical, startDistance, lifeTime);
+                    speed, speedRate, angle + angleRange * (UnityEngine.Random.Range(0, 1.0f) - 0.5f), angleRate, isCritical, startDistance, lifeTime);
         }
     }
 
     void RandomDirectionalShoot() 
     {
-        BasicShoot(speed, speedRate, angle + angleRange * (Random.Range(0, 1.0f) - 0.5f), angleRate, muzzle.position);
+        BasicShoot(speed, speedRate, angle + angleRange * (UnityEngine.Random.Range(0, 1.0f) - 0.5f), angleRate, muzzle.position);
     }
 
     void RollingNway() 
@@ -472,8 +474,8 @@ public class Shooter : MonoBehaviour
     {
         for (int i = 0; i < count; i++) 
         {
-            BasicShoot(speed + speedRange * Random.Range(0, 1.0f), 0,
-                angle + angleRange * (Random.Range(0, 1.0f) - 0.5f), 0, muzzle.position);
+            BasicShoot(speed + speedRange * UnityEngine.Random.Range(0, 1.0f), 0,
+                angle + angleRange * (UnityEngine.Random.Range(0, 1.0f) - 0.5f), 0, muzzle.position);
         }
     }
 
@@ -623,19 +625,6 @@ public class Shooter : MonoBehaviour
         return Vector3.SignedAngle(targetDir, forward, Vector3.up);
     }
 
-    // public void RemoveAllBullet() 
-    // {
-    //     if (savePattern) 
-    //     {
-    //         for (int i = 0; i < bulletList.Count; i++) 
-    //         {
-    //             bulletList[i].Stop();
-    //         }
-
-    //         bulletList.Clear();
-    //     }
-    // }
-
     public void StopAllCoroutine()
     {
         isRunning = false;
@@ -755,13 +744,27 @@ public class Shooter : MonoBehaviour
         return Path.Combine(Application.dataPath, "Resources/Data", jsonName + ".json");
     }
 
-    public void SaveParameters()
+   public void SaveParameters()
     {
-        BaseParameters data = CreateParameters();
+        try
+        {
+            BaseParameters data = CreateParameters();
 
-        string json = JsonConvert.SerializeObject(data, Formatting.Indented);
-        File.WriteAllText(GetJsonPath(), json);
-        Debug.Log("Save 완료");
+            // TypeNameHandling을 All로 설정하여 타입 정보를 포함
+            JsonSerializerSettings settings = new JsonSerializerSettings
+            {
+                TypeNameHandling = TypeNameHandling.All,
+                ReferenceLoopHandling = ReferenceLoopHandling.Ignore
+            };
+
+            string json = JsonConvert.SerializeObject(data, Formatting.Indented, settings);
+            File.WriteAllText(GetJsonPath(), json);
+            Debug.Log("Save 완료");
+        }
+        catch (Exception ex)
+        {
+            Debug.LogError("Error saving parameters: " + ex.Message);
+        }
     }
 
     public void LoadParameters()
@@ -773,16 +776,29 @@ public class Shooter : MonoBehaviour
             return;
         }
 
-
-        string json = File.ReadAllText(path);
-        BaseParameters baseData = JsonConvert.DeserializeObject<BaseParameters>(json);
-
-        if (baseData != null)
+        try
         {
-            Debug.Log("Load 완료");
-            isRunning = false;
-            RemoveType(shootingType);
-            ApplyParameters(baseData);
+            string json = File.ReadAllText(path);
+
+            // TypeNameHandling을 All로 설정하여 타입 정보를 포함
+            JsonSerializerSettings settings = new JsonSerializerSettings
+            {
+                TypeNameHandling = TypeNameHandling.All
+            };
+
+            BaseParameters baseData = JsonConvert.DeserializeObject<BaseParameters>(json, settings);
+
+            if (baseData != null)
+            {
+                Debug.Log("Load 완료");
+                isRunning = false;
+                RemoveType(shootingType);
+                ApplyParameters(baseData);
+            }
+        }
+        catch (Exception ex)
+        {
+            Debug.LogError("Error loading parameters: " + ex.Message);
         }
     }
 
@@ -846,7 +862,7 @@ public class Shooter : MonoBehaviour
                 vertex = this.vertex,
                 sup = this.sup,
                 rotateBulletCore = this.rotateBulletCore,
-                rotateBulletOffset = this.rotateBulletOffset
+                //rotateBulletOffset = this.rotateBulletOffset
             };
             break;
         case ShootingType.Homing:
@@ -1031,7 +1047,7 @@ public class Shooter : MonoBehaviour
                 vertex = customShapeData.vertex;
                 sup = customShapeData.sup;
                 rotateBulletCore = customShapeData.rotateBulletCore;
-                rotateBulletOffset = customShapeData.rotateBulletOffset;
+                //rotateBulletOffset = customShapeData.rotateBulletOffset;
                 break;
 
             case HomingParameters homingData:

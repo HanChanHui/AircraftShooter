@@ -9,5 +9,5 @@ public class CustomShapeParameters : BaseParameters
     public int vertex;
     public float sup;
     public bool rotateBulletCore;
-    public Vector3 rotateBulletOffset;
+    //public Vector3 rotateBulletOffset;
 }

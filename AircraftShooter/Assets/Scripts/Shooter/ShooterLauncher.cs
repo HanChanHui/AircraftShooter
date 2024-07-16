@@ -25,7 +25,11 @@ public class ShooterLauncher : MonoBehaviour
         shooter.Init();
         LoadAllParameters();
         ApplyCurrentParameters();
-        StartCoroutine(OnShooterLauncher());
+        if(parametersList.Count > 0)
+        {
+            StartCoroutine(OnShooterLauncher());
+        }
+        
     }
 
     private IEnumerator OnShooterLauncher()

@@ -1,8 +1,8 @@
+using System;
 using Consts;
-using Newtonsoft.Json;
 using UnityEngine;
 
-[JsonConverter(typeof(ParameterConverter))]
+[Serializable]
 public class BaseParameters
 {
     [Header("Basic")]
