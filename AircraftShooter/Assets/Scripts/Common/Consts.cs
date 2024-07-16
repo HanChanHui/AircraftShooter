@@ -4,6 +4,36 @@ using UnityEngine;
 
 namespace Consts
 {
+     public enum ShootingType {
+        None,
+        Forward,
+        Directional,
+        Nway,
+        Circle,
+        RandomNway,
+        RandomCircle,
+        RollingNway,
+        WavingNway,
+        CircleWavingNway,
+        Spreading,
+        RandomSpreading,
+        Overtaking,
+        Multiple,
+        Homing,
+        DelayHoming,
+        RandomHoming,
+        Placed,
+        Aiming,
+        AimingDirectional,
+        Cross,
+        RandomDirectional,
+        Arc,
+        CustomShape,
+        Pattern,
+        CustomShapeForward,
+        ShooterShooter,
+    };
+
      public enum BulletType 
      {
         Bullet,

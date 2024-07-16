@@ -310,6 +310,7 @@ GameObject:
   m_Component:
   - component: {fileID: 420261940}
   - component: {fileID: 420261941}
+  - component: {fileID: 420261942}
   m_Layer: 0
   m_Name: Enemy
   m_TagString: Untagged
@@ -348,6 +349,22 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   shooters:
   - {fileID: 1014086434}
+--- !u!114 &420261942
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 420261939}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 76a702ecb075c6942bf3185ca1730007, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  jsonFiles:
+  - C:/Users/stayy/Documents/GitHub/AircraftShooter/AircraftShooter/Assets/Resources/Data/ForwardShooter.json
+  - C:/Users/stayy/Documents/GitHub/AircraftShooter/AircraftShooter/Assets/Resources/Data/NwayShooter.json
+  term: 0.5
 --- !u!1 &705507993
 GameObject:
   m_ObjectHideFlags: 0
@@ -528,13 +545,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f4a2a817573ace145b10f01b66227770, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  shootingType: 25
+  shootingType: 23
   muzzle: {fileID: 1014086435}
-  showMuzzleFlash: 0
-  shootingPattern: {fileID: 0}
-  savePattern: 0
-  loadPattern: 0
-  bulletType: 4
+  bulletType: 0
   power: 0
   speed: 5
   speedRate: 0
@@ -548,8 +561,8 @@ MonoBehaviour:
   rotateBulletCore: 0
   rotateBulletOffset: {x: 0, y: 0, z: 0}
   forwardAngleSpeed: 0
-  angleRange: 0
-  count: 1
+  angleRange: 30
+  count: 3
   multipleStep: 0
   multipleRange: 0
   turnSpeed: 1
@@ -582,9 +595,11 @@ MonoBehaviour:
   circleAngle: 10
   attackCooltime: 0
   attackTime: 0
-  stopAttackDelay: 0.2
+  stopAttackDelay: 0.5
   attackTimeReset: 1
+  attackFixedTime: 5
   canAttack: 1
+  jsonName: 
 --- !u!4 &1014086435
 Transform:
   m_ObjectHideFlags: 0

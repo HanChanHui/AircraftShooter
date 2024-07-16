@@ -1,53 +1,23 @@
 using Consts;
+using Newtonsoft.Json;
+using System.IO;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEditor;
 
 
 public class Shooter : MonoBehaviour
 {
-    public enum ShootingType {
-        None,
-        Forward,
-        Directional,
-        Nway,
-        Circle,
-        RandomNway,
-        RandomCircle,
-        RollingNway,
-        WavingNway,
-        CircleWavingNway,
-        Spreading,
-        RandomSpreading,
-        Overtaking,
-        Multiple,
-        Homing,
-        DelayHoming,
-        RandomHoming,
-        Placed,
-        Aiming,
-        AimingDirectional,
-        Cross,
-        RandomDirectional,
-        Arc,
-        CustomShape,
-        Pattern,
-        CustomShapeForward,
-        ShooterShooter,
-    };
 
     [Header("Basic")]
     public ShootingType shootingType;
     public Transform muzzle;
-    public bool showMuzzleFlash;
     
-    public ShootingPattern shootingPattern;
-    public bool savePattern;
-    public bool loadPattern;
 
     [Header("Bullet")]
     //public string bulletType;
-    public Consts.BulletType bulletType;
+    public BulletType bulletType;
     public int power;
     public float speed;
     public float speedRate;
@@ -69,7 +39,6 @@ public class Shooter : MonoBehaviour
     List<float> cs_v = new List<float>();
     List<float> cs_xx = new List<float>();
 
-    Quaternion muzzleRot;
 
     bool isCritical;
     int currPower;
@@ -149,7 +118,7 @@ public class Shooter : MonoBehaviour
     "#   # #   # #     #     #       #  \n" +
     "####  ##### ##### ##### #####   #  ";
 
-    [Header("CircleShape")]
+    [Header("CustomShapeForward")]
     public ShapeType shapeType;
     public int vertexShape;
     public float radius;
@@ -163,12 +132,15 @@ public class Shooter : MonoBehaviour
     public float attackTime = 0f;
     public float stopAttackDelay = 0f;
     public float attackTimeReset = 0f;
+    public float attackFixedTime = 0f;
     public bool canAttack = true;
 
     delegate void ShootFunc();
     ShootFunc shootFunc;
     bool isInitialized;
     bool isRunning = false;
+    public bool IsRunning { get { return isRunning; } set { isRunning = value; } }
+    public string jsonName;
 
     int isCalculatedDamage;
     public int CalculatedDamage { get { return isCalculatedDamage; } set { isCalculatedDamage = value; } }
@@ -200,10 +172,7 @@ public class Shooter : MonoBehaviour
             InitCustomShape();
         }
 
-        if(shootingPattern != null && loadPattern)
-        {
-            LoadPattern(shootingPattern);
-        }
+       
     }
 
     public void SetMuzzle(Transform muzzle) {
@@ -260,42 +229,67 @@ public class Shooter : MonoBehaviour
                 StartCoroutine(CoAttack());
                 yield break;
             }
-            yield return new WaitForSeconds(0.1f);
+            yield return new WaitForSeconds(0f);
         }
+        yield return null;
     }
 
-    private IEnumerator CoAttack() 
+    private IEnumerator CoAttack()
     {
-        yield return new WaitForSeconds(attackTime);
-        Shoot();
-        //yield return new WaitForSeconds(stopAttackDelay);
-       
-        StartCoroutine(CoAttackCooltime());
-        StartCoroutine(CoCheckDistance());
+        if (isRunning)
+        {
+            yield return new WaitForSeconds(attackTime);
+            Shoot();
+
+            StartCoroutine(CoAttackCooltime());
+            StartCoroutine(CoCheckDistance());
+        }
     }
 
 
     private IEnumerator CoAttackCooltime()
     {
-        canAttack = false;
-        yield return new WaitForSeconds(attackTimeReset);
-        canAttack = true;
+        if (isRunning)
+        {
+            canAttack = false;
+            yield return new WaitForSeconds(attackTimeReset);
+            canAttack = true;
+        }
     }
 
     public IEnumerator CoStopAttackCooltime()
     {
+        if(attackFixedTime > 0)
+        {
+            StartCoroutine(CoFixedAttackCooltime());
+        }
+
         while(isRunning)
         {
-            attackTimeReset = 0f;
+            //attackTimeReset = 0f;
             yield return new WaitForSeconds(attackCooltime);
             attackTimeReset = stopAttackDelay;
             yield return new WaitForSeconds(attackTimeReset);
         }
     }
 
+    public IEnumerator CoFixedAttackCooltime()
+    {
+        yield return new WaitForSeconds(attackFixedTime);
+        isRunning = false;
+    }
+
+    public void StartShoot()
+    {
+        StopAllCoroutine();
+        isRunning = true;
+        StartCoroutine(CoCheckDistance());
+        StartCoroutine(CoStopAttackCooltime());
+    }
 
     // temp
-    public void Shoot(int damage, bool isCritical) {
+    public void Shoot(int damage, bool isCritical) 
+    {
         isCalculatedDamage = damage;
         this.isCritical = isCritical;
 
@@ -319,9 +313,6 @@ public class Shooter : MonoBehaviour
                 bullet.RotateBulletCore(offset);
             }
 
-            if (savePattern) {
-                bulletList.Add(bullet);
-            }
         }
     }
 
@@ -396,10 +387,6 @@ public class Shooter : MonoBehaviour
             bullet.CheckOutBound = this.CheckOutBound;
             bullet.Create(muzzle.position, muzzle.rotation, isCalculatedDamage,
                     speed, speedRate, angle, angleRate, isCritical, startDistance, lifeTime);
-
-            if (savePattern) {
-                bulletList.Add(bullet);
-            }
         }
     }
 
@@ -420,11 +407,6 @@ public class Shooter : MonoBehaviour
             bullet.CheckOutBound = this.CheckOutBound;
             bullet.Create(muzzle.position, muzzle.rotation, isCalculatedDamage,
                     speed, speedRate, angle + angleRange * (Random.Range(0, 1.0f) - 0.5f), angleRate, isCritical, startDistance, lifeTime);
-
-            if (savePattern) 
-            {
-                bulletList.Add(bullet);
-            }
         }
     }
 
@@ -463,11 +445,6 @@ public class Shooter : MonoBehaviour
             bullet.CheckOutBound = this.CheckOutBound;
             bullet.Create(muzzle.position, muzzle.rotation, isCalculatedDamage, speed,
                     speedRate, angle, angleRate, isCritical, startDistance, lifeTime);
-
-            if (savePattern) 
-            {
-                bulletList.Add(bullet);
-            }
         }
     }
 
@@ -646,18 +623,18 @@ public class Shooter : MonoBehaviour
         return Vector3.SignedAngle(targetDir, forward, Vector3.up);
     }
 
-    public void RemoveAllBullet() 
-    {
-        if (savePattern) 
-        {
-            for (int i = 0; i < bulletList.Count; i++) 
-            {
-                bulletList[i].Stop();
-            }
+    // public void RemoveAllBullet() 
+    // {
+    //     if (savePattern) 
+    //     {
+    //         for (int i = 0; i < bulletList.Count; i++) 
+    //         {
+    //             bulletList[i].Stop();
+    //         }
 
-            bulletList.Clear();
-        }
-    }
+    //         bulletList.Clear();
+    //     }
+    // }
 
     public void StopAllCoroutine()
     {
@@ -773,108 +750,372 @@ public class Shooter : MonoBehaviour
         }
     }
 
-    private void OnDisable()
+    private string GetJsonPath()
     {
-        if(shootingPattern != null && savePattern)
+        return Path.Combine(Application.dataPath, "Resources/Data", jsonName + ".json");
+    }
+
+    public void SaveParameters()
+    {
+        BaseParameters data = CreateParameters();
+
+        string json = JsonConvert.SerializeObject(data, Formatting.Indented);
+        File.WriteAllText(GetJsonPath(), json);
+        Debug.Log("Save 완료");
+    }
+
+    public void LoadParameters()
+    {
+        string path = GetJsonPathWithOpenFilePanel();
+        if (string.IsNullOrEmpty(path) || !File.Exists(path))
         {
-            SavePattern(shootingPattern);
+            Debug.LogWarning("Save file not found");
+            return;
+        }
+
+
+        string json = File.ReadAllText(path);
+        BaseParameters baseData = JsonConvert.DeserializeObject<BaseParameters>(json);
+
+        if (baseData != null)
+        {
+            Debug.Log("Load 완료");
+            isRunning = false;
+            RemoveType(shootingType);
+            ApplyParameters(baseData);
         }
     }
 
-    public void SavePattern(ShootingPattern pattern)
+     private string GetJsonPathWithOpenFilePanel()
     {
-        pattern.shootingType = shootingType;
-        pattern.bulletType = bulletType;
-        pattern.power = power;
-        pattern.speed = speed;
-        pattern.speedRate = speedRate;
-        pattern.angle = angle;
-        pattern.angleRate = angleRate;
-        pattern.startDistance = startDistance;
-        pattern.lifeTime = lifeTime;
-        pattern.rot = rot;
-        pattern.vertex = vertex;
-        pattern.sup = sup;
-        pattern.rotateBulletCore = rotateBulletCore;
-        pattern.rotateBulletOffset = rotateBulletOffset;
-        pattern.forwardAngleSpeed = forwardAngleSpeed;
-        pattern.angleRange = angleRange;
-        pattern.count = count;
-        pattern.multipleStep = multipleStep;
-        pattern.multipleRange = multipleRange;
-        pattern.turnSpeed = turnSpeed;
-        pattern.decreaseHomingSpeed = decreaseHomingSpeed;
-        pattern.delayTime = delayTime;
-        pattern.nWayCount = nWayCount;
-        pattern.wavingAngleRange = wavingAngleRange;
-        pattern.cycle = cycle;
-        pattern.moveTime = moveTime;
-        pattern.stopTime = stopTime;
-        pattern.placedStopSpeed = placedStopSpeed;
-        pattern.targetTransform = targetTransform;
-        pattern.stopAttackCooltime = stopAttackCooltime;
-        pattern.targetfixedAngle = targetfixedAngle;
-        pattern.groupSpeed = groupSpeed;
-        pattern.groupCount = groupCount;
-        pattern.speedRange = speedRange;
-        pattern.groupAngle = groupAngle;
-        pattern.groupInterval = groupInterval;
-        pattern.arrivalTime = arrivalTime;
-        pattern.height = height;
-        pattern.attackCooltime = attackCooltime;
-        pattern.attackTime = attackTime;
-        pattern.attackTimeReset = attackTimeReset;
-        stopAttackDelay = pattern.stopAttackDelay;
-
-        Debug.Log("Pattern saved!");
+        #if UNITY_EDITOR
+        string path = EditorUtility.OpenFilePanel("Select JSON file", Application.dataPath + "/Resources/Data", "json");
+        return path;
+        #else
+        return null;
+        #endif
     }
 
-    public void LoadPattern(ShootingPattern pattern)
+    private BaseParameters CreateParameters()
     {
-        shootingType = pattern.shootingType;
-        bulletType = pattern.bulletType;
-        power = pattern.power;
-        speed = pattern.speed;
-        speedRate = pattern.speedRate;
-        angle = pattern.angle;
-        angleRate = pattern.angleRate;
-        startDistance = pattern.startDistance;
-        lifeTime = pattern.lifeTime;
-        rot = pattern.rot;
-        vertex = pattern.vertex;
-        sup = pattern.sup;
-        rotateBulletCore = pattern.rotateBulletCore;
-        rotateBulletOffset = pattern.rotateBulletOffset;
-        forwardAngleSpeed = pattern.forwardAngleSpeed;
-        angleRange = pattern.angleRange;
-        count = pattern.count;
-        multipleStep = pattern.multipleStep;
-        multipleRange = pattern.multipleRange;
-        turnSpeed = pattern.turnSpeed;
-        decreaseHomingSpeed = pattern.decreaseHomingSpeed;
-        delayTime = pattern.delayTime;
-        nWayCount = pattern.nWayCount;
-        wavingAngleRange = pattern.wavingAngleRange;
-        cycle = pattern.cycle;
-        moveTime = pattern.moveTime;
-        stopTime = pattern.stopTime;
-        placedStopSpeed = pattern.placedStopSpeed;
-        targetTransform = pattern.targetTransform;
-        stopAttackCooltime = pattern.stopAttackCooltime;
-        targetfixedAngle = pattern.targetfixedAngle;
-        groupSpeed = pattern.groupSpeed;
-        groupCount = pattern.groupCount;
-        speedRange = pattern.speedRange;
-        groupAngle = pattern.groupAngle;
-        groupInterval = pattern.groupInterval;
-        arrivalTime = pattern.arrivalTime;
-        height = pattern.height;
-        attackCooltime = pattern.attackCooltime;
-        attackTime = pattern.attackTime;
-        attackTimeReset = pattern.attackTimeReset;
-        stopAttackDelay = pattern.stopAttackDelay;
+        BaseParameters data = null;
 
-        Debug.Log("Pattern loaded!");
+        switch (shootingType)
+        {
+            case ShootingType.Forward:
+            data = new ForwardParameters
+            {
+                forwardAngleSpeed = this.forwardAngleSpeed,
+                angleRange = this.angleRange,
+                count = this.count
+            };
+            break;
+        case ShootingType.Nway:
+            data = new NwayParameters
+            {
+                angleRange = this.angleRange,
+                count = this.count
+            };
+            break;
+        case ShootingType.Circle:
+            data = new NwayParameters
+            {
+                angleRange = this.angleRange,
+                count = this.count
+            };
+            break;
+        case ShootingType.RandomNway:
+            data = new ForwardParameters
+            {
+                forwardAngleSpeed = this.forwardAngleSpeed,
+                angleRange = this.angleRange,
+                count = this.count
+            };
+            break;
+        case ShootingType.Multiple:
+            data = new MultipleParameters
+            {
+                multipleStep = this.multipleStep,
+                multipleRange = this.multipleRange
+            };
+            break;
+         case ShootingType.CustomShape:
+            data = new CustomShapeParameters
+            {
+                rot = this.rot,
+                vertex = this.vertex,
+                sup = this.sup,
+                rotateBulletCore = this.rotateBulletCore,
+                rotateBulletOffset = this.rotateBulletOffset
+            };
+            break;
+        case ShootingType.Homing:
+            data = new HomingParameters
+            {
+                targetTransform = this.targetTransform,
+                turnSpeed = this.turnSpeed,
+                decreaseHomingSpeed = this.decreaseHomingSpeed,
+                homingSpeedRate = this.homingSpeedRate,
+            };
+            break;
+        case ShootingType.DelayHoming:
+            data = new DelayHomingParameters
+            {
+                turnSpeed = this.turnSpeed,
+                decreaseHomingSpeed = this.decreaseHomingSpeed,
+                homingSpeedRate = this.homingSpeedRate,
+                delayTime = this.delayTime,
+            };
+            break;
+        case ShootingType.RandomHoming:
+            data = new DelayHomingParameters
+            {
+                turnSpeed = this.turnSpeed,
+                decreaseHomingSpeed = this.decreaseHomingSpeed,
+                homingSpeedRate = this.homingSpeedRate,
+            };
+            break;
+        case ShootingType.RollingNway:
+            data = new RollingNwayParameters
+            {
+                forwardAngleSpeed = this.forwardAngleSpeed,
+                angleRange = this.angleRange,
+                count = this.count,
+                nWayCount = this.nWayCount
+            };
+            break;
+        case ShootingType.WavingNway:
+            data = new WavingNwayParameters
+            {
+                forwardAngleSpeed = this.forwardAngleSpeed,
+                angleRange = this.angleRange,
+                count = this.count,
+                wavingAngleRange = this.wavingAngleRange,
+                cycle = this.cycle
+            };
+            break;
+        case ShootingType.CircleWavingNway:
+            data = new WavingNwayParameters
+            {
+                count = this.count,
+                wavingAngleRange = this.wavingAngleRange,
+                cycle = this.cycle
+            };
+            break;
+        case ShootingType.Placed:
+            data = new PlacedParameters
+            {
+                moveTime = this.moveTime,
+                stopTime = this.stopTime,
+                placedStopSpeed = this.placedStopSpeed,
+            };
+            break;
+        case ShootingType.Aiming:
+            data = new AimingParameters
+            {
+                angleRange = this.angleRange,
+                count = this.count,
+                targetTransform = this.targetTransform,
+                stopAttackCooltime = this.stopAttackCooltime,
+                targetfixedAngle = this.targetfixedAngle,
+            };
+            break;
+        case ShootingType.Spreading:
+            data = new SpreadingParameters
+            {
+                angleRange = this.angleRange,
+                count = this.count,
+                groupSpeed = this.groupSpeed,
+                groupCount = this.groupCount
+            };
+            break;
+        case ShootingType.RandomSpreading:
+            data = new RandomSpreadingParameters
+            {
+                angleRange = this.angleRange,
+                count = this.count,
+                speedRange = this.speedRange
+            };
+            break;
+        case ShootingType.Overtaking:
+            data = new OvertakingParameters
+            {
+                angleRange = this.angleRange,
+                count = this.count,
+                groupSpeed = this.groupSpeed,
+                groupCount = this.groupCount,
+                groupAngle = this.groupAngle,
+                groupInterval = this.groupInterval
+            };
+            break;
+        case ShootingType.Arc:
+            data = new ArcParameters
+            {
+                targetTransform = this.targetTransform,
+                arrivalTime = this.arrivalTime,
+                height = this.height
+            };
+            break;
+         case ShootingType.CustomShapeForward:
+            data = new CustomShapeForwardParameters
+            {
+                shapeType = this.shapeType,
+                vertexShape = this.vertexShape,
+                radius = this.radius,
+                segments = this.segments,
+                angleSpeed = this.angleSpeed,
+                circleAngle = this.circleAngle
+            };
+            break;
+            default:
+                data = new BaseParameters();
+                break;
+        }
+
+        // 공통 파라미터 설정
+        data.shootingType = this.shootingType;
+        data.bulletType = this.bulletType;
+        data.power = this.power;
+        data.speed = this.speed;
+        data.speedRate = this.speedRate;
+        data.angle = this.angle;
+        data.angleRate = this.angleRate;
+        data.startDistance = this.startDistance;
+        data.lifeTime = this.lifeTime;
+        data.attackCooltime = this.attackCooltime;
+        data.attackTime = this.attackTime;
+        data.stopAttackDelay = this.stopAttackDelay;
+        data.attackTimeReset = this.attackTimeReset;
+        data.attackFixedTime = this.attackFixedTime;
+
+        return data;
+    }
+
+    public void ApplyParameters(BaseParameters data)
+    {
+        shootingType = data.shootingType;
+        bulletType = data.bulletType;
+        power = data.power;
+        speed = data.speed;
+        speedRate = data.speedRate;
+        angle = data.angle;
+        angleRate = data.angleRate;
+        startDistance = data.startDistance;
+        lifeTime = data.lifeTime;
+        attackCooltime = data.attackCooltime;
+        attackTime = data.attackTime;
+        stopAttackDelay = data.stopAttackDelay;
+        attackTimeReset = data.attackTimeReset;
+        attackFixedTime = data.attackFixedTime;
+
+        switch (data)
+        {
+            case ForwardParameters forwardData:
+                forwardAngleSpeed = forwardData.forwardAngleSpeed;
+                angleRange = forwardData.angleRange;
+                count = forwardData.count;
+                break;
+
+            case NwayParameters nwayData:
+                angleRange = nwayData.angleRange;
+                count = nwayData.count;
+                break;
+
+            case MultipleParameters multipleData:
+                multipleStep = multipleData.multipleStep;
+                multipleRange = multipleData.multipleRange;
+                break;
+
+            case CustomShapeParameters customShapeData:
+                rot = customShapeData.rot;
+                vertex = customShapeData.vertex;
+                sup = customShapeData.sup;
+                rotateBulletCore = customShapeData.rotateBulletCore;
+                rotateBulletOffset = customShapeData.rotateBulletOffset;
+                break;
+
+            case HomingParameters homingData:
+                targetTransform = homingData.targetTransform;
+                turnSpeed = homingData.turnSpeed;
+                decreaseHomingSpeed = homingData.decreaseHomingSpeed;
+                homingSpeedRate = homingData.homingSpeedRate;
+                break;
+
+            case DelayHomingParameters delayHomingData:
+                turnSpeed = delayHomingData.turnSpeed;
+                decreaseHomingSpeed = delayHomingData.decreaseHomingSpeed;
+                homingSpeedRate = delayHomingData.homingSpeedRate;
+                delayTime = delayHomingData.delayTime;
+                break;
+
+            case RollingNwayParameters rollingNwayData:
+                forwardAngleSpeed = rollingNwayData.forwardAngleSpeed;
+                angleRange = rollingNwayData.angleRange;
+                count = rollingNwayData.count;
+                nWayCount = rollingNwayData.nWayCount;
+                break;
+
+            case WavingNwayParameters wavingNwayData:
+                forwardAngleSpeed = wavingNwayData.forwardAngleSpeed;
+                angleRange = wavingNwayData.angleRange;
+                count = wavingNwayData.count;
+                wavingAngleRange = wavingNwayData.wavingAngleRange;
+                cycle = wavingNwayData.cycle;
+                break;
+
+            case PlacedParameters placedData:
+                moveTime = placedData.moveTime;
+                stopTime = placedData.stopTime;
+                placedStopSpeed = placedData.placedStopSpeed;
+                break;
+
+            case AimingParameters aimingData:
+                angleRange = aimingData.angleRange;
+                count = aimingData.count;
+                targetTransform = aimingData.targetTransform;
+                stopAttackCooltime = aimingData.stopAttackCooltime;
+                targetfixedAngle = aimingData.targetfixedAngle;
+                break;
+
+            case SpreadingParameters spreadingData:
+                angleRange = spreadingData.angleRange;
+                count = spreadingData.count;
+                groupSpeed = spreadingData.groupSpeed;
+                groupCount = spreadingData.groupCount;
+                break;
+
+            case RandomSpreadingParameters randomSpreadingData:
+                angleRange = randomSpreadingData.angleRange;
+                count = randomSpreadingData.count;
+                speedRange = randomSpreadingData.speedRange;
+                break;
+
+            case OvertakingParameters overtakingData:
+                angleRange = overtakingData.angleRange;
+                count = overtakingData.count;
+                groupSpeed = overtakingData.groupSpeed;
+                groupCount = overtakingData.groupCount;
+                groupAngle = overtakingData.groupAngle;
+                groupInterval = overtakingData.groupInterval;
+                break;
+
+            case ArcParameters arcData:
+                targetTransform = arcData.targetTransform;
+                arrivalTime = arcData.arrivalTime;
+                height = arcData.height;
+                break;
+
+            case CustomShapeForwardParameters customShapeForwardData:
+                shapeType = customShapeForwardData.shapeType;
+                vertexShape = customShapeForwardData.vertexShape;
+                radius = customShapeForwardData.radius;
+                segments = customShapeForwardData.segments;
+                angleSpeed = customShapeForwardData.angleSpeed;
+                circleAngle = customShapeForwardData.circleAngle;
+                break;
+        }
+
+        SetType(shootingType);
     }
 
 }
