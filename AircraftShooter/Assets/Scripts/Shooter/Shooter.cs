@@ -4,39 +4,11 @@ using System.IO;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEditor;
 
 
 public class Shooter : MonoBehaviour
 {
-    public enum ShootingType {
-        None,
-        Forward,
-        Directional,
-        Nway,
-        Circle,
-        RandomNway,
-        RandomCircle,
-        RollingNway,
-        WavingNway,
-        CircleWavingNway,
-        Spreading,
-        RandomSpreading,
-        Overtaking,
-        Multiple,
-        Homing,
-        DelayHoming,
-        RandomHoming,
-        Placed,
-        Aiming,
-        AimingDirectional,
-        Cross,
-        RandomDirectional,
-        Arc,
-        CustomShape,
-        Pattern,
-        CustomShapeForward,
-        ShooterShooter,
-    };
 
     [Header("Basic")]
     public ShootingType shootingType;
@@ -167,6 +139,8 @@ public class Shooter : MonoBehaviour
     ShootFunc shootFunc;
     bool isInitialized;
     bool isRunning = false;
+    public bool IsRunning { get { return isRunning; } set { isRunning = value; } }
+    public string jsonName;
 
     int isCalculatedDamage;
     public int CalculatedDamage { get { return isCalculatedDamage; } set { isCalculatedDamage = value; } }
@@ -255,7 +229,7 @@ public class Shooter : MonoBehaviour
                 StartCoroutine(CoAttack());
                 yield break;
             }
-            yield return new WaitForSeconds(0.1f);
+            yield return new WaitForSeconds(0f);
         }
         yield return null;
     }
@@ -778,7 +752,7 @@ public class Shooter : MonoBehaviour
 
     private string GetJsonPath()
     {
-        return Path.Combine(Application.dataPath, "Resources/Data/shooterData.json");
+        return Path.Combine(Application.dataPath, "Resources/Data", jsonName + ".json");
     }
 
     public void SaveParameters()
@@ -792,13 +766,15 @@ public class Shooter : MonoBehaviour
 
     public void LoadParameters()
     {
-        if (!File.Exists(GetJsonPath()))
+        string path = GetJsonPathWithOpenFilePanel();
+        if (string.IsNullOrEmpty(path) || !File.Exists(path))
         {
             Debug.LogWarning("Save file not found");
             return;
         }
 
-        string json = File.ReadAllText(GetJsonPath());
+
+        string json = File.ReadAllText(path);
         BaseParameters baseData = JsonConvert.DeserializeObject<BaseParameters>(json);
 
         if (baseData != null)
@@ -808,6 +784,16 @@ public class Shooter : MonoBehaviour
             RemoveType(shootingType);
             ApplyParameters(baseData);
         }
+    }
+
+     private string GetJsonPathWithOpenFilePanel()
+    {
+        #if UNITY_EDITOR
+        string path = EditorUtility.OpenFilePanel("Select JSON file", Application.dataPath + "/Resources/Data", "json");
+        return path;
+        #else
+        return null;
+        #endif
     }
 
     private BaseParameters CreateParameters()
@@ -1005,7 +991,7 @@ public class Shooter : MonoBehaviour
         return data;
     }
 
-    private void ApplyParameters(BaseParameters data)
+    public void ApplyParameters(BaseParameters data)
     {
         shootingType = data.shootingType;
         bulletType = data.bulletType;
@@ -1026,6 +1012,8 @@ public class Shooter : MonoBehaviour
         {
             case ForwardParameters forwardData:
                 forwardAngleSpeed = forwardData.forwardAngleSpeed;
+                angleRange = forwardData.angleRange;
+                count = forwardData.count;
                 break;
 
             case NwayParameters nwayData:

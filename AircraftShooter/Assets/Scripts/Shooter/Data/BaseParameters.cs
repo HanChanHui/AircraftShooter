@@ -1,12 +1,12 @@
-using System;
 using Consts;
+using Newtonsoft.Json;
 using UnityEngine;
 
-[Serializable]
+[JsonConverter(typeof(ParameterConverter))]
 public class BaseParameters
 {
     [Header("Basic")]
-    public Shooter.ShootingType shootingType;
+    public ShootingType shootingType;
 
     [Header("Bullet")]
     public BulletType bulletType;

@@ -1,11 +1,10 @@
-using System.Collections.Generic;
 using UnityEngine;
 
 
 public class ShootingData
 {
     [Header("Basic")]
-    public Shooter.ShootingType shootingType;
+    public Consts.ShootingType shootingType;
 
     [Header("Bullet")]
     public Consts.BulletType bulletType;
