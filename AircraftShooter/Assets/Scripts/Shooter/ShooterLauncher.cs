@@ -3,17 +3,19 @@ using System.Collections.Generic;
 using System.IO;
 using Newtonsoft.Json;
 using UnityEngine;
+using System;
 
 public class ShooterLauncher : MonoBehaviour
 {
-    [SerializeField]
-    private List<string> jsonFiles = new List<string>(); // JSON 파일 경로 리스트
+    [SerializeField] private List<Shooter> shooters = new List<Shooter>();
+
+    [SerializeField] private List<TextAsset> jsonFiles = new List<TextAsset>(); // JSON 파일 리스트
 
     private List<BaseParameters> parametersList = new List<BaseParameters>(); // 파라미터 리스트
     private int currentParameterIndex = 0;
     private Shooter shooter;
 
-    private float term = 1f;
+    [SerializeField] private float term = 1f;
 
 
     private void Awake()
@@ -22,7 +24,14 @@ public class ShooterLauncher : MonoBehaviour
     }
     void Start()
     {
-        shooter.Init();
+        foreach (var shooter in shooters)
+        {
+            if (shooter != null)
+            {
+                shooter.Init();
+            }
+        }
+
         LoadAllParameters();
         ApplyCurrentParameters();
         if(parametersList.Count > 0)
@@ -43,7 +52,6 @@ public class ShooterLauncher : MonoBehaviour
     {
         while(true)
         {
-            Debug.Log(shooter.IsRunning);
             if(!shooter.IsRunning)
             {
                 yield return new WaitForSeconds(term);
@@ -56,23 +64,36 @@ public class ShooterLauncher : MonoBehaviour
         yield return null;
     }
 
-    // 모든 JSON 파일을 읽어들여 파라미터 리스트에 저장하는 메서드
     private void LoadAllParameters()
     {
-        foreach (var filePath in jsonFiles)
+        foreach (var textAsset in jsonFiles)
         {
-            if (File.Exists(filePath))
+            if (textAsset != null)
             {
-                string json = File.ReadAllText(filePath);
-                BaseParameters parameters = JsonConvert.DeserializeObject<BaseParameters>(json);
-                if (parameters != null)
+                try
                 {
-                    parametersList.Add(parameters);
+                    string json = textAsset.text;
+
+                    // TypeNameHandling을 설정하여 타입 정보를 포함
+                    JsonSerializerSettings settings = new JsonSerializerSettings
+                    {
+                        TypeNameHandling = TypeNameHandling.All
+                    };
+
+                    BaseParameters parameters = JsonConvert.DeserializeObject<BaseParameters>(json, settings);
+                    if (parameters != null)
+                    {
+                        parametersList.Add(parameters);
+                    }
+                }
+                catch (Exception ex)
+                {
+                    Debug.LogError("Error loading JSON from TextAsset: " + textAsset.name + " - " + ex.Message);
                 }
             }
             else
             {
-                Debug.LogWarning("File not found: " + filePath);
+                Debug.LogWarning("TextAsset is null.");
             }
         }
     }

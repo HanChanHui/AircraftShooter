@@ -310,6 +310,7 @@ GameObject:
   m_Component:
   - component: {fileID: 420261940}
   - component: {fileID: 420261941}
+  - component: {fileID: 420261942}
   m_Layer: 0
   m_Name: Enemy
   m_TagString: Untagged
@@ -348,6 +349,22 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   shooters:
   - {fileID: 1014086434}
+--- !u!114 &420261942
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 420261939}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 76a702ecb075c6942bf3185ca1730007, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  jsonFiles:
+  - C:/Users/stayy/Documents/GitHub/AircraftShooter/AircraftShooter/Assets/Resources/Data/RollingNwayShooter.json
+  - C:/Users/stayy/Documents/GitHub/AircraftShooter/AircraftShooter/Assets/Resources/Data/ForwardShoot.json
+  - C:/Users/stayy/Documents/GitHub/AircraftShooter/AircraftShooter/Assets/Resources/Data/CustomShapeForwardShoot.json
 --- !u!1 &705507993
 GameObject:
   m_ObjectHideFlags: 0
@@ -528,11 +545,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f4a2a817573ace145b10f01b66227770, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  shootingType: 23
+  shootingType: 25
   muzzle: {fileID: 1014086435}
-  bulletType: 0
+  bulletType: 4
   power: 0
-  speed: 5
+  speed: 10
   speedRate: 0
   angle: 180
   angleRate: 0
@@ -543,9 +560,9 @@ MonoBehaviour:
   sup: 3
   rotateBulletCore: 0
   rotateBulletOffset: {x: 0, y: 0, z: 0}
-  forwardAngleSpeed: 0
-  angleRange: 30
-  count: 3
+  forwardAngleSpeed: 80
+  angleRange: 10
+  count: 2
   multipleStep: 0
   multipleRange: 0
   turnSpeed: 1
@@ -570,19 +587,19 @@ MonoBehaviour:
   height: 0
   pat_width: 0
   pat_height: 0
-  shapeType: 0
-  vertexShape: 0
-  radius: 5
-  angleSpeed: 0
-  segments: 0
-  circleAngle: 10
+  shapeType: 1
+  vertexShape: 4
+  radius: 10
+  angleSpeed: 8
+  segments: 10
+  circleAngle: 0
   attackCooltime: 0
   attackTime: 0
-  stopAttackDelay: 0.5
+  stopAttackDelay: 1
   attackTimeReset: 1
   attackFixedTime: 5
   canAttack: 1
-  jsonName: 
+  jsonName: CustomShapeForwardShoot
 --- !u!4 &1014086435
 Transform:
   m_ObjectHideFlags: 0

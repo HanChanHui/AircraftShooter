@@ -1,12 +1,12 @@
 {
-  "rot": 0.0,
-  "vertex": 3,
-  "sup": 3.0,
-  "rotateBulletCore": false,
-  "shootingType": 23,
+  "$type": "ForwardParameters, Assembly-CSharp",
+  "forwardAngleSpeed": 80.0,
+  "angleRange": 10.0,
+  "count": 2,
+  "shootingType": 1,
   "bulletType": 0,
   "power": 0,
-  "speed": 5.0,
+  "speed": 20.0,
   "speedRate": 0.0,
   "angle": 180.0,
   "angleRate": 0.0,
@@ -15,6 +15,6 @@
   "attackCooltime": 0.0,
   "attackTime": 0.0,
   "stopAttackDelay": 0.5,
-  "attackTimeReset": 0.5,
+  "attackTimeReset": 1.0,
   "attackFixedTime": 5.0
 }

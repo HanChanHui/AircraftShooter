@@ -19,11 +19,20 @@ public class ShooterLauncherEditor : Editor
 
         if (GUILayout.Button("Add JSON File"))
         {
-            string path = EditorUtility.OpenFilePanel("Select JSON file", Application.dataPath + "Resources/Data", "json");
+            string path = EditorUtility.OpenFilePanel("Select JSON file", Application.dataPath + "/Resources/Data", "json");
             if (!string.IsNullOrEmpty(path))
             {
-                jsonFilesProperty.arraySize++;
-                jsonFilesProperty.GetArrayElementAtIndex(jsonFilesProperty.arraySize - 1).stringValue = path;
+                path = "Assets" + path.Replace(Application.dataPath, "").Replace('\\', '/'); // Unity 경로 형식으로 변환
+                TextAsset textAsset = AssetDatabase.LoadAssetAtPath<TextAsset>(path);
+                if (textAsset != null)
+                {
+                    jsonFilesProperty.arraySize++;
+                    jsonFilesProperty.GetArrayElementAtIndex(jsonFilesProperty.arraySize - 1).objectReferenceValue = textAsset;
+                }
+                else
+                {
+                    Debug.LogWarning("Failed to load TextAsset from path: " + path);
+                }
             }
         }
 
@@ -31,7 +40,7 @@ public class ShooterLauncherEditor : Editor
         {
             if (jsonFilesProperty.arraySize > 0)
             {
-                jsonFilesProperty.arraySize--;
+                jsonFilesProperty.DeleteArrayElementAtIndex(jsonFilesProperty.arraySize - 1);
             }
         }
 
