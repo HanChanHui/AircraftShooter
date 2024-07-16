@@ -10,15 +10,15 @@ public class EnemyCtr : MonoBehaviour
 
     private void Start()
     {
-        // foreach (var shooter in shooters)
-        // {
-        //     if (shooter != null)
-        //     {
-        //         shooter.Init();
-        //         StartCoroutine(shooter.CoCheckDistance());
-        //         StartCoroutine(shooter.CoStopAttackCooltime());
-        //     }
-        // }
+        foreach (var shooter in shooters)
+        {
+            if (shooter != null)
+            {
+                shooter.Init();
+                StartCoroutine(shooter.CoCheckDistance());
+                StartCoroutine(shooter.CoStopAttackCooltime());
+            }
+        }
     }
 
 }
