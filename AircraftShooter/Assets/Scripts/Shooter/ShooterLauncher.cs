@@ -1,7 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
-using JetBrains.Annotations;
 using Newtonsoft.Json;
 using UnityEngine;
 
@@ -26,7 +25,11 @@ public class ShooterLauncher : MonoBehaviour
         shooter.Init();
         LoadAllParameters();
         ApplyCurrentParameters();
-        StartCoroutine(OnShooterLauncher());
+        if(parametersList.Count > 0)
+        {
+            StartCoroutine(OnShooterLauncher());
+        }
+        
     }
 
     private IEnumerator OnShooterLauncher()
