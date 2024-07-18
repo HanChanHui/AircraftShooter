@@ -282,6 +282,7 @@ public class Shooter : MonoBehaviour
 
     public void StartShoot()
     {
+        Init();
         StopAllCoroutine();
         isRunning = true;
         StartCoroutine(CoCheckDistance());
