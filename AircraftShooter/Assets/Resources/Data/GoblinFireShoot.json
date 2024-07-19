@@ -1,0 +1,17 @@
+{
+  "$type": "BaseParameters, Assembly-CSharp",
+  "shootingType": 27,
+  "bulletType": 7,
+  "power": 0,
+  "speed": 3.0,
+  "speedRate": 0.0,
+  "angle": 180.0,
+  "angleRate": 0.0,
+  "startDistance": 0.0,
+  "lifeTime": 20.0,
+  "attackCooltime": 0.0,
+  "attackTime": 0.0,
+  "stopAttackDelay": 1.0,
+  "attackTimeReset": 1.0,
+  "attackFixedTime": 1.0
+}

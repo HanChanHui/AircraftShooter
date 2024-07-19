@@ -127,6 +127,10 @@ public class Shooter : MonoBehaviour
     public int segments;
     public int circleAngle;
 
+    [Header("GoblinFire")]
+    public float wavingRange;
+    public float wavingCycle;
+
 
     [Header("AttackCoolTime")]
     public float attackCooltime = 0f;
@@ -562,6 +566,16 @@ public class Shooter : MonoBehaviour
         }
     }
 
+    void GoblinFireShoot() {
+        GoblinFireBullet bullet = HSPoolManager.Instance.NewItem<GoblinFireBullet>(bulletType.ToString());
+        if (bullet) {
+            bullet.Init(turnSpeed, targetTransform, homingSpeedRate, wavingRange, wavingCycle, decreaseHomingSpeed);
+            bullet.CheckOutBound = this.CheckOutBound;
+            bullet.Create(muzzle.position, muzzle.rotation, isCalculatedDamage,
+                    speed, speedRate, angle, angleRate, isCritical, startDistance, lifeTime);
+        }
+    }
+
 
     void CustomShapeShoot() 
     {
@@ -734,6 +748,8 @@ public class Shooter : MonoBehaviour
                 return CircleShapeShoot;
             case ShootingType.ShooterShooter:
                 return ShooterShoot;
+            case ShootingType.GoblinFire:
+                return GoblinFireShoot;
             default:
                 return null;
         }
