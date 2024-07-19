@@ -46,22 +46,20 @@ public class CharacterCtrl : MonoBehaviour
         {
             Vector3 targetPoint = ray.GetPoint(hitDist);
             Vector3 direction = targetPoint - transform.position;
-            direction.y = 0; // Y축 회전을 방지하여 플레이어가 바닥을 보지 않도록 합니다.
+            direction.y = 0;
 
             if (direction != Vector3.zero)
             {
                 Quaternion newTargetRotation = Quaternion.LookRotation(direction);
-                // 회전 목표를 업데이트하고 타이머를 초기화
+
                 if (targetRotation != newTargetRotation)
                 {
                     targetRotation = newTargetRotation;
                     followTimer = 0f;
                 }
 
-                // 타이머 업데이트
                 followTimer += Time.deltaTime;
 
-                // 타이머가 딜레이를 초과했을 때만 실제 회전 적용
                 if (followTimer > followDelay)
                 {
                     // 부드럽게 회전
@@ -80,41 +78,47 @@ public class CharacterCtrl : MonoBehaviour
             float vertical = Input.GetAxis("Vertical");
             bool isRunning = Input.GetKey(KeyCode.LeftShift);
 
-            // 이동 속도 설정
             float currentSpeed = isRunning ? runSpeed : walkSpeed;
 
-            // 이동 방향 설정
             Vector3 inputDirection = new Vector3(horizontal, 0, vertical);
             inputDirection = Vector3.ClampMagnitude(inputDirection, 1);
 
             if (inputDirection.magnitude > 0.01f)
             {
-                // 이동 방향 설정
                 moveDirection = inputDirection * currentSpeed;
 
-                // 이동 방향과 애니메이션 방향 설정
                 Vector3 localInputDirection = transform.InverseTransformDirection(moveDirection);
-                float maxMagnitude = isRunning ? 2f : 1f;
+                float maxMagnitude = isRunning ? 6f : 4f;
                 localInputDirection.x = Mathf.Clamp(localInputDirection.x, -maxMagnitude, maxMagnitude);
                 localInputDirection.z = Mathf.Clamp(localInputDirection.z, -maxMagnitude, maxMagnitude);
 
-                // 애니메이터 파라미터 설정
-                anim.SetFloat("x", localInputDirection.x, smoothBlend, Time.deltaTime);
-                anim.SetFloat("y", localInputDirection.z, smoothBlend, Time.deltaTime);
+                float targetX = localInputDirection.x;
+                float targetY = localInputDirection.z;
+
+                float currentX = anim.GetFloat("x");
+                float currentY = anim.GetFloat("y");
+
+                float newX = Mathf.Lerp(currentX, targetX, smoothBlend * Time.deltaTime);
+                float newY = Mathf.Lerp(currentY, targetY, smoothBlend * Time.deltaTime);
+
+                anim.SetFloat("x", newX);
+                anim.SetFloat("y", newY);
             }
             else
             {
                 // 멈추기
-                moveDirection = Vector3.zero;
-                anim.SetFloat("x", 0, stopSmoothBlend, Time.deltaTime);
-                anim.SetFloat("y", 0, stopSmoothBlend, Time.deltaTime);
+                float currentX = anim.GetFloat("x");
+                float currentY = anim.GetFloat("y");
+
+                float newX = Mathf.Lerp(currentX, 0, stopSmoothBlend * Time.deltaTime);
+                float newY = Mathf.Lerp(currentY, 0, stopSmoothBlend * Time.deltaTime);
+                anim.SetFloat("x", newX);
+                anim.SetFloat("y", newY);
             }
         }
 
-        // 중력 적용
         moveDirection.y -= gravity * Time.deltaTime;
 
-        // 이동 적용
         characterController.Move(moveDirection * Time.deltaTime);
     }
 }
