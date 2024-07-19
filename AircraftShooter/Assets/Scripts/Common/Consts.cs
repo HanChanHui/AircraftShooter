@@ -32,6 +32,7 @@ namespace Consts
         Pattern,
         CustomShapeForward,
         ShooterShooter,
+        GoblinFire,
     };
 
      public enum BulletType 
@@ -43,6 +44,7 @@ namespace Consts
         ShapeBullet,
         ChildBullet,
         ShooterBullet,
+        GoblinFireBullet,
     }
 
      public enum ShapeType
