@@ -17,5 +17,5 @@
   "attackTime": 0.0,
   "stopAttackDelay": 1.0,
   "attackTimeReset": 1.0,
-  "attackFixedTime": 5.0
+  "attackFixedTime": 1.0
 }

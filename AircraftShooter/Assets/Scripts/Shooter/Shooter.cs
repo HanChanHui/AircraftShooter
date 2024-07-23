@@ -271,7 +271,7 @@ public class Shooter : MonoBehaviour
 
         while(isRunning)
         {
-            //attackTimeReset = 0f;
+            attackTimeReset = 0f;
             yield return new WaitForSeconds(attackCooltime);
             attackTimeReset = stopAttackDelay;
             yield return new WaitForSeconds(attackTimeReset);
