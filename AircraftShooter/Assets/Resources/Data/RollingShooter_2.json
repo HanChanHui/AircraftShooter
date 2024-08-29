@@ -1,13 +1,13 @@
 {
   "$type": "RollingNwayParameters, Assembly-CSharp",
-  "forwardAngleSpeed": 0.0,
-  "angleRange": 0.0,
-  "count": 0,
-  "nWayCount": 12,
+  "forwardAngleSpeed": 80.0,
+  "angleRange": 30.0,
+  "count": 5,
+  "nWayCount": 3,
   "shootingType": 7,
   "bulletType": 0,
   "power": 0,
-  "speed": 15.0,
+  "speed": 5.0,
   "speedRate": 0.0,
   "angle": 180.0,
   "angleRate": 0.0,
@@ -15,7 +15,7 @@
   "lifeTime": 5.0,
   "attackCooltime": 0.0,
   "attackTime": 0.0,
-  "stopAttackDelay": 1.0,
-  "attackTimeReset": 1.0,
+  "stopAttackDelay": 0.5,
+  "attackTimeReset": 0.5,
   "attackFixedTime": 5.0
 }
