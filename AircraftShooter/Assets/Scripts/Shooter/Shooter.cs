@@ -478,8 +478,17 @@ public class Shooter : MonoBehaviour
     {
         for (int i = 0; i < count; i++) 
         {
-            BasicShoot(speed + speedRange * UnityEngine.Random.Range(0, 1.0f), 0,
+            SpreadingArcShoot(speed + speedRange * UnityEngine.Random.Range(0, 1.0f), 0,
                 angle + angleRange * (UnityEngine.Random.Range(0, 1.0f) - 0.5f), 0, muzzle.position);
+        }
+    }
+
+    void SpreadingArcShoot(float speed, float speedRate, float angle, float angleRate, Vector3 pos)
+    {
+        ArcBullet bullet = HSPoolManager.Instance.NewItem<ArcBullet>(bulletType.ToString());
+        if (bullet)
+        {
+            bullet.Create(muzzle.position, speed, angle, isCalculatedDamage, arrivalTime, height);
         }
     }
 
@@ -513,7 +522,7 @@ public class Shooter : MonoBehaviour
        ArcBullet bullet = HSPoolManager.Instance.NewItem<ArcBullet>(bulletType.ToString());
         if (bullet) 
         {
-            bullet.Create(muzzle.position, targetTransform.position, isCalculatedDamage, arrivalTime, height);
+            //bullet.Create(muzzle.position, targetTransform.position, isCalculatedDamage, arrivalTime, height);
         }
     }
 

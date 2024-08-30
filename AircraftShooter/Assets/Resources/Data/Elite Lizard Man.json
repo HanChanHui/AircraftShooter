@@ -1,0 +1,19 @@
+{
+  "$type": "NwayParameters, Assembly-CSharp",
+  "angleRange": 60.0,
+  "count": 10,
+  "shootingType": 3,
+  "bulletType": 0,
+  "power": 0,
+  "speed": 20.0,
+  "speedRate": 0.0,
+  "angle": 180.0,
+  "angleRate": 0.0,
+  "startDistance": 0.0,
+  "lifeTime": 10.0,
+  "attackCooltime": 0.9,
+  "attackTime": 0.3,
+  "stopAttackDelay": 0.0,
+  "attackTimeReset": 0.0,
+  "attackFixedTime": 0.9
+}

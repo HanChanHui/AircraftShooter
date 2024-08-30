@@ -1,0 +1,20 @@
+{
+  "$type": "ForwardParameters, Assembly-CSharp",
+  "forwardAngleSpeed": 0.0,
+  "angleRange": 45.0,
+  "count": 1,
+  "shootingType": 5,
+  "bulletType": 0,
+  "power": 8,
+  "speed": 20.0,
+  "speedRate": 0.0,
+  "angle": 180.0,
+  "angleRate": 0.0,
+  "startDistance": 0.0,
+  "lifeTime": 5.0,
+  "attackCooltime": 0.0,
+  "attackTime": 0.1,
+  "stopAttackDelay": 0.0,
+  "attackTimeReset": 0.0,
+  "attackFixedTime": 3.0
+}

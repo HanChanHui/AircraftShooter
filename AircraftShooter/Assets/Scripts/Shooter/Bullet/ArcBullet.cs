@@ -48,10 +48,10 @@ public class ArcBullet : Bullet, IMemoryPool {
     }
     
 
-    public void Create(Vector3 startPos, Vector3 endPos, int damage, float arrivalTime = 0, float height = 1, bool isCritical = false) {
+    public void Create(Vector3 startPos, float endPos, float pos,int damage, float arrivalTime = 0, float height = 1, bool isCritical = false) {
         myTransform.position = startPos;
         this.startPos = startPos;
-        this.endPos = endPos;
+        this.endPos = new Vector3(-endPos, 0, -pos);
         this.damage = damage;
         this.arrivalTime = arrivalTime;
         this.maxHeight = height;

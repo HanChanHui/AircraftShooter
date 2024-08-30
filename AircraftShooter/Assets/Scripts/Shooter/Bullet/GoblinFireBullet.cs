@@ -156,18 +156,18 @@ public class GoblinFireBullet : Bullet
 
     protected override void MyDestroy() {
         base.MyDestroy();
-        switch(bulletStyle)
-        {
-            case BulletStyle.ChildGoblinFire:
-                if (childCreate)
-                {
-                    GoblinFireShoot();
-                }
-                break;
-             case BulletStyle.Homing:
-                HomingShoot();
-                break;
-        }
+        //switch(bulletStyle)
+        //{
+        //    case BulletStyle.ChildGoblinFire:
+        //        if (childCreate)
+        //        {
+        //            GoblinFireShoot();
+        //        }
+        //        break;
+        //     case BulletStyle.Homing:
+        //        HomingShoot();
+        //        break;
+        //}
         
         myTransform.position = Vector3.zero;
     }

@@ -1,0 +1,22 @@
+{
+  "$type": "WavingNwayParameters, Assembly-CSharp",
+  "forwardAngleSpeed": 0.0,
+  "angleRange": 0.0,
+  "count": 0,
+  "wavingAngleRange": 5.0,
+  "cycle": 5,
+  "shootingType": 8,
+  "bulletType": 0,
+  "power": 0,
+  "speed": 30.0,
+  "speedRate": 0.0,
+  "angle": 180.0,
+  "angleRate": 0.0,
+  "startDistance": 0.0,
+  "lifeTime": 5.0,
+  "attackCooltime": 2.0,
+  "attackTime": 0.1,
+  "stopAttackDelay": 1.0,
+  "attackTimeReset": 1.0,
+  "attackFixedTime": 2.0
+}
