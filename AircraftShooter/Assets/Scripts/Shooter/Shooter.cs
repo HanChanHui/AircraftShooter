@@ -121,6 +121,7 @@ public class Shooter : MonoBehaviour
 
     [Header("CustomShapeForward")]
     public ShapeType shapeType;
+    public MoveType moveType;
     public int vertexShape;
     public float radius;
     public float angleSpeed;
@@ -488,7 +489,7 @@ public class Shooter : MonoBehaviour
         ArcBullet bullet = HSPoolManager.Instance.NewItem<ArcBullet>(bulletType.ToString());
         if (bullet)
         {
-            bullet.Create(muzzle.position, speed, angle, isCalculatedDamage, arrivalTime, height);
+            //bullet.Create(muzzle.position, speed, angle, isCalculatedDamage, arrivalTime, height);
         }
     }
 
@@ -522,7 +523,7 @@ public class Shooter : MonoBehaviour
        ArcBullet bullet = HSPoolManager.Instance.NewItem<ArcBullet>(bulletType.ToString());
         if (bullet) 
         {
-            //bullet.Create(muzzle.position, targetTransform.position, isCalculatedDamage, arrivalTime, height);
+            bullet.Create(muzzle.position, targetTransform.position, isCalculatedDamage, arrivalTime, height);
         }
     }
 
@@ -562,7 +563,17 @@ public class Shooter : MonoBehaviour
         if (centorbullet) 
         {
             centorbullet.Init(angleSpeed, circleAngle, radius, vertexShape, segments);
-            centorbullet.Create(shapeType, muzzle.position, muzzle.rotation, isCalculatedDamage, speed, angle, angleRate, lifeTime);
+            switch(moveType)
+            {
+                case MoveType.Forward:
+                    centorbullet.Create(shapeType, muzzle.position, muzzle.rotation, isCalculatedDamage, speed, angle, angleRate, lifeTime, moveType);
+                    break;
+                case MoveType.Fall:
+                    centorbullet.Create(shapeType, targetTransform.position + new Vector3(0 , 30f, 0), targetTransform.rotation, isCalculatedDamage, speed, 0, angleRate, lifeTime, moveType);
+                    break;
+            }
+            //Debug.Log(muzzle.position +", " + targetTransform.position);
+            
         }
     }
 
@@ -582,6 +593,17 @@ public class Shooter : MonoBehaviour
             bullet.CheckOutBound = this.CheckOutBound;
             bullet.Create(muzzle.position, muzzle.rotation, isCalculatedDamage,
                     speed, speedRate, angle, angleRate, isCritical, startDistance, lifeTime);
+        }
+    }
+
+    void FallCirclePattern()
+    {
+        ShapeBullet centorbullet = HSPoolManager.Instance.NewItem<ShapeBullet>(bulletType.ToString());
+
+        if (centorbullet) 
+        {
+            centorbullet.Init(angleSpeed, circleAngle, radius, vertexShape, segments);
+            centorbullet.Create(shapeType, muzzle.position, muzzle.rotation, isCalculatedDamage, speed, angle, angleRate, lifeTime, moveType);
         }
     }
 
@@ -759,6 +781,8 @@ public class Shooter : MonoBehaviour
                 return ShooterShoot;
             case ShootingType.GoblinFire:
                 return GoblinFireShoot;
+            case ShootingType.FallCircle:
+                return FallCirclePattern;
             default:
                 return null;
         }

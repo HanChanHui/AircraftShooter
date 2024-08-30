@@ -288,6 +288,108 @@ Transform:
   - {fileID: 1375198758}
   m_Father: {fileID: 1211010647}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &248647867
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 248647869}
+  - component: {fileID: 248647868}
+  m_Layer: 0
+  m_Name: Shooter0
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &248647868
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 248647867}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4a2a817573ace145b10f01b66227770, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  shootingType: 25
+  muzzle: {fileID: 248647869}
+  bulletType: 4
+  power: 0
+  speed: 20
+  speedRate: 0
+  angle: 180
+  angleRate: 0
+  startDistance: 0
+  lifeTime: 5
+  rot: 0
+  vertex: 3
+  sup: 3
+  rotateBulletCore: 0
+  rotateBulletOffset: {x: 0, y: 0, z: 0}
+  forwardAngleSpeed: 0
+  angleRange: 0
+  count: 0
+  multipleStep: 0
+  multipleRange: 0
+  turnSpeed: 0
+  decreaseHomingSpeed: 0
+  homingSpeedRate: 0
+  delayTime: 0
+  nWayCount: 0
+  wavingAngleRange: 0
+  cycle: 0
+  moveTime: 0
+  stopTime: 0
+  placedStopSpeed: 0
+  targetTransform: {fileID: 1611185765}
+  stopAttackCooltime: 1
+  targetfixedAngle: 0
+  groupSpeed: 0
+  groupCount: 0
+  speedRange: 0
+  groupAngle: 0
+  groupInterval: 0
+  arrivalTime: 0
+  height: 0
+  pat_width: 0
+  pat_height: 0
+  shapeType: 0
+  moveType: 1
+  vertexShape: 0
+  radius: 8
+  angleSpeed: 0
+  segments: 0
+  circleAngle: 30
+  wavingRange: 0
+  wavingCycle: 0
+  attackCooltime: 0
+  attackTime: 0
+  stopAttackDelay: 1
+  attackTimeReset: 0
+  attackFixedTime: 1
+  canAttack: 1
+  jsonName: 
+--- !u!4 &248647869
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 248647867}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 2, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 420261940}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &344845049
 GameObject:
   m_ObjectHideFlags: 0
@@ -458,6 +560,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1474197008}
+  - {fileID: 248647869}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &420261942
@@ -473,7 +576,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   shooters:
-  - {fileID: 0}
+  - {fileID: 248647868}
   shooterJsonFilesList:
   - jsonFiles: []
   term: 1
@@ -1468,7 +1571,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1777244951608149373, guid: 02c2b87f236fa674e8217c966bf5042b, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -0.0000009536743
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1777244951608149373, guid: 02c2b87f236fa674e8217c966bf5042b, type: 3}
       propertyPath: m_LocalPosition.z

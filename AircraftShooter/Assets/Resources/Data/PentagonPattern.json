@@ -1,0 +1,23 @@
+{
+  "$type": "CustomShapeForwardParameters, Assembly-CSharp",
+  "shapeType": 1,
+  "vertexShape": 6,
+  "radius": 8.0,
+  "angleSpeed": 25.0,
+  "segments": 10,
+  "circleAngle": 30,
+  "shootingType": 25,
+  "bulletType": 4,
+  "power": 0,
+  "speed": 20.0,
+  "speedRate": 0.0,
+  "angle": 180.0,
+  "angleRate": 0.0,
+  "startDistance": 0.0,
+  "lifeTime": 5.0,
+  "attackCooltime": 0.0,
+  "attackTime": 0.0,
+  "stopAttackDelay": 1.0,
+  "attackTimeReset": 1.0,
+  "attackFixedTime": 1.0
+}

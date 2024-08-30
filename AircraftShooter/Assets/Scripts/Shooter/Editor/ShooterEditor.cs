@@ -229,6 +229,10 @@ public class ShooterEditor : Editor
                 shooter.segments = EditorGUILayout.IntField("Segments", shooter.segments);
                 shooter.angleSpeed = EditorGUILayout.FloatField("AngleSpeed", shooter.angleSpeed);
                 shooter.circleAngle = EditorGUILayout.IntField("CircleAngle", shooter.circleAngle);
+
+                EditorGUILayout.LabelField("FallCustomShape", EditorStyles.boldLabel);
+                shooter.targetTransform = (Transform)EditorGUILayout.ObjectField("Target Transform", shooter.targetTransform, typeof(Transform), true);
+                shooter.moveType = (MoveType)EditorGUILayout.EnumPopup("Move Type", shooter.moveType);
                 break;
 
              case ShootingType.ShooterShooter:

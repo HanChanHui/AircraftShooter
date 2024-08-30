@@ -33,6 +33,7 @@ namespace Consts
         CustomShapeForward,
         ShooterShooter,
         GoblinFire,
+        FallCircle,
     };
 
      public enum BulletType 
@@ -51,5 +52,11 @@ namespace Consts
     {
         Circle,
         Polygon,
+    }
+
+    public enum MoveType
+    {
+        Forward,
+        Fall,
     }
 }

@@ -20,6 +20,7 @@ public class ShapeBullet : MonoBehaviour, IMemoryPool
     public float angleSpeed;
 
     [SerializeField] private Consts.ShapeType shapeType;
+    [SerializeField] private Consts.MoveType moveType;
 
     float[] cosAngles;
     float[] sinAngles;
@@ -43,11 +44,15 @@ public class ShapeBullet : MonoBehaviour, IMemoryPool
         this.segments = _segments;
     }
 
-    public void Create(Consts.ShapeType type, Vector3 pos, Quaternion rot, int power, float speed, float angle, float angleRate, float lifeTime)
+    public void Create(Consts.ShapeType shapetype, Vector3 pos, Quaternion rot, int power, float speed, float angle, float angleRate, float lifeTime,
+                        Consts.MoveType moveType = Consts.MoveType.Forward)
     {
         myTransform.position = pos;
         myTransform.rotation = rot;
-        this.shapeType = type;
+        Debug.Log("Bullet Position: " + myTransform.position);
+        Debug.Log("Bullet Rotation: " + myTransform.rotation);
+        this.shapeType = shapetype;
+        this.moveType = moveType;
         this.power = power;
         this.speed = speed;
         this.angle = angle;
@@ -55,15 +60,18 @@ public class ShapeBullet : MonoBehaviour, IMemoryPool
         this.lifeTime = lifeTime;
 
         isDead = false;
-
-        if(shapeType == Consts.ShapeType.Circle)
+        switch(moveType)
         {
-            CirclePatterns();
+            case Consts.MoveType.Forward:
+                if(shapeType == Consts.ShapeType.Circle) { CirclePatterns(); }
+                else if(shapeType == Consts.ShapeType.Polygon) { PolygonPattern(vertexShape); }
+                break;
+            case Consts.MoveType.Fall:
+                if(shapeType == Consts.ShapeType.Circle) { CirclePatterns(); }
+                else if(shapeType == Consts.ShapeType.Polygon) { PolygonPattern(vertexShape); }
+                break;
         }
-        else if(shapeType == Consts.ShapeType.Polygon)
-        {
-            PolygonPattern(vertexShape);
-        }
+        
         
 
         StartCoroutine("CoUpdate");
@@ -84,6 +92,19 @@ public class ShapeBullet : MonoBehaviour, IMemoryPool
     }
 
     void CirclePatterns()
+    {
+        for (int i = 0; i < 360; i += circleAngle)
+        {
+            double angleRad = DegreeToRadian(i);
+            float pointx = Mathf.Cos((float)angleRad) * radius;
+            float pointz = Mathf.Sin((float)angleRad) * radius;
+            Vector3 projposition = new Vector3(pointx, 0, pointz);
+            Vector3 worldPosition = myTransform.TransformPoint(projposition);
+            CreateChildShapeBullet(worldPosition);
+        }
+    }
+
+    void FallCirclePatterns()
     {
         for (int i = 0; i < 360; i += circleAngle)
         {
@@ -142,8 +163,13 @@ public class ShapeBullet : MonoBehaviour, IMemoryPool
         if (bullet && bullet.gameObject.activeSelf)
         {
             bullet.ParentBullet = this;
-            bullet.Create(_point, this.transform, angleSpeed, lifeTime);
+            bullet.transform.position = _point;
+            bullet.transform.rotation = this.transform.rotation;
+
+            // 이후에 부모-자식 관계 설정
             bullet.transform.parent = this.transform;
+
+            bullet.Create(_point, this.transform, angleSpeed, lifeTime);
         }
     }
 
@@ -160,8 +186,9 @@ public class ShapeBullet : MonoBehaviour, IMemoryPool
     private void Move()
     {
         float moveDistance = speed * Time.deltaTime;
-        myTransform.Translate(Vector3.Normalize(Vector3.forward) * moveDistance);
-        Quaternion rot = Quaternion.Euler(transform.rotation.x, angle, transform.rotation.z);
+        Vector3 moveDir = moveType == Consts.MoveType.Forward ? Vector3.forward : Vector3.down;
+        myTransform.Translate(Vector3.Normalize(moveDir) * moveDistance);
+        Quaternion rot = Quaternion.Euler(myTransform.rotation.x, angle, myTransform.rotation.y);
         myTransform.rotation = rot;
 
         angle += angleRate;
