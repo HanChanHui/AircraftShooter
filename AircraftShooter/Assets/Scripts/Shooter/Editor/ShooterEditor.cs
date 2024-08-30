@@ -175,11 +175,16 @@ public class ShooterEditor : Editor
                 break;
             
             case ShootingType.RandomSpreading:
-                shooter.bulletType = BulletType.Bullet;
+                shooter.bulletType = BulletType.ArcBullet;
                 EditorGUILayout.LabelField("Nway", EditorStyles.boldLabel);
                 shooter.angleRange = EditorGUILayout.FloatField("Angle Range", shooter.angleRange);
                 shooter.count = EditorGUILayout.IntField("Count", shooter.count);
                 shooter.speedRange = EditorGUILayout.FloatField("Speed Range", shooter.speedRange);
+                EditorGUILayout.LabelField("Aiming", EditorStyles.boldLabel);
+                shooter.targetTransform = (Transform)EditorGUILayout.ObjectField("Target Transform", shooter.targetTransform, typeof(Transform), true);
+                EditorGUILayout.LabelField("Arc", EditorStyles.boldLabel);
+                shooter.arrivalTime = EditorGUILayout.FloatField("Arrival Time", shooter.arrivalTime);
+                shooter.height = EditorGUILayout.FloatField("Height", shooter.height);
                 break;
 
             case ShootingType.Overtaking:
